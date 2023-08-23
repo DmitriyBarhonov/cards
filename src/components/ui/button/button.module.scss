@@ -1,24 +1,87 @@
-.primary {
+@mixin button {
   all: unset;
-  background-color: red;
+
+  cursor: pointer;
+  user-select: none;
+
+  padding: 6px 28px;
+
+  border-radius: 4px;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-700);
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+
+  &.fullWidth {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+.primary {
+  @include button;
+
+  background-color: var(--color-accent-500);
+  box-shadow: 0 4px 18px 0 rgb(var(--color-accent-500) 0.12);
+
+  &:hover:enabled {
+    background-color: var(--color-accent-300);
+  }
+
+  &:active:enabled {
+    background-color: var(--color-accent-700);
+  }
 }
 
 .secondary {
-  all: unset;
-  background-color: green;
+  @include button;
+
+  background-color: var(--color-dark-300);
+  box-shadow: 0 4px 4px 0 #4d566021;
+
+  &:hover:enabled {
+    background-color: var(--color-dark-100);
+  }
+
+  &:active:enabled {
+    background-color: var(--color-dark-500);
+  }
 }
 
 .tertiary {
-  all: unset;
-  background-color: blue;
+  @include button;
+
+  color: var(--color-accent-500);
+  background-color: var(--color-dark-900);
+  border: 1px solid var(--color-accent-500);
+
+  &:hover:enabled {
+    background-color: var(--color-dark-500);
+  }
+
+  &:active:enabled {
+    background-color: var(--color-accent-700);
+  }
 }
 
 .link {
-  all: unset;
-  background-color: yellow;
+  @include button;
+
+  padding: 6px 0;
+
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+  color: var(--color-accent-700);
+
+  background-color: var(--color-dark-900);
+  border-radius: 20px;
 }
 
 .fullWidth {
-  all: unset;
   width: 100%;
 }
