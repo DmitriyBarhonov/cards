@@ -1,0 +1,117 @@
+@mixin typography {
+  color: var(--color-dark-900);
+  text-align: left;
+  letter-spacing: 0;
+}
+
+@mixin link {
+  color: var(--color-info-500);
+  text-decoration: underline;
+}
+
+.large {
+  @include typography;
+
+  font-size: var(--font-size-xxl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-l);
+}
+
+.h1 {
+  @include typography;
+
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-l);
+}
+
+.h2 {
+  @include typography;
+
+  font-size: var(--font-size-l);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+}
+
+.h3 {
+  @include typography;
+
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+}
+
+.body1 {
+  @include typography;
+
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+}
+
+.body2 {
+  @include typography;
+
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+}
+
+.subtitle1 {
+  @include typography;
+
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+}
+
+.subtitle2 {
+  @include typography;
+
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+}
+
+.caption {
+  @include typography;
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-s);
+}
+
+.overline {
+  @include typography;
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-x);
+}
+
+.link1 {
+  @include typography;
+  @include link;
+
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+}
+
+.link2 {
+  @include typography;
+  @include link;
+
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-xs);
+}
+
+.error {
+  @include typography;
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+  color: var(--color-danger-300);
+}
