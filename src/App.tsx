@@ -1,9 +1,5 @@
-import { Button } from './components/ui/button'
+import { Checkbox } from './components/ui/checkbox'
 
 export function App() {
-  return (
-    <Button as="a" href={'dwwddw'}>
-      2123
-    </Button>
-  )
+  return <Checkbox label="wwddwdw" />
 }
