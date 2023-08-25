@@ -29,10 +29,10 @@ export const Standard: Story = {
 
 export const StandardWithError: Story = {
   args: {
-    error: 'Whoa whoa whoa!!!',
-    label: 'Just a label',
+    errorMessage: 'Enter a valid email',
+    label: 'Login or email',
     variant: 'standard',
-    placeholder: 'Input',
+    placeholder: 'Enter your login of email',
     disabled: false,
   },
 }

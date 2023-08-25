@@ -6,19 +6,19 @@
   border-radius: 2px;
   font-size: var(--font-size-m);
   font-weight: var(--font-weight-regular);
-  line-height: var(--line-height-m);
-  border: 1px solid var(--dark-300, #4C4C4C);
-  color: var(--dark-100, #808080);
+  line-height: var(--line-height-l);
+  border: 1px solid var(--color-dark-300);
+  color: var(--dark-100);
   transition: all 0.5s ease;
 
   &:active {
-    border: 1px solid var(--light-100, #FFF);
+    border: 1px solid var(--color-light-100);
     outline: none;
-    color: var(--light-100, #FFF);
+    color: var(--color-light-100);
   }
 
   &:hover {
-    border: 1px solid var(--dark-100, #808080);
+    border: 1px solid var(--color-dark-100);
   }
 
   &:focus {
@@ -26,12 +26,12 @@
   }
 
   &:disabled {
-    border: 1px solid var(--dark-300, #4C4C4C);
+    border: 1px solid var(--color-dark-300);
   }
 
-  &.error {
-    border: 1px solid var(--danger-300, #F23D61);
-    color: var(--danger-300, #F23D61);
+  &.errorInput {
+    border: 1px solid var(--color-danger-300);
+    color: var(--color-danger-300);
   }
 }
 
@@ -66,7 +66,6 @@
     &:focus-visible {
       outline: var(--outline-focus);
     }
-
   }
 
   .label {
@@ -76,18 +75,16 @@
     font-size: var(--font-size-m);
 
     &.disabledLabel {
-      color: var(--dark-300, #4C4C4C);
+      color: var(--color-dark-300);
     }
 
     .standard {
       @include input;
-
     }
 
     .password {
       @include input;
       padding-right: 38px;
-
     }
 
     .search {
@@ -96,7 +93,8 @@
     }
 
     .error {
-      color: red;
+      color: var(--color-danger-300);
+      font-size: var(--font-size-xs);
     }
   }
 

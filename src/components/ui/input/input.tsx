@@ -10,6 +10,7 @@ import { CrossedOutWatchPassIcon } from '@/components/assets/icons/WatchPassCros
 export type CardsInputProps<T extends ElementType> = {
   as?: T
   required?: boolean
+  errorMessage?: string
   value: string
   onInputValueChange?: (value: string) => void
   children: ReactNode
@@ -102,10 +103,13 @@ export const CardsInput = <T extends ElementType = 'input'>(
           value={inputValue}
           onChange={onInputValueChangeHandler}
           type={variant === 'password' && hidePass ? 'password' : 'text'}
-          className={`${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`}
+          className={`${s[variant]} ${rest.errorMessage ? s.errorInput : ''} ${
+            fullWidth ? s.fullWidth : ''
+          } ${className}`}
           {...rest}
         />
         {required && error && <p className={s.error}>{error}</p>}
+        {rest.errorMessage && <p className={s.error}>{rest.errorMessage}</p>}
       </label>
     </div>
   )
