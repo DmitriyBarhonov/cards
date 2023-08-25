@@ -1,71 +1,129 @@
+@mixin input {
+  all: unset;
+  cursor: text;
+  padding: 6px 15px;
+  height: 36px;
+  border-radius: 2px;
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+  border: 1px solid var(--dark-300, #4C4C4C);
+  color: var(--dark-100, #808080);
+  transition: all 0.5s ease;
+
+  &:active {
+    border: 1px solid var(--light-100, #FFF);
+    outline: none;
+    color: var(--light-100, #FFF);
+  }
+
+  &:hover {
+    border: 1px solid var(--dark-100, #808080);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-info-700);
+  }
+
+  &:disabled {
+    border: 1px solid var(--dark-300, #4C4C4C);
+  }
+
+  &.error {
+    border: 1px solid var(--danger-300, #F23D61);
+    color: var(--danger-300, #F23D61);
+  }
+}
+
+@mixin disabledIcon {
+  color: var(--color-dark-300);
+}
+
+@mixin inputIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-light-100);
+  position: absolute;
+  cursor: pointer;
+  background: transparent;
+
+  &.disabledIcon {
+    color: var(--color-dark-300);
+  }
+}
+
 .inputContainer {
-  background: yellowgreen;
-  width: 200px;
+  width: 284px;
+  height: 60px;
+  flex-shrink: 0;
   position: relative;
 
   .watchPassButton {
-    position: absolute;
-    top: 25px;
-    right: 5px
+    @include inputIcon;
+    top: 36px;
+    right: 12px;
+
+    &:focus-visible {
+      outline: var(--outline-focus);
+    }
+
   }
 
   .label {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    font-size: var(--font-size-m);
+
+    &.disabledLabel {
+      color: var(--dark-300, #4C4C4C);
+    }
+
+    .standard {
+      @include input;
+
+    }
+
+    .password {
+      @include input;
+      padding-right: 38px;
+
+    }
 
     .search {
-      all: unset;
-      margin: 0 30px;
-      color: black;
+      @include input;
+      padding: 6px 40px;
+    }
+
+    .error {
+      color: red;
     }
   }
- .inputIconsContainer{
-   position: relative;
 
-   .inputSearchIcon{
-     position: absolute;
-     top: 2px;
-     left: 4px;
-     z-index: 2;
+  .inputIconsContainer {
+    position: relative;
 
-   }
-   .inputCleanFieldIcon{
-     position: absolute;
-     top: 2px;
-     right: 4px;
-     z-index: 2;
-   }
- }
+    .inputSearchIcon {
+      @include inputIcon;
+      color: var(--color-dark-100);
+      top: 12px;
+      left: 12px;
+
+      &:active {
+        color: var(--color-light-100);
+      }
+    }
+
+    .inputCleanFieldIcon {
+      @include inputIcon;
+      top: 12px;
+      right: 12px;
+    }
+  }
 }
 
-
-.standard {
-  all: unset;
-  border: 1px solid #000;
-}
-
-.password {
-  all: unset;
-  border: 1px solid #000;
-  background-color: green;
-}
-
-.search {
-  all: unset;
-  border: 1px solid #000;
-}
-
-.inputWithIcon {
-  all: unset;
-  border: 1px solid #000;
-  background-color: yellow;
-}
 
 .fullWidth {
   width: 100%;
 }
 
-.error {
-  color: red;
-}

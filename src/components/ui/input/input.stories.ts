@@ -27,6 +27,16 @@ export const Standard: Story = {
   },
 }
 
+export const StandardWithError: Story = {
+  args: {
+    error: 'Whoa whoa whoa!!!',
+    label: 'Just a label',
+    variant: 'standard',
+    placeholder: 'Input',
+    disabled: false,
+  },
+}
+
 export const Password: Story = {
   args: {
     required: true,
@@ -36,6 +46,7 @@ export const Password: Story = {
     disabled: false,
   },
 }
+
 export const Search: Story = {
   args: {
     variant: 'search',

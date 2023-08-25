@@ -57,15 +57,23 @@ export const CardsInput = <T extends ElementType = 'input'>(
 
   return (
     <div className={s.inputContainer}>
-      {/*show and hide password logic*/}
+      {/*show and hide password logic
+       //TODO should apply Typography for error and label*/}
       {variant === 'password' &&
         (hidePass ? (
-          <span className={s.watchPassButton} onClick={toggleWatchPassword}>
+          //TODO should wrap these icons into button
+          <span
+            className={`${s.watchPassButton} ${rest.disabled ? s.disabledIcon : ''}`}
+            onClick={toggleWatchPassword}
+          >
             {' '}
             <CrossedOutWatchPassIcon />{' '}
           </span>
         ) : (
-          <span className={s.watchPassButton} onClick={toggleWatchPassword}>
+          <span
+            className={`${s.watchPassButton} ${rest.disabled ? s.disabledIcon : ''}`}
+            onClick={toggleWatchPassword}
+          >
             {' '}
             <WatchPassIcon />{' '}
           </span>
@@ -73,16 +81,20 @@ export const CardsInput = <T extends ElementType = 'input'>(
 
       {variant === 'search' && (
         <div className={s.inputIconsContainer}>
-          <span className={s.inputSearchIcon}>
+          <span className={`${s.inputSearchIcon} ${rest.disabled ? s.disabledIcon : ''}`}>
             <SearchIcon />
           </span>
-
-          <span onClick={clearInputHandler} className={s.inputCleanFieldIcon}>
-            <CleanInputIcon />
-          </span>
+          {inputValue && (
+            <span
+              onClick={clearInputHandler}
+              className={`${s.inputCleanFieldIcon} ${rest.disabled ? s.disabledIcon : ''}`}
+            >
+              <CleanInputIcon />
+            </span>
+          )}
         </div>
       )}
-      <label className={s.label}>
+      <label className={`${s.label} ${rest.disabled ? s.disabledLabel : ''}`}>
         {rest.label}
         <Component
           onBlur={onInputValueChangeHandler}
