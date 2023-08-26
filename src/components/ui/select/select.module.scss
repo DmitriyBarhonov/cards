@@ -1,0 +1,140 @@
+.root {
+  width: 100%;
+}
+
+.trigger {
+  //шапка селекта или выбранный элемент
+  all: unset; //удаляет стили по умолчанию для себя и детей
+
+  cursor: pointer;
+
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+  height: 36px;
+  padding: 6px 12px;
+
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
+  background-color: var(--color-dark-900);
+  border: 1px solid var(--color-dark-300);
+  border-radius: 0.125rem;
+
+  &:focus-visible {
+    border: var(--color-info-700);
+  }
+
+  &[data-state='open'] {
+    border-color: var(--color-dark-100);
+    border-bottom: none;
+    border-radius: 0.125rem 0.125rem 0 0;
+  }
+
+  &.pagination {
+    gap: 2px;
+    height: 24px;
+    padding: 0 2px 0 6px;
+    font-size: var(--font-size-s);
+  }
+
+  &.error {
+    border-color: var(--color-danger-300);
+  }
+
+  &:hover {
+    background: var(--color-dark-500);
+    border: 1px solid var(--color-dark-100);
+  }
+
+  &:focus {
+    border: 1px solid var(--color-info-700);
+    outline: 1px solid var(--color-info-700);
+  }
+
+  &[data-placeholder] {
+    color: var(--color-light-100);
+  }
+
+  &[data-disabled] {
+    pointer-events: none;
+    color: var(--color-dark-300);
+  }
+}
+
+.content {
+  position: relative;
+  z-index: 500;
+
+  display: flex;
+
+  width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
+  margin-left: -10px;
+
+  background-color: var(--color-dark-900);
+  border: 1px solid var(--color-dark-100);
+  border-radius: 0 0 0.125rem 0.125rem;
+
+  &.pagination {
+    width: var(--radix-select-trigger-width);
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+
+  &.pagination {
+    display: flex;
+    width: 16px;
+    height: 16px;
+  }
+
+  [data-state='open'] > & {
+    transform: rotate(180deg);
+  }
+}
+
+.item {
+  display: flex;
+
+  padding: 6px 12px;
+
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-m);
+
+  background-color: var(--color-dark-900);
+
+  &.pagination {
+    padding-bottom: 6px;
+    font-size: var(--font-size-s);
+    line-height: var(--line-height-m);
+  }
+
+  &[data-highlighted] {
+    color: var(--color-accent-300);
+    background-color: var(--color-accent-900);
+    outline: none;
+  }
+
+  &[data-disabled] {
+    pointer-events: none;
+    color: var(--color-dark-300);
+  }
+}
+
+.label {
+  display: block;
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-m);
+  color: var(--color-dark-100);
+
+  &.disabled {
+    color: var(--color-dark-300);
+  }
+}
