@@ -1,0 +1,127 @@
+@mixin input {
+  all: unset;
+  cursor: text;
+  padding: 6px 15px;
+  height: 36px;
+  border-radius: 2px;
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-l);
+  border: 1px solid var(--color-dark-300);
+  color: var(--dark-100);
+  transition: all 0.5s ease;
+
+  &:active {
+    border: 1px solid var(--color-light-100);
+    outline: none;
+    color: var(--color-light-100);
+  }
+
+  &:hover {
+    border: 1px solid var(--color-dark-100);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-info-700);
+  }
+
+  &:disabled {
+    border: 1px solid var(--color-dark-300);
+  }
+
+  &.errorInput {
+    border: 1px solid var(--color-danger-300);
+    color: var(--color-danger-300);
+  }
+}
+
+@mixin disabledIcon {
+  color: var(--color-dark-300);
+}
+
+@mixin inputIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-light-100);
+  position: absolute;
+  cursor: pointer;
+  background: transparent;
+
+  &.disabledIcon {
+    color: var(--color-dark-300);
+  }
+}
+
+.inputContainer {
+  width: 284px;
+  height: 60px;
+  flex-shrink: 0;
+  position: relative;
+
+  .watchPassButton {
+    @include inputIcon;
+    top: 36px;
+    right: 12px;
+
+    &:focus-visible {
+      outline: var(--outline-focus);
+    }
+  }
+
+  .label {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-size: var(--font-size-m);
+
+    &.disabledLabel {
+      color: var(--color-dark-300);
+    }
+
+    .standard {
+      @include input;
+    }
+
+    .password {
+      @include input;
+      padding-right: 38px;
+    }
+
+    .search {
+      @include input;
+      padding: 6px 40px;
+    }
+
+    .error {
+      color: var(--color-danger-300);
+      font-size: var(--font-size-xs);
+    }
+  }
+
+  .inputIconsContainer {
+    position: relative;
+
+    .inputSearchIcon {
+      @include inputIcon;
+      color: var(--color-dark-100);
+      top: 12px;
+      left: 12px;
+
+      &:active {
+        color: var(--color-light-100);
+      }
+    }
+
+    .inputCleanFieldIcon {
+      @include inputIcon;
+      top: 12px;
+      right: 12px;
+    }
+  }
+}
+
+
+.fullWidth {
+  width: 100%;
+}
+
