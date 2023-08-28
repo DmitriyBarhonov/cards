@@ -2,6 +2,8 @@ import { FC } from 'react'
 
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
 
+import { Typography } from '../typography'
+
 import s from './checkbox.module.scss'
 
 import { Check } from '@/assets/icon/check'
@@ -16,19 +18,33 @@ export type CheckboxType = {
   id?: string
 }
 
-export const Checkbox: FC<CheckboxType> = props => {
+export const Checkbox: FC<CheckboxType> = ({
+  className,
+  checked,
+  onChange,
+  disabled,
+  required,
+  label,
+  id,
+}) => {
   return (
-    <div className={s.wrapperButton}>
-      <CheckboxRadix.Root
-        disabled={props.disabled}
-        className={s.CheckboxRoot}
-        onCheckedChange={props.onChange}
-      >
-        <CheckboxRadix.Indicator className={s.CheckboxIndicator}>
-          <Check />
-        </CheckboxRadix.Indicator>
-      </CheckboxRadix.Root>
-      {props.label || 'lable'}
+    <div>
+      <Typography variant="body2" as="label" className={disabled ? s.labelDisabled : s.label}>
+        <CheckboxRadix.Root
+          disabled={disabled}
+          className={disabled ? s.disabledCheckboxRoot : s.checkboxRoot}
+          onCheckedChange={onChange}
+        >
+          <CheckboxRadix.Indicator>
+            <Check
+              arrowColor={disabled ? '#DCDAE0' : 'black'}
+              bgColor={disabled ? '#808080' : 'white'}
+              className={s.icon}
+            />
+          </CheckboxRadix.Indicator>
+        </CheckboxRadix.Root>
+        <div> {label}</div>
+      </Typography>
     </div>
   )
 }
