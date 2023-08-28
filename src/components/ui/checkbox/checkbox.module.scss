@@ -1,18 +1,65 @@
-.CheckboxRoot {
-  width: 24px;
-  height: 24px;
-  background-color: #000000;
-  border: 2px solid #ffffff;
+@mixin checkbox-styling($background-color, $border-color) {
+  width: 20px;
+  height: 20px;
+  background-color: $background-color;
+  border: 2px solid $border-color;
   border-radius: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 8px;
+  margin-right: 10px;
+  position: relative;
+  z-index: 10;
 }
-.CheckboxIndicator {
-  border: #5500ff;
+@mixin label-styling($color) {
+  display: flex;
+  align-items: center;
+  color: $color;
+  cursor: pointer;
+}
+@mixin pseudo-element-styling($background-color) {
+  content: '';
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: $background-color;
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
 }
 
-.wrapperButton {
+.checkboxRoot {
+  @include checkbox-styling(#00000000, #ffffff);
+  &:hover {
+    border-color: #808080;
+
+    &::before {
+      @include pseudo-element-styling(#808080);
+    }
+  }
+  &:focus {
+    outline: none;
+    &::before {
+      @include pseudo-element-styling(#c3c1c7);
+    }
+  }
+}
+
+.disabledCheckboxRoot {
+  @include checkbox-styling(#dcdae000, #808080);
+}
+
+.label {
+  @include label-styling(var(--light-100, #fff));
+}
+.labelDisabled {
+  @include label-styling(var(--dark-100, #808080));
+}
+.icon {
+  position: relative;
+  z-index: 11;
   display: flex;
 }
