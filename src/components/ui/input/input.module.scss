@@ -57,6 +57,7 @@
   height: 60px;
   flex-shrink: 0;
   position: relative;
+  margin: 20px 15px;
 
   .watchPassButton {
     @include inputIcon;

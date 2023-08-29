@@ -1,4 +1,6 @@
-import { ChangeEvent, ComponentPropsWithoutRef, ElementType, ReactNode, useState } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, ElementType, useState } from 'react'
+
+import { clsx } from 'clsx'
 
 import s from './input.module.scss'
 
@@ -9,18 +11,16 @@ import { CrossedOutWatchPassIcon } from '@/components/assets/icons/WatchPassCros
 
 export type CardsInputProps<T extends ElementType> = {
   as?: T
+  label?: string
   required?: boolean
   errorMessage?: string
   value: string
   onInputValueChange?: (value: string) => void
-  children: ReactNode
   variant?: 'standard' | 'password' | 'search'
   fullWidth?: boolean
 } & ComponentPropsWithoutRef<T>
 
-export const CardsInput = <T extends ElementType = 'input'>(
-  props: CardsInputProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof CardsInputProps<T>>
-) => {
+export const CardsInput = (props: CardsInputProps<any>) => {
   const {
     required,
     value,
@@ -33,7 +33,6 @@ export const CardsInput = <T extends ElementType = 'input'>(
   } = props
   const [hidePass, setHidePass] = useState(true)
   const [inputValue, setInputValue] = useState('')
-  const [error, setError] = useState('')
 
   const toggleWatchPassword = () => {
     setHidePass(!hidePass)
@@ -44,72 +43,58 @@ export const CardsInput = <T extends ElementType = 'input'>(
 
   const onInputValueChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value)
-    if (inputValue.trim() === '') {
-      setError('The field is required')
-    } else if (inputValue !== '') {
-      setError('')
-    }
-    //just a check that we have the function
-    // in case we'll have a changeHandler fnc for the input
-    if (onInputValueChange) {
-      onInputValueChange(e.currentTarget.value.toString())
-    }
+    onInputValueChange?.(e.currentTarget.value)
+  }
+  const inputType = variant === 'password' && hidePass ? 'password' : 'text'
+
+  const classNames = {
+    inputContainer: clsx(s.inputContainer),
+    watchPassButton: clsx(s.watchPassButton, rest.disabled && s.disabledIcon),
+    searchIconsContainer: clsx(s.inputIconsContainer),
+    searchIcon: clsx(s.inputSearchIcon, rest.disabled && s.disabledIcon),
+    clearFieldIcon: clsx(s.inputCleanFieldIcon, rest.disabled && s.disabledIcon),
+    inputLabel: clsx(s.label, rest.disabled && s.disabledLabel),
+    error: clsx(s.error),
+    inputField: clsx(
+      s[variant],
+      rest.errorMessage && s.errorInput,
+      fullWidth && s.fullWidth,
+      className
+    ),
   }
 
   return (
-    <div className={s.inputContainer}>
-      {/*show and hide password logic
-       //TODO should apply Typography for error and label*/}
-      {variant === 'password' &&
-        (hidePass ? (
-          //TODO should wrap these icons into button
-          <span
-            className={`${s.watchPassButton} ${rest.disabled ? s.disabledIcon : ''}`}
-            onClick={toggleWatchPassword}
-          >
-            {' '}
-            <CrossedOutWatchPassIcon />{' '}
-          </span>
-        ) : (
-          <span
-            className={`${s.watchPassButton} ${rest.disabled ? s.disabledIcon : ''}`}
-            onClick={toggleWatchPassword}
-          >
-            {' '}
-            <WatchPassIcon />{' '}
-          </span>
-        ))}
+    <div className={classNames.inputContainer}>
+      {variant === 'password' && (
+        <span className={classNames.watchPassButton} onClick={toggleWatchPassword}>
+          {hidePass ? <WatchPassIcon /> : <CrossedOutWatchPassIcon />}
+        </span>
+      )}
 
       {variant === 'search' && (
-        <div className={s.inputIconsContainer}>
-          <span className={`${s.inputSearchIcon} ${rest.disabled ? s.disabledIcon : ''}`}>
+        <div className={classNames.searchIconsContainer}>
+          <span className={classNames.searchIcon}>
             <SearchIcon />
           </span>
           {inputValue && (
-            <span
-              onClick={clearInputHandler}
-              className={`${s.inputCleanFieldIcon} ${rest.disabled ? s.disabledIcon : ''}`}
-            >
+            <span onClick={clearInputHandler} className={classNames.clearFieldIcon}>
               <CleanInputIcon />
             </span>
           )}
         </div>
       )}
-      <label className={`${s.label} ${rest.disabled ? s.disabledLabel : ''}`}>
+      <label className={classNames.inputLabel}>
         {rest.label}
         <Component
           onBlur={onInputValueChangeHandler}
           required={required}
           value={inputValue}
           onChange={onInputValueChangeHandler}
-          type={variant === 'password' && hidePass ? 'password' : 'text'}
-          className={`${s[variant]} ${rest.errorMessage ? s.errorInput : ''} ${
-            fullWidth ? s.fullWidth : ''
-          } ${className}`}
+          type={inputType}
+          className={classNames.inputField}
           {...rest}
         />
-        {required && error && <p className={s.error}>{error}</p>}
-        {rest.errorMessage && <p className={s.error}>{rest.errorMessage}</p>}
+        {rest.errorMessage && <p className={classNames.error}>{rest.errorMessage}</p>}
       </label>
     </div>
   )
