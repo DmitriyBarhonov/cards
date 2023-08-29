@@ -45,7 +45,9 @@ export const CardsInput = (props: CardsInputProps<any>) => {
     setInputValue(e.currentTarget.value)
     onInputValueChange?.(e.currentTarget.value)
   }
-  const inputType = variant === 'password' && hidePass ? 'password' : 'text'
+  const isInputSearch = variant === 'search'
+  const isInputPass = variant === 'password'
+  const inputType = isInputPass && hidePass ? 'password' : 'text'
 
   const classNames = {
     inputContainer: clsx(s.inputContainer),
@@ -65,13 +67,13 @@ export const CardsInput = (props: CardsInputProps<any>) => {
 
   return (
     <div className={classNames.inputContainer}>
-      {variant === 'password' && (
+      {isInputPass && (
         <span className={classNames.watchPassButton} onClick={toggleWatchPassword}>
           {hidePass ? <WatchPassIcon /> : <CrossedOutWatchPassIcon />}
         </span>
       )}
 
-      {variant === 'search' && (
+      {isInputSearch && (
         <div className={classNames.searchIconsContainer}>
           <span className={classNames.searchIcon}>
             <SearchIcon />
@@ -83,6 +85,7 @@ export const CardsInput = (props: CardsInputProps<any>) => {
           )}
         </div>
       )}
+
       <label className={classNames.inputLabel}>
         {rest.label}
         <Component
