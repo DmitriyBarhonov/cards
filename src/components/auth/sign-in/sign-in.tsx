@@ -18,21 +18,24 @@ type FormValues = {
   password: string
 }
 export const SignIn = (props: SignInProps) => {
-  const classNames = {
-    signInContainer: clsx(s.signInContainer),
-    mainTitle: clsx(s.signInMainTitle),
-    watchPassButton: clsx(s.watchPassButton),
-  }
-
   const { register, handleSubmit } = useForm<FormValues>()
 
   const onSubmit = (data: FormValues) => {
     console.log(data)
   }
 
+  const classNames = {
+    signInContainer: clsx(s.signInContainer),
+    mainTitle: clsx(s.signInMainTitle),
+    watchPassButton: clsx(s.watchPassButton),
+  }
+
   return (
     <Card className={classNames.signInContainer}>
-      <Typography variant={'large'}> Sign In</Typography>
+      <Typography className={classNames.mainTitle} variant={'large'}>
+        {' '}
+        Sign In
+      </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardsInput variant={'standard'} value={''} {...register('email')} label={'Email'} />
         <CardsInput variant={'password'} value={''} {...register('password')} label={'Password'} />
