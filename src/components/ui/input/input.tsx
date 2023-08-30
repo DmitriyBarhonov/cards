@@ -14,7 +14,7 @@ export type CardsInputProps<T extends ElementType> = {
   label?: string
   required?: boolean
   errorMessage?: string
-  value: string
+  value?: string
   onInputValueChange?: (value: string) => void
   variant?: 'standard' | 'password' | 'search'
   fullWidth?: boolean
@@ -46,6 +46,7 @@ export const CardsInput = (props: CardsInputProps<any>) => {
     onInputValueChange?.(e.currentTarget.value)
   }
   const isInputSearch = variant === 'search'
+  const valueForInput = variant === 'search' ? inputValue : null
   const isInputPass = variant === 'password'
   const inputType = isInputPass && hidePass ? 'password' : 'text'
 
@@ -91,7 +92,7 @@ export const CardsInput = (props: CardsInputProps<any>) => {
         <Component
           onBlur={onInputValueChangeHandler}
           required={required}
-          value={inputValue}
+          value={valueForInput}
           onChange={onInputValueChangeHandler}
           type={inputType}
           className={classNames.inputField}
