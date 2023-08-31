@@ -6,7 +6,7 @@ import s from './sign-up.module.scss'
 import { Button, Card, Typography } from '@/components/ui'
 import { CardsInput } from '@/components/ui/input'
 
-export type SignInProps = {
+export type SignUpProps = {
   value?: string
   onInputValueChange?: (value: string) => void
 }
@@ -15,7 +15,7 @@ type FormValues = {
   email: string
   password: string
 }
-export const SignUp = (props: SignInProps) => {
+export const SignUp = (props: SignUpProps) => {
   const { register, handleSubmit } = useForm<FormValues>()
 
   const onSubmit = (data: FormValues) => {
