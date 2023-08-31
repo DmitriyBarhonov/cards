@@ -51,7 +51,7 @@ export const CardsInput = (props: CardsInputProps<any>) => {
   const inputType = isInputPass && hidePass ? 'password' : 'text'
 
   const classNames = {
-    inputContainer: clsx(s.inputContainer),
+    inputContainer: clsx(s.inputContainer, className, fullWidth && s.fullWidth),
     watchPassButton: clsx(s.watchPassButton, rest.disabled && s.disabledIcon),
     searchIconsContainer: clsx(s.inputIconsContainer),
     searchIcon: clsx(s.inputSearchIcon, rest.disabled && s.disabledIcon),
@@ -60,9 +60,9 @@ export const CardsInput = (props: CardsInputProps<any>) => {
     error: clsx(s.error),
     inputField: clsx(
       s[variant],
-      rest.errorMessage && s.errorInput,
-      fullWidth && s.fullWidth,
-      className
+      rest.errorMessage && s.errorInput
+      //fullWidth && s.fullWidth,
+      //className,
     ),
   }
 
