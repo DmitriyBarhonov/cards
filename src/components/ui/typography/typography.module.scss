@@ -1,6 +1,6 @@
 @mixin typography {
-  color: var(--color-dark-900);
-  text-align: left;
+  color: inherit;
+  text-align: inherit;
   letter-spacing: 0;
 }
 
