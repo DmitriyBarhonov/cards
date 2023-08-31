@@ -51,13 +51,16 @@
     color: var(--color-dark-300);
   }
 }
+.fullWidth {
+  width: 100%;
+}
 
 .inputContainer {
-  width: 284px;
+  min-width: 284px;
   height: 60px;
   flex-shrink: 0;
   position: relative;
-  margin: 20px 15px;
+  margin: 20px 0;
 
   .watchPassButton {
     @include inputIcon;
@@ -97,6 +100,7 @@
       color: var(--color-danger-300);
       font-size: var(--font-size-xs);
     }
+
   }
 
   .inputIconsContainer {
@@ -122,7 +126,5 @@
 }
 
 
-.fullWidth {
-  width: 100%;
-}
+
 

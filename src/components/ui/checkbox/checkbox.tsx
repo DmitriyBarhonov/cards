@@ -28,7 +28,7 @@ export const Checkbox: FC<CheckboxType> = ({
   id,
 }) => {
   return (
-    <div>
+    <div className={className}>
       <Typography variant="body2" as="label" className={disabled ? s.labelDisabled : s.label}>
         <CheckboxRadix.Root
           disabled={disabled}

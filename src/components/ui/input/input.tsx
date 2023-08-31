@@ -14,7 +14,7 @@ export type CardsInputProps<T extends ElementType> = {
   label?: string
   required?: boolean
   errorMessage?: string
-  value: string
+  value?: string
   onInputValueChange?: (value: string) => void
   variant?: 'standard' | 'password' | 'search'
   fullWidth?: boolean
@@ -46,11 +46,12 @@ export const CardsInput = (props: CardsInputProps<any>) => {
     onInputValueChange?.(e.currentTarget.value)
   }
   const isInputSearch = variant === 'search'
+  const valueForInput = variant === 'search' ? inputValue : null
   const isInputPass = variant === 'password'
   const inputType = isInputPass && hidePass ? 'password' : 'text'
 
   const classNames = {
-    inputContainer: clsx(s.inputContainer),
+    inputContainer: clsx(s.inputContainer, className, fullWidth && s.fullWidth),
     watchPassButton: clsx(s.watchPassButton, rest.disabled && s.disabledIcon),
     searchIconsContainer: clsx(s.inputIconsContainer),
     searchIcon: clsx(s.inputSearchIcon, rest.disabled && s.disabledIcon),
@@ -59,9 +60,9 @@ export const CardsInput = (props: CardsInputProps<any>) => {
     error: clsx(s.error),
     inputField: clsx(
       s[variant],
-      rest.errorMessage && s.errorInput,
-      fullWidth && s.fullWidth,
-      className
+      rest.errorMessage && s.errorInput
+      //fullWidth && s.fullWidth,
+      //className,
     ),
   }
 
@@ -91,7 +92,7 @@ export const CardsInput = (props: CardsInputProps<any>) => {
         <Component
           onBlur={onInputValueChangeHandler}
           required={required}
-          value={inputValue}
+          value={valueForInput}
           onChange={onInputValueChangeHandler}
           type={inputType}
           className={classNames.inputField}
