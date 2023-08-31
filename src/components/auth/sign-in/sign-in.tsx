@@ -24,13 +24,16 @@ export const SignIn = (props: SignInProps) => {
   }
 
   const classNames = {
-    signInContainer: clsx(s.signInContainer),
-    signInCard: clsx(s.signInFormContainer),
+    signInContainer: clsx(s.signInFormContainer),
+    signInCard: clsx(s.signInCardContainer),
+    form: clsx(s.signInForm),
     mainTitle: clsx(s.signInMainTitle),
-    form: clsx(s.signInFormContainer),
-    rememberMe: clsx(s.rememberMeTitle),
+    input: clsx(s.signInInput),
+    rememberMe: clsx(s.rememberMe),
     forgotPass: clsx(s.forgotPasswordLink),
     submit: clsx(s.submitButton),
+    haveAcc: clsx(s.dontHaveAcc),
+    signUp: clsx(s.signUpLink),
   }
 
   return (
@@ -41,17 +44,36 @@ export const SignIn = (props: SignInProps) => {
             {' '}
             Sign In
           </Typography>
-          <CardsInput variant={'standard'} {...register('email')} label={'Email'} />
-          <CardsInput variant={'password'} {...register('password')} label={'Password'} />
-          <Checkbox label={'Remember me'} />
+          <CardsInput
+            className={classNames.input}
+            variant={'standard'}
+            {...register('email')}
+            label={'Email'}
+          />
+          <CardsInput
+            className={classNames.input}
+            variant={'password'}
+            {...register('password')}
+            label={'Password'}
+          />
+          <Checkbox className={classNames.rememberMe} label={'Remember me'} />
         </form>
         <Typography as={'a'} href={''} className={classNames.forgotPass} variant={'link1'}>
           {' '}
           Forgot Password?
         </Typography>
-        <Button className={classNames.forgotPass} type="submit">
-          Submit
+        <Button fullWidth={false} className={classNames.submit} type="submit">
+          Sign in
         </Button>
+        <Typography className={classNames.haveAcc} variant={'body2'}>
+          {' '}
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
+          Don't have an account?
+        </Typography>
+        <Typography as={'a'} href={''} className={classNames.signUp} variant={'h3'}>
+          {' '}
+          Sign Up
+        </Typography>
       </Card>
     </div>
   )
