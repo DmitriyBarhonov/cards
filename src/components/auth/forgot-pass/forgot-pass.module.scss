@@ -1,0 +1,81 @@
+
+.formContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 17vh;
+  width: 100%;
+  //fill: var(--dark-700, #171717);
+  //stroke-width: 1px;
+  //stroke: #313131;
+  //filter: drop-shadow(-1px -1px 2px rgba(0, 0, 0, 0.10)) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.10));
+
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 420px;
+    height: 456px;
+    padding: 0 0;
+
+    .formBody {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: inherit;
+      width: 100%;
+      box-sizing: border-box;
+
+      .formTitle {
+        color: var(--color-light-100);
+        display: flex;
+        justify-content: center;
+        margin: 38px 0 6px;
+      }
+
+      .formInput {
+        width: 348px;
+        margin-top: 12px;
+      }
+
+      .secondaryText{
+        //align-self: flex-start;
+        color: var(--color-light-900);
+        margin: 12px 0 2px;
+        width: 348px;
+      }
+    }
+
+    .forgotPasswordLink {
+      align-self: flex-end;
+      margin-right: 36px;
+      color: var(--color-light-100);
+      text-decoration: none;
+      text-align: right;
+    }
+
+    .submitButton {
+      width: 292px;
+      text-align: center;
+      margin-top: 56px;
+    }
+    .dontHaveAcc{
+      color: var(--color-light-900);
+      margin: 12px 0 2px;
+    }
+    .signLink{
+      color: var(--color-accent-500);
+
+      margin-bottom: 20px;
+    }
+
+  }
+
+
+}
+
+
+
+
