@@ -44,6 +44,7 @@ export const CheckEmail = (props: CheckEmailProps) => {
             {' '}
             Check Email
           </Typography>
+          <CheckEmail />
           <CardsInput
             className={classNames.input}
             variant={'standard'}
