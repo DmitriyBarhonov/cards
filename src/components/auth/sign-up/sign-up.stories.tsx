@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { SignUp } from './index.ts'
 
 const meta = {
-  title: 'Components/SignUp',
+  title: 'Components/Auth/SignUp',
   component: SignUp,
 } satisfies Meta<typeof SignUp>
 
