@@ -42,6 +42,18 @@
       width: 292px;
       text-align: center;
       margin: 22px 0 22px;
+
+      //применил здесь доп стили т.к. с модуля самой кнопки
+      //hover & active почемуто не срабатыва для type='link'
+
+      &:hover {
+        background-color: var(--color-accent-300);
+      }
+
+      &:active {
+        background-color: var(--color-accent-700);
+      }
+
     }
   }
 }
