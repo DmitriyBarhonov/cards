@@ -1,0 +1,71 @@
+@mixin commonAuthContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 17vh;
+  width: 100%;
+}
+
+@mixin cardContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 0 0;
+  border: 1px solid #313131;
+  transition: all 0.5s ease;
+  border-radius: 5px;
+  width: 420px;
+
+  &:hover {
+    border: 1px solid var(--color-dark-100);
+  }
+}
+
+
+@mixin formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@mixin authMainTitle {
+  color: var(--color-light-100);
+  display: flex;
+  justify-content: center;
+}
+
+@mixin authInput {
+  width: 348px;
+  margin-top: 12px;
+}
+
+@mixin authSecondaryText {
+  color: var(--color-light-900);
+  width: 348px;
+  opacity: 0.5;
+}
+
+@mixin authSubmitButton {
+  width: 292px;
+  text-align: center;
+}
+
+@mixin authBottomText {
+  color: var(--color-light-900);
+}
+
+@mixin authMainBottomLink {
+  color: var(--color-accent-500);
+
+  &:hover {
+    color: var(--color-accent-300);
+  }
+  &:active {
+    color: var(--color-accent-700);
+  }
+}
+

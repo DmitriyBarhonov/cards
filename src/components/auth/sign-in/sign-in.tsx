@@ -16,7 +16,7 @@ type FormValues = {
   email: string
   password: string
 }
-export const SignIn = (props: SignInProps) => {
+export const SignIn = () => {
   const { register, handleSubmit } = useForm<FormValues>()
 
   const onSubmit = (data: FormValues) => {
@@ -24,21 +24,21 @@ export const SignIn = (props: SignInProps) => {
   }
 
   const classNames = {
-    signInContainer: clsx(s.signInFormContainer),
-    signInCard: clsx(s.signInCardContainer),
+    formContainer: clsx(s.formContainer),
+    card: clsx(s.card),
     form: clsx(s.signInForm),
-    mainTitle: clsx(s.signInMainTitle),
+    mainTitle: clsx(s.mainTitle),
     input: clsx(s.signInInput),
     rememberMe: clsx(s.rememberMe),
     forgotPass: clsx(s.forgotPasswordLink),
     submit: clsx(s.submitButton),
-    haveAcc: clsx(s.dontHaveAcc),
+    question: clsx(s.bottomText),
     signUp: clsx(s.signUpLink),
   }
 
   return (
-    <div className={classNames.signInContainer}>
-      <Card className={classNames.signInCard}>
+    <div className={classNames.formContainer}>
+      <Card className={classNames.card}>
         <form className={classNames.form} onSubmit={handleSubmit(onSubmit)}>
           <Typography className={classNames.mainTitle} variant={'large'}>
             {' '}
@@ -65,7 +65,7 @@ export const SignIn = (props: SignInProps) => {
         <Button fullWidth={false} className={classNames.submit} type="submit">
           Sign in
         </Button>
-        <Typography className={classNames.haveAcc} variant={'body2'}>
+        <Typography className={classNames.question} variant={'body2'}>
           {' '}
           {/* eslint-disable-next-line react/no-unescaped-entities */}
           Don't have an account?

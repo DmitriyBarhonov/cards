@@ -5,18 +5,19 @@
 
   .card {
     @include mixins.cardContainer;
-    height: 456px;
+    height: 384px;
 
     .formBody {
       @include mixins.formContainer;
 
       .formTitle {
         @include mixins.authMainTitle;
-        margin: 38px 0 28px;
+        margin: 12px 0 28px;
       }
 
       .formInput {
         @include mixins.authInput;
+        margin-top: 12px;
       }
 
       .secondaryText {
@@ -27,18 +28,7 @@
 
     .submitButton {
       @include mixins.authSubmitButton;
-      margin-top: 56px;
-    }
-
-    .bottomText {
-      @include mixins.authBottomText;
-      margin: 12px 0 2px;
-    }
-
-    .signLink {
-      @include mixins.authMainBottomLink;
-      margin-bottom: 20px;
-
+      margin: 12px 0 24px;
     }
   }
 }

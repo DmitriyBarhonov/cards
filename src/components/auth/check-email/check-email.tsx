@@ -14,8 +14,8 @@ export const CheckEmail = () => {
   const userEmail = ''
 
   const classNames = {
-    signInContainer: clsx(s.signInFormContainer),
-    signInCard: clsx(s.signInCardContainer),
+    formContainer: clsx(s.formContainer),
+    card: clsx(s.card),
     mainTitle: clsx(s.signInMainTitle),
     icon: clsx(s.mainIcon),
     info: clsx(s.secondaryText),
@@ -23,8 +23,8 @@ export const CheckEmail = () => {
   }
 
   return (
-    <div className={classNames.signInContainer}>
-      <Card className={classNames.signInCard}>
+    <div className={classNames.formContainer}>
+      <Card className={classNames.card}>
         <Typography className={classNames.mainTitle} variant={'large'}>
           {' '}
           Check Email
