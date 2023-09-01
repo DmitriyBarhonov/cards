@@ -8,7 +8,7 @@ import s from './checkbox.module.scss'
 
 import { Check } from '@/assets/icons/check'
 
-export type CheckboxType = {
+export type CheckboxProps = {
   className?: string
   checked?: boolean
   onChange?: (checked: boolean) => void
@@ -18,7 +18,7 @@ export type CheckboxType = {
   id?: string
 }
 
-export const Checkbox: FC<CheckboxType> = ({
+export const Checkbox: FC<CheckboxProps> = ({
   className,
   checked,
   onChange,
