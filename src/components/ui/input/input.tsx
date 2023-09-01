@@ -4,10 +4,10 @@ import { clsx } from 'clsx'
 
 import s from './input.module.scss'
 
-import { CleanInputIcon } from '@/components/assets/icons/CleanInput.tsx'
-import { SearchIcon } from '@/components/assets/icons/Search.tsx'
-import { WatchPassIcon } from '@/components/assets/icons/WatchPass.tsx'
-import { CrossedOutWatchPassIcon } from '@/components/assets/icons/WatchPassCrossedOut.tsx'
+import { CleanInputIcon } from '@/assets/icons/CleanInput.tsx'
+import { SearchIcon } from '@/assets/icons/Search.tsx'
+import { WatchPassIcon } from '@/assets/icons/WatchPass.tsx'
+import { CrossedOutWatchPassIcon } from '@/assets/icons/WatchPassCrossedOut.tsx'
 
 export type CardsInputProps<T extends ElementType> = {
   as?: T
