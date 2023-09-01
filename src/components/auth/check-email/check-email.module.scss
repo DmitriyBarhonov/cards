@@ -17,63 +17,35 @@
     justify-content: space-evenly;
     align-items: center;
     width: 420px;
-    height: 548px;
-    padding: 0 0;
+    height: 408px;
 
-    .signInForm {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: inherit;
-      width: 100%;
-      box-sizing: border-box;
-
-      .signInMainTitle {
-        color: var(--color-light-100);
-        display: flex;
-        justify-content: center;
-        margin: 38px 0 6px;
-      }
-
-      .signInInput {
-        width: 348px;
-        margin-top: 12px;
-      }
-
-      .rememberMe{
-        align-self: flex-start;
-        margin-top: 12px;
-        margin-left: 36px;
-      }
-    }
-
-    .forgotPasswordLink {
-      align-self: flex-end;
-      margin-right: 36px;
+    .signInMainTitle {
       color: var(--color-light-100);
-      text-decoration: none;
-      text-align: right;
+      display: flex;
+      justify-content: center;
+      margin: 0 0 6px;
     }
 
-    .submitButton {
+    .mainIcon {
+      margin: 2px 0 2px;
+    }
+
+    .secondaryText {
+      color: var(--color-light-900);
+      margin: 8px 0 34px;
+      width: 348px;
+      text-align: center;
+      opacity: 0.5;
+    }
+
+    .button {
       width: 292px;
       text-align: center;
-      margin-top: 56px;
+      margin: 22px 0 22px;
     }
-    .dontHaveAcc{
-      color: var(--color-light-900);
-      margin: 12px 0 2px;
-    }
-    .signUpLink{
-      color: var(--color-accent-500);
-
-      margin-bottom: 20px;
-    }
-
   }
-
-
 }
+
 
 
 
