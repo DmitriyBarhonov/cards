@@ -4,10 +4,10 @@ import { clsx } from 'clsx'
 
 import s from './input.module.scss'
 
-import { CleanInputIcon } from '@/components/assets/icons/CleanInput.tsx'
-import { SearchIcon } from '@/components/assets/icons/Search.tsx'
-import { WatchPassIcon } from '@/components/assets/icons/WatchPass.tsx'
-import { CrossedOutWatchPassIcon } from '@/components/assets/icons/WatchPassCrossedOut.tsx'
+import { CleanInputIcon } from '@/assets/icons/CleanInput.tsx'
+import { SearchIcon } from '@/assets/icons/Search.tsx'
+import { WatchPassIcon } from '@/assets/icons/WatchPass.tsx'
+import { CrossedOutWatchPassIcon } from '@/assets/icons/WatchPassCrossedOut.tsx'
 
 export type CardsInputProps<T extends ElementType> = {
   as?: T
@@ -69,20 +69,20 @@ export const CardsInput = (props: CardsInputProps<any>) => {
   return (
     <div className={classNames.inputContainer}>
       {isInputPass && (
-        <span className={classNames.watchPassButton} onClick={toggleWatchPassword}>
+        <button
+          disabled={rest.disabled}
+          className={classNames.watchPassButton}
+          onClick={toggleWatchPassword}
+        >
           {hidePass ? <WatchPassIcon /> : <CrossedOutWatchPassIcon />}
-        </span>
+        </button>
       )}
 
       {isInputSearch && (
         <div className={classNames.searchIconsContainer}>
-          <span className={classNames.searchIcon}>
-            <SearchIcon />
-          </span>
+          <SearchIcon className={classNames.searchIcon} />
           {inputValue && (
-            <span onClick={clearInputHandler} className={classNames.clearFieldIcon}>
-              <CleanInputIcon />
-            </span>
+            <CleanInputIcon onClick={clearInputHandler} className={classNames.clearFieldIcon} />
           )}
         </div>
       )}

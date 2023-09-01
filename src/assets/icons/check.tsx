@@ -84,7 +84,7 @@ export const Check = (props: PropsType) => {
 //   color: var(--light-100, #fff);
 //   cursor: pointer;
 // }
-// .icon {
+// .icons {
 //   position: relative;
 //   z-index: 10;
 //   display: flex;

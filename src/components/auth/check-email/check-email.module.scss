@@ -1,0 +1,64 @@
+
+.signInFormContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 17vh;
+  width: 100%;
+  //fill: var(--dark-700, #171717);
+  //stroke-width: 1px;
+  //stroke: #313131;
+  //filter: drop-shadow(-1px -1px 2px rgba(0, 0, 0, 0.10)) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.10));
+
+
+  .signInCardContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 420px;
+    height: 408px;
+
+    .signInMainTitle {
+      color: var(--color-light-100);
+      display: flex;
+      justify-content: center;
+      margin: 0 0 6px;
+    }
+
+    .mainIcon {
+      margin: 2px 0 2px;
+    }
+
+    .secondaryText {
+      color: var(--color-light-900);
+      margin: 8px 0 34px;
+      width: 348px;
+      text-align: center;
+      opacity: 0.5;
+    }
+
+    .button {
+      width: 292px;
+      text-align: center;
+      margin: 22px 0 22px;
+
+      //применил здесь доп стили т.к. с модуля самой кнопки
+      //hover & active почемуто не срабатыва для type='link'
+
+      &:hover {
+        background-color: var(--color-accent-300);
+      }
+
+      &:active {
+        background-color: var(--color-accent-700);
+      }
+
+    }
+  }
+}
+
+
+
+
+
