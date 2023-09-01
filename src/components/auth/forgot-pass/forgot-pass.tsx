@@ -1,12 +1,12 @@
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
 
-import s from './sign-up.module.scss'
+import s from './forgot-pass.module.scss'
 
 import { Button, Card, Typography } from '@/components/ui'
 import { CardsInput } from '@/components/ui/input'
 
-export type SignUpProps = {
+export type ForgotPassProps = {
   value?: string
   onInputValueChange?: (value: string) => void
 }
@@ -15,7 +15,7 @@ type FormValues = {
   email: string
   password: string
 }
-export const SignUp = (props: SignUpProps) => {
+export const ForgotPass = (props: ForgotPassProps) => {
   const { register, handleSubmit } = useForm<FormValues>()
 
   const onSubmit = (data: FormValues) => {
@@ -29,6 +29,7 @@ export const SignUp = (props: SignUpProps) => {
     mainTitle: clsx(s.formTitle),
     input: clsx(s.formInput),
     submit: clsx(s.submitButton),
+    info: clsx(s.secondaryText),
     haveAcc: clsx(s.dontHaveAcc),
     signIn: clsx(s.signLink),
   }
@@ -39,7 +40,7 @@ export const SignUp = (props: SignUpProps) => {
         <form className={classNames.form} onSubmit={handleSubmit(onSubmit)}>
           <Typography className={classNames.mainTitle} variant={'large'}>
             {' '}
-            Sign Up
+            Forgot your password?
           </Typography>
           <CardsInput
             className={classNames.input}
@@ -47,29 +48,22 @@ export const SignUp = (props: SignUpProps) => {
             {...register('email')}
             label={'Email'}
           />
-          <CardsInput
-            className={classNames.input}
-            variant={'password'}
-            {...register('password')}
-            label={'Password'}
-          />
-          <CardsInput
-            className={classNames.input}
-            variant={'password'}
-            {...register('password')}
-            label={'Confirm Password'}
-          />
+
+          <Typography className={classNames.info} variant={'body2'}>
+            {' '}
+            Enter your email address and we will send you further instructions
+          </Typography>
         </form>
         <Button className={classNames.submit} type="submit">
-          Sign Up
+          Send Instructions
         </Button>
         <Typography className={classNames.haveAcc} variant={'body2'}>
           {' '}
-          Already have an account?
+          Did you remember your password?
         </Typography>
         <Typography as={'a'} href={''} className={classNames.signIn} variant={'h3'}>
           {' '}
-          Sign In
+          Try logging in
         </Typography>
       </Card>
     </div>
