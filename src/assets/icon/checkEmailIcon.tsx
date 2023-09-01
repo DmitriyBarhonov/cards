@@ -1,4 +1,6 @@
-export const CheckEmailIcon = props => (
+import { memo, SVGProps } from 'react'
+
+export const CheckEmailIcon = memo((props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={96} height={96} fill="none" {...props}>
     <path
       fill="#8C61FF"
@@ -59,4 +61,4 @@ export const CheckEmailIcon = props => (
       d="M44.579 77.14a.668.668 0 0 1-.668-.668v-3.559a.668.668 0 0 1 1.335 0v3.56a.667.667 0 0 1-.667.666Z"
     />
   </svg>
-)
+))
