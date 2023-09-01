@@ -1,5 +1,5 @@
 import { clsx } from 'clsx'
-import { useForm } from 'react-hook-form'
+import { useController, useForm } from 'react-hook-form'
 
 import s from './sign-in.module.scss'
 
@@ -15,13 +15,22 @@ export type SignInProps = {
 type FormValues = {
   email: string
   password: string
+  rememberMe: boolean
 }
 export const SignIn = () => {
-  const { register, handleSubmit } = useForm<FormValues>()
+  const { register, handleSubmit, control } = useForm<FormValues>()
 
   const onSubmit = (data: FormValues) => {
     console.log(data)
   }
+
+  const {
+    field: { value, onChange },
+  } = useController({
+    name: 'rememberMe',
+    control,
+    defaultValue: false,
+  })
 
   const classNames = {
     formContainer: clsx(s.formContainer),
@@ -56,15 +65,21 @@ export const SignIn = () => {
             {...register('password')}
             label={'Password'}
           />
-          <Checkbox className={classNames.rememberMe} label={'Remember me'} />
+          <Checkbox
+            checked={value}
+            onValueChange={onChange}
+            className={classNames.rememberMe}
+            label={'Remember me'}
+          />
+
+          <Typography as={'a'} href={''} className={classNames.forgotPass} variant={'link1'}>
+            {' '}
+            Forgot Password?
+          </Typography>
+          <Button fullWidth={false} className={classNames.submit} type="submit">
+            Sign in
+          </Button>
         </form>
-        <Typography as={'a'} href={''} className={classNames.forgotPass} variant={'link1'}>
-          {' '}
-          Forgot Password?
-        </Typography>
-        <Button fullWidth={false} className={classNames.submit} type="submit">
-          Sign in
-        </Button>
         <Typography className={classNames.question} variant={'body2'}>
           {' '}
           {/* eslint-disable-next-line react/no-unescaped-entities */}

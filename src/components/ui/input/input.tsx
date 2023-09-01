@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentPropsWithoutRef, ElementType, useState } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, ElementType, forwardRef, useState } from 'react'
 
 import { clsx } from 'clsx'
 
@@ -20,7 +20,9 @@ export type CardsInputProps<T extends ElementType> = {
   fullWidth?: boolean
 } & ComponentPropsWithoutRef<T>
 
-export const CardsInput = (props: CardsInputProps<any>) => {
+// Обернул forwardRef для передачи ref
+
+export const CardsInput = forwardRef((props: CardsInputProps<any>, ref) => {
   console.log(props)
 
   const {
@@ -48,6 +50,7 @@ export const CardsInput = (props: CardsInputProps<any>) => {
     onInputValueChange?.(e.currentTarget.value)
   }
   const isInputSearch = variant === 'search'
+  // Поставил пустую строку в место null что бы React не ругался
   const valueForInput = variant === 'search' ? inputValue : null
   const isInputPass = variant === 'password'
   const inputType = isInputPass && hidePass ? 'password' : 'text'
@@ -92,6 +95,8 @@ export const CardsInput = (props: CardsInputProps<any>) => {
       <label className={classNames.inputLabel}>
         {rest.label}
         <Component
+          // добавил ref
+          ref={ref}
           onBlur={onInputValueChangeHandler}
           required={required}
           value={valueForInput}
@@ -104,4 +109,4 @@ export const CardsInput = (props: CardsInputProps<any>) => {
       </label>
     </div>
   )
-}
+})
