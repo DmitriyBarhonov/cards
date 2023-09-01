@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import s from './sign-in.module.scss'
 
 import { Button, Card, Typography } from '@/components/ui'
-import { Checkbox } from '@/components/ui/checkbox'
+import { ControlledCheckbox } from '@/components/ui/controlled'
 import { CardsInput } from '@/components/ui/input'
 
 export type SignInProps = {
@@ -15,9 +15,10 @@ export type SignInProps = {
 type FormValues = {
   email: string
   password: string
+  rememberMe: boolean
 }
 export const SignIn = () => {
-  const { register, handleSubmit } = useForm<FormValues>()
+  const { register, handleSubmit, control } = useForm<FormValues>()
 
   const onSubmit = (data: FormValues) => {
     console.log(data)
@@ -35,6 +36,12 @@ export const SignIn = () => {
     question: clsx(s.bottomText),
     signUp: clsx(s.signUpLink),
   }
+
+  // register который мы передаем в формы
+  // name: "email"
+  // onBlur: async (event) => {…}
+  // onChange: async (event) => {…}
+  // ref: (ref) => {…}
 
   return (
     <div className={classNames.formContainer}>
@@ -56,15 +63,23 @@ export const SignIn = () => {
             {...register('password')}
             label={'Password'}
           />
-          <Checkbox className={classNames.rememberMe} label={'Remember me'} />
+          <ControlledCheckbox
+            // name передаем такой же как и в типизации
+            name="rememberMe"
+            className={classNames.rememberMe}
+            label={'Remember me'}
+            // Передаем control
+            control={control}
+          />
+
+          <Typography as={'a'} href={''} className={classNames.forgotPass} variant={'link1'}>
+            {' '}
+            Forgot Password?
+          </Typography>
+          <Button fullWidth={false} className={classNames.submit} type="submit">
+            Sign in
+          </Button>
         </form>
-        <Typography as={'a'} href={''} className={classNames.forgotPass} variant={'link1'}>
-          {' '}
-          Forgot Password?
-        </Typography>
-        <Button fullWidth={false} className={classNames.submit} type="submit">
-          Sign in
-        </Button>
         <Typography className={classNames.question} variant={'body2'}>
           {' '}
           {/* eslint-disable-next-line react/no-unescaped-entities */}

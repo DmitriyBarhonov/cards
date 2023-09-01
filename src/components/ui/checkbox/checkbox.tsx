@@ -11,7 +11,7 @@ import { Check } from '@/assets/icons/check'
 export type CheckboxProps = {
   className?: string
   checked?: boolean
-  onChange?: (checked: boolean) => void
+  onValueChange?: (checked: boolean) => void
   disabled?: boolean
   required?: boolean
   label?: string
@@ -21,7 +21,7 @@ export type CheckboxProps = {
 export const Checkbox: FC<CheckboxProps> = ({
   className,
   checked,
-  onChange,
+  onValueChange,
   disabled,
   required,
   label,
@@ -33,14 +33,18 @@ export const Checkbox: FC<CheckboxProps> = ({
         <CheckboxRadix.Root
           disabled={disabled}
           className={disabled ? s.disabledCheckboxRoot : s.checkboxRoot}
-          onCheckedChange={onChange}
+          onCheckedChange={onValueChange}
+          checked={checked}
+          id={id}
         >
           <CheckboxRadix.Indicator>
-            <Check
-              arrowColor={disabled ? '#DCDAE0' : 'black'}
-              bgColor={disabled ? '#808080' : 'white'}
-              className={s.icon}
-            />
+            {checked && (
+              <Check
+                arrowColor={disabled ? '#DCDAE0' : 'black'}
+                bgColor={disabled ? '#808080' : 'white'}
+                className={s.icon}
+              />
+            )}
           </CheckboxRadix.Indicator>
         </CheckboxRadix.Root>
         <div> {label}</div>

@@ -20,7 +20,7 @@ export const ControlledCheckbox = ({
   return (
     <Checkbox
       {...{
-        onChange,
+        onValueChange: onChange,
         checked: value,
         id: name,
         ...checkboxProps,
