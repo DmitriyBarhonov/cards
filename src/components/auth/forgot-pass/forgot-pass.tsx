@@ -15,7 +15,7 @@ type FormValues = {
   email: string
   password: string
 }
-export const ForgotPass = (props: ForgotPassProps) => {
+export const ForgotPass = () => {
   const { register, handleSubmit } = useForm<FormValues>()
 
   const onSubmit = (data: FormValues) => {
@@ -28,9 +28,9 @@ export const ForgotPass = (props: ForgotPassProps) => {
     form: clsx(s.formBody),
     mainTitle: clsx(s.formTitle),
     input: clsx(s.formInput),
-    submit: clsx(s.submitButton),
     info: clsx(s.secondaryText),
-    haveAcc: clsx(s.dontHaveAcc),
+    submit: clsx(s.submitButton),
+    question: clsx(s.bottomText),
     signIn: clsx(s.signLink),
   }
 
@@ -57,7 +57,7 @@ export const ForgotPass = (props: ForgotPassProps) => {
         <Button className={classNames.submit} type="submit">
           Send Instructions
         </Button>
-        <Typography className={classNames.haveAcc} variant={'body2'}>
+        <Typography className={classNames.question} variant={'body2'}>
           {' '}
           Did you remember your password?
         </Typography>

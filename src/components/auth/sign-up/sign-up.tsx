@@ -15,7 +15,7 @@ type FormValues = {
   email: string
   password: string
 }
-export const SignUp = (props: SignUpProps) => {
+export const SignUp = () => {
   const { register, handleSubmit } = useForm<FormValues>()
 
   const onSubmit = (data: FormValues) => {
@@ -29,7 +29,7 @@ export const SignUp = (props: SignUpProps) => {
     mainTitle: clsx(s.formTitle),
     input: clsx(s.formInput),
     submit: clsx(s.submitButton),
-    haveAcc: clsx(s.dontHaveAcc),
+    question: clsx(s.bottomText),
     signIn: clsx(s.signLink),
   }
 
@@ -63,7 +63,7 @@ export const SignUp = (props: SignUpProps) => {
         <Button className={classNames.submit} type="submit">
           Sign Up
         </Button>
-        <Typography className={classNames.haveAcc} variant={'body2'}>
+        <Typography className={classNames.question} variant={'body2'}>
           {' '}
           Already have an account?
         </Typography>

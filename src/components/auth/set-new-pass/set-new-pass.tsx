@@ -15,7 +15,7 @@ type FormValues = {
   email: string
   password: string
 }
-export const SetNewPass = (props: SetNewPassProps) => {
+export const SetNewPass = () => {
   const { register, handleSubmit } = useForm<FormValues>()
 
   const onSubmit = (data: FormValues) => {
@@ -28,8 +28,8 @@ export const SetNewPass = (props: SetNewPassProps) => {
     form: clsx(s.formBody),
     mainTitle: clsx(s.formTitle),
     input: clsx(s.formInput),
-    submit: clsx(s.submitButton),
     info: clsx(s.secondaryText),
+    submit: clsx(s.submitButton),
   }
 
   return (

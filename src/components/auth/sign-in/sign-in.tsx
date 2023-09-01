@@ -16,7 +16,7 @@ type FormValues = {
   email: string
   password: string
 }
-export const SignIn = (props: SignInProps) => {
+export const SignIn = () => {
   const { register, handleSubmit } = useForm<FormValues>()
 
   const onSubmit = (data: FormValues) => {

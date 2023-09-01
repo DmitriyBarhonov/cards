@@ -1,9 +1,7 @@
 @use "../../../assets/mixins/mixins" as mixins;
 
-
 .formContainer {
   @include mixins.commonAuthContainer;
-
 
   .card {
     @include mixins.cardContainer;
@@ -12,21 +10,13 @@
     .signInForm {
       @include mixins.formContainer;
 
-      //display: flex;
-      //flex-direction: column;
-      //justify-content: center;
-      //align-items: inherit;
-      //width: 100%;
-      //box-sizing: border-box;
-
       .mainTitle {
         @include mixins.authMainTitle;
         margin: 38px 0 6px;
       }
 
       .signInInput {
-        width: 348px;
-        margin-top: 12px;
+        @include mixins.authInput;
       }
 
       .rememberMe {
@@ -49,8 +39,6 @@
       &:active {
         color: var(--color-accent-300);
       }
-
-
     }
 
     .submitButton {

@@ -38,6 +38,17 @@
   justify-content: center;
 }
 
+@mixin authInput {
+  width: 348px;
+  margin-top: 12px;
+}
+
+@mixin authSecondaryText {
+  color: var(--color-light-900);
+  width: 348px;
+  opacity: 0.5;
+}
+
 @mixin authSubmitButton {
   width: 292px;
   text-align: center;
