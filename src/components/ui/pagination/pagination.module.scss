@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+
+  //max-width: 600px;
+  height: 24px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+  min-width: 24px;
+  height: 24px;
+  margin: auto 4px;
+  padding: 0 12px;
+
+  font-size: 14px;
+  color: var(--color-light-100);
+  text-align: center;
+  letter-spacing: 0.01071em;
+
+  background-color: var(--color-dark-900);
+  border-radius: 2px;
+
+  &.dots:hover {
+    cursor: default;
+    fill: var(--color-dark-500);
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--color-dark-500) !important;
+  }
+
+  &:active {
+    cursor: pointer;
+    background-color: var(--color-light-100);
+  }
+
+  &.selected {
+    color: var(--color-dark-900);
+    background-color: var(--color-light-100);
+  }
+}
+
+.containerSelect {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  margin-left: 24px;
+
+  color: var(--color-light-100);
+}
