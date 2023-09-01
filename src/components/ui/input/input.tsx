@@ -69,20 +69,20 @@ export const CardsInput = (props: CardsInputProps<any>) => {
   return (
     <div className={classNames.inputContainer}>
       {isInputPass && (
-        <span className={classNames.watchPassButton} onClick={toggleWatchPassword}>
+        <button
+          disabled={rest.disabled}
+          className={classNames.watchPassButton}
+          onClick={toggleWatchPassword}
+        >
           {hidePass ? <WatchPassIcon /> : <CrossedOutWatchPassIcon />}
-        </span>
+        </button>
       )}
 
       {isInputSearch && (
         <div className={classNames.searchIconsContainer}>
-          <span className={classNames.searchIcon}>
-            <SearchIcon />
-          </span>
+          <SearchIcon className={classNames.searchIcon} />
           {inputValue && (
-            <span onClick={clearInputHandler} className={classNames.clearFieldIcon}>
-              <CleanInputIcon />
-            </span>
+            <CleanInputIcon onClick={clearInputHandler} className={classNames.clearFieldIcon} />
           )}
         </div>
       )}

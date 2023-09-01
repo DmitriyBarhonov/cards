@@ -63,6 +63,7 @@
   margin: 20px 0;
 
   .watchPassButton {
+    all: unset;
     @include inputIcon;
     top: 36px;
     right: 12px;
