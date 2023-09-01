@@ -12,16 +12,20 @@ export default {
 
 const optionsPrimary = [
   {
-    value: 'select-box1',
-    label: 'select-box1',
+    value: 'first',
+    label: 'first',
   },
   {
-    value: 'select-box2',
-    label: 'select-box2',
+    value: 'second',
+    label: 'second',
   },
   {
-    value: 'select-box3',
-    label: 'select-box3',
+    value: 'third',
+    label: 'third',
+  },
+  {
+    value: 'fourth',
+    label: 'fourth',
   },
 ]
 const optionsPagination = [
