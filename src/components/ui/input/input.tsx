@@ -21,6 +21,8 @@ export type CardsInputProps<T extends ElementType> = {
 } & ComponentPropsWithoutRef<T>
 
 export const CardsInput = (props: CardsInputProps<any>) => {
+  console.log(props)
+
   const {
     required,
     value,
