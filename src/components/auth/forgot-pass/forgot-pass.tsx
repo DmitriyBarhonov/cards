@@ -1,5 +1,6 @@
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import s from './forgot-pass.module.scss'
 
@@ -63,7 +64,7 @@ export const ForgotPass = () => {
         </Typography>
         <Typography as={'a'} href={''} className={classNames.signIn} variant={'h3'}>
           {' '}
-          Try logging in
+          <Link to="/login">Try logging in</Link>
         </Typography>
       </Card>
     </div>

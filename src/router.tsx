@@ -6,10 +6,32 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
+import { CheckEmail } from '@/components/auth/check-email'
+import { ForgotPass } from '@/components/auth/forgot-pass'
+import { SetNewPass } from '@/components/auth/set-new-pass'
+import { SignIn } from '@/components/auth/sign-in'
+import { SignUp } from '@/components/auth/sign-up'
+
 const publicRoutes: RouteObject[] = [
   {
     path: '/login',
-    element: <div>login</div>,
+    element: <SignIn />,
+  },
+  {
+    path: '/sign-up',
+    element: <SignUp />,
+  },
+  {
+    path: '/forgot-password',
+    element: <ForgotPass />,
+  },
+  {
+    path: '/check-your-email',
+    element: <CheckEmail />,
+  },
+  {
+    path: '/set-new-password',
+    element: <SetNewPass />,
   },
 ]
 
