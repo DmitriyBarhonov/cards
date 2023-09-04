@@ -1,5 +1,6 @@
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import s from './sign-in.module.scss'
 
@@ -74,7 +75,7 @@ export const SignIn = () => {
 
           <Typography as={'a'} href={''} className={classNames.forgotPass} variant={'link1'}>
             {' '}
-            Forgot Password?
+            <Link to="/forgot-password">Forgot Password?</Link>
           </Typography>
           <Button fullWidth={false} className={classNames.submit} type="submit">
             Sign in
@@ -87,7 +88,7 @@ export const SignIn = () => {
         </Typography>
         <Typography as={'a'} href={''} className={classNames.signUp} variant={'h3'}>
           {' '}
-          Sign Up
+          <Link to="/sign-up">Sign Up</Link>
         </Typography>
       </Card>
     </div>

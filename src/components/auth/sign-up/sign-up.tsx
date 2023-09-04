@@ -1,5 +1,6 @@
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import s from './sign-up.module.scss'
 
@@ -69,7 +70,7 @@ export const SignUp = () => {
         </Typography>
         <Typography as={'a'} href={''} className={classNames.signIn} variant={'h3'}>
           {' '}
-          Sign In
+          <Link to="/login">Sign In</Link>
         </Typography>
       </Card>
     </div>
