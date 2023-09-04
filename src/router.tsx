@@ -11,6 +11,7 @@ import { ForgotPass } from '@/components/auth/forgot-pass'
 import { SetNewPass } from '@/components/auth/set-new-pass'
 import { SignIn } from '@/components/auth/sign-in'
 import { SignUp } from '@/components/auth/sign-up'
+import { useGetDecksQuery } from '@/services/base-api.ts'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -51,6 +52,11 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
+  const { isLoading, data } = useGetDecksQuery()
+
+  if (isLoading) return <h1>Loading....</h1>
+  console.log(data)
+
   return <RouterProvider router={router} />
 }
 
