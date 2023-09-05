@@ -1,10 +1,15 @@
+import { useState } from 'react'
+
 import { Button } from '@/components/ui'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks'
 import { Deck } from '@/services/decks/types.ts'
 
 export const Decks = () => {
-  const decks = useGetDecksQuery()
-  const [createDeck, {}] = useCreateDeckMutation()
+  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const decks = useGetDecksQuery({
+    itemsPerPage,
+  })
+  const [createDeck, { isLoading }] = useCreateDeckMutation()
 
   console.log(decks)
   if (decks.isError) return <div>decks.isError</div>
@@ -18,6 +23,23 @@ export const Decks = () => {
       >
         create Deck
       </Button>
+      <Button
+        onClick={() => {
+          setItemsPerPage(20)
+        }}
+        disabled={isLoading}
+      >
+        set 20 items
+      </Button>
+      <Button
+        onClick={() => {
+          setItemsPerPage(10)
+        }}
+        disabled={isLoading}
+      >
+        set 10 items
+      </Button>
+
       <table>
         <thead>
           <tr>
