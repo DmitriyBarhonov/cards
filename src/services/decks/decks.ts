@@ -1,10 +1,15 @@
 import { baseApi } from '@/services/base-api.ts'
+import { DeckResponseType, DecksParams } from '@/services/decks/types.ts'
 
 const deskApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      getDecks: builder.query<any, void>({
-        query: () => `v1/decks`,
+      getDecks: builder.query<DeckResponseType, DecksParams>({
+        query: (params: DecksParams) => ({
+          url: `v1/decks`,
+          method: 'GET',
+          params: params ?? {},
+        }),
         //когда выполнится запрос и даные придут
         //они будут храниться в кэше под тегом Decks
         providesTags: ['Decks'],

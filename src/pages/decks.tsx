@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks'
+import { Deck } from '@/services/decks/types.ts'
 
 export const Decks = () => {
   const decks = useGetDecksQuery()
@@ -12,7 +13,7 @@ export const Decks = () => {
     <div>
       <Button
         onClick={() => {
-          createDeck({ name: '1234' })
+          createDeck({ name: '321312' })
         }}
       >
         create Deck
@@ -27,7 +28,7 @@ export const Decks = () => {
           </tr>
         </thead>
         <tbody>
-          {decks.data?.items?.map((deck: any) => {
+          {decks.data?.items?.map((deck: Deck) => {
             return (
               <tr key={deck.id}>
                 <td>{deck.name}</td>
