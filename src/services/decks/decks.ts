@@ -6,8 +6,15 @@ const deskApi = baseApi.injectEndpoints({
       getDecks: builder.query<any, void>({
         query: () => `v1/decks`,
       }),
+      createDeck: builder.mutation<any, { name: string }>({
+        query: ({ name }) => ({
+          url: `v1/decks`,
+          method: 'POST',
+          body: { name },
+        }),
+      }),
     }
   },
 })
 
-export const { useGetDecksQuery } = deskApi
+export const { useGetDecksQuery, useCreateDeckMutation } = deskApi
