@@ -1,9 +1,10 @@
-import { useGetDecksQuery } from '@/services/base-api.ts'
+import { useGetDecksQuery } from '@/services/decks'
 
 export const Decks = () => {
-  const { isLoading, data } = useGetDecksQuery()
+  const decks = useGetDecksQuery()
 
-  if (isLoading) return <h1>Loading...</h1>
+  console.log(decks)
+  if (decks.isError) return <div>decks.isError</div>
 
-  return <div>Decks</div>
+  return <div>{JSON.stringify(decks || '')}</div>
 }

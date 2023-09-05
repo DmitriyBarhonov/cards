@@ -12,7 +12,6 @@ import { SetNewPass } from '@/components/auth/set-new-pass'
 import { SignIn } from '@/components/auth/sign-in'
 import { SignUp } from '@/components/auth/sign-up'
 import { Decks } from '@/pages/decks.tsx'
-import { useGetDecksQuery } from '@/services/base-api.ts'
 
 const publicRoutes: RouteObject[] = [
   {
