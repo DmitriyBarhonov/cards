@@ -5,6 +5,9 @@ const deskApi = baseApi.injectEndpoints({
     return {
       getDecks: builder.query<any, void>({
         query: () => `v1/decks`,
+        //когда выполнится запрос и даные придут
+        //они будут храниться в кэше под тегом Decks
+        providesTags: ['Decks'],
       }),
       createDeck: builder.mutation<any, { name: string }>({
         query: ({ name }) => ({
@@ -12,6 +15,9 @@ const deskApi = baseApi.injectEndpoints({
           method: 'POST',
           body: { name },
         }),
+        //когда выполнится запрос и даные придут
+        //сд. прошлые данные с этим тегом невалидными
+        invalidatesTags: ['Decks'],
       }),
     }
   },
