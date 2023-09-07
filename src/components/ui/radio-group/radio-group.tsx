@@ -1,28 +1,20 @@
-import { forwardRef } from 'react'
-
 import * as RadioGroup from '@radix-ui/react-radio-group'
-import { useForm } from 'react-hook-form'
 
 import { Typography } from '..'
 
 import s from './radio-group.module.scss'
-
-type RadioPros = {
-  options: Option[]
-  onValueChange?: (value: string) => void
-  className?: string
-}
 type Option = {
   label: string
   value: string
 }
-type FormData = {
-  selectedOption: string // Предполагается, что это строка, которая будет хранить выбранное значение из Radio Group
+export type RadioGroupProps = {
+  options?: Option[]
+  onValueChange?: (value: string) => void
+  className?: string
+  value?: string
 }
 
-export const RadioGroupDemo = forwardRef((props: RadioPros, ref) => {
-  const { register, handleSubmit } = useForm<FormData>()
-
+export const RadioGroupDemo = (props: RadioGroupProps) => {
   const onValueChangeHandler = (value: any) => {
     if (props.onValueChange) props.onValueChange(value)
   }
@@ -30,10 +22,11 @@ export const RadioGroupDemo = forwardRef((props: RadioPros, ref) => {
   return (
     <div style={{ margin: '30px' }}>
       <RadioGroup.Root
-        onValueChange={handleSubmit(onValueChangeHandler)}
+        value={props.value}
+        onValueChange={onValueChangeHandler}
         className={s.RadioGroupRoot}
       >
-        {props.options.map(el => {
+        {props.options?.map(el => {
           return (
             <div key={el.value}>
               <RadioGroup.Item id={el.value} className={s.RadioGroupItem} value={el.value}>
@@ -48,4 +41,4 @@ export const RadioGroupDemo = forwardRef((props: RadioPros, ref) => {
       </RadioGroup.Root>
     </div>
   )
-})
+}

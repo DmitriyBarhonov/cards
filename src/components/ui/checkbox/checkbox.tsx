@@ -36,6 +36,7 @@ export const Checkbox: FC<CheckboxProps> = ({
           onCheckedChange={onValueChange}
           checked={checked}
           id={id}
+          value={'1'}
         >
           <CheckboxRadix.Indicator>
             {checked && (
