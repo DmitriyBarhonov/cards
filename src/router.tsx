@@ -8,6 +8,7 @@ import {
 
 import { CheckEmail } from '@/components/auth/check-email'
 import { ForgotPass } from '@/components/auth/forgot-pass'
+import { PersonalInfo } from '@/components/auth/personal-info'
 import { SetNewPass } from '@/components/auth/set-new-pass'
 import { SignIn } from '@/components/auth/sign-in'
 import { SignUp } from '@/components/auth/sign-up'
@@ -33,6 +34,10 @@ const publicRoutes: RouteObject[] = [
   {
     path: '/set-new-password',
     element: <SetNewPass />,
+  },
+  {
+    path: '/personal-info',
+    element: <PersonalInfo />,
   },
 ]
 
