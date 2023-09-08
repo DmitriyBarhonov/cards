@@ -11,6 +11,7 @@ import { ForgotPass } from '@/components/auth/forgot-pass'
 import { SetNewPass } from '@/components/auth/set-new-pass'
 import { SignIn } from '@/components/auth/sign-in'
 import { SignUp } from '@/components/auth/sign-up'
+import { Decks } from '@/pages/decks.tsx'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -38,7 +39,7 @@ const publicRoutes: RouteObject[] = [
 const privateRoutes: RouteObject[] = [
   {
     path: '/',
-    element: <div>hello</div>,
+    element: <Decks />,
   },
 ]
 
@@ -55,7 +56,7 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = false
+  const isAuthenticated = true
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }
