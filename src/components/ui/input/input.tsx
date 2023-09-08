@@ -23,7 +23,7 @@ export type CardsInputProps<T extends ElementType> = {
 // Обернул forwardRef для передачи ref
 
 export const CardsInput = forwardRef((props: CardsInputProps<any>, ref) => {
-  console.log(props)
+  // console.log(props)
 
   const {
     required,
