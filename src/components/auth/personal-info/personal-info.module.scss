@@ -25,9 +25,34 @@
         box-sizing: border-box;
       }
 
-      .secondaryText {
-        @include mixins.authSecondaryText;
+      .profileTitle {
+        color: var(--color-light-100);
         margin: 12px 0 2px;
+        padding-top: 15px;
+      }
+
+      .editTextButton {
+        all: unset;
+        margin: 0 0 8px 6px;
+        cursor: pointer;
+        background: transparent;
+        border: none;
+
+        .editTextIcon {
+          padding-top: 2px;
+        }
+
+        &:hover {
+          color: var(--color-accent-100);
+        }
+        &:active {
+          color: var(--color-accent-300);
+        }
+      }
+
+      .bottomText {
+        @include mixins.authBottomText;
+        margin: 8px 0 2px;
       }
 
       .submitButton {
@@ -36,17 +61,16 @@
         margin: 20px 0 26px;
       }
 
-      .bottomText {
-        @include mixins.authBottomText;
-        margin: 12px 0 2px;
+      .logOutButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        text-align: center;
+        width: 122px;
+        height: 36px;
+        margin: 20px 0 26px;
       }
-
-      .signLink {
-        @include mixins.authMainBottomLink;
-        margin-bottom: 20px;
-
-      }
-
     }
 
 

@@ -1,7 +1,6 @@
 import { FC, useState } from 'react'
 
 import { clsx } from 'clsx'
-import { Link } from 'react-router-dom'
 
 import s from './personal-info.module.scss'
 
@@ -25,10 +24,12 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, email }) => 
     mainTitle: clsx(s.formTitle),
     avatar: clsx(s.avatarContainer),
     input: clsx(s.formInput),
-    info: clsx(s.secondaryText),
     submit: clsx(s.submitButton),
-    question: clsx(s.bottomText),
-    signIn: clsx(s.signLink),
+    info: clsx(s.profileTitle),
+    editButton: clsx(s.editTextButton),
+    editIcon: clsx(s.editTextIcon),
+    email: clsx(s.bottomText),
+    logOut: clsx(s.logOutButton),
   }
   const emailForPersonalInfo = email ? email : 'ihateincubatorexams@gmail.com'
   const nameForPersonalInfo = name ? name : 'Kilobucks Lover'
@@ -38,6 +39,13 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, email }) => 
 
   const onEditTextClickHandler = () => {
     setEditMode(true)
+  }
+  const onInputBlurHandler = () => {
+    setEditMode(false)
+  }
+
+  const onLogoutClickHandler = () => {
+    //ляляля это заглушка =D
   }
 
   return (
@@ -57,22 +65,32 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, email }) => 
 
           {editMode ? (
             <>
-              <Typography className={classNames.info} variant={'h1'}>
-                {nameForPersonalInfo}
-                <EdittextIcon onClick={onEditTextClickHandler} />
-              </Typography>
-              <Typography className={classNames.question} variant={'body1'}>
-                {emailForPersonalInfo}
-              </Typography>
-              <Button className={classNames.submit} variant={'secondary'}>
-                <LogOut /> Logout
+              <CardsInput
+                onBlur={onInputBlurHandler}
+                className={classNames.input}
+                label={'Nickname'}
+              />
+              <Button className={classNames.submit} variant={'primary'}>
+                Save Changes
               </Button>
             </>
           ) : (
             <>
-              <CardsInput className={classNames.input} label={'Nickname'} />
-              <Button className={classNames.submit} variant={'primary'}>
-                Save Changes
+              <Typography className={classNames.info} variant={'h2'}>
+                {nameForPersonalInfo}
+                <button className={classNames.editButton}>
+                  <EdittextIcon className={classNames.editIcon} onClick={onEditTextClickHandler} />
+                </button>
+              </Typography>
+              <Typography className={classNames.email} variant={'body1'}>
+                {emailForPersonalInfo}
+              </Typography>
+              <Button
+                onClick={onLogoutClickHandler}
+                className={classNames.logOut}
+                variant={'secondary'}
+              >
+                <LogOut /> Logout
               </Button>
             </>
           )}
