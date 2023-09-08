@@ -2,9 +2,9 @@ import { useController, UseControllerProps } from 'react-hook-form'
 
 import { CardsInput, CardsInputProps } from '../input'
 
-//ControlledCheckboxProps расширяет UseControllerProps<any>
-// и исключает некоторые свойства из CheckboxProps, такие как
-// onChange, value и id. Это означает, что ControlledCheckboxProps
+//ControlledInputProps расширяет UseControllerProps<any>
+// и исключает некоторые свойства из CardsInputProps, такие как
+// onChange, value и id. Это означает, что ControlledInputProps
 // принимает все свойства UseControllerProps
 // и все свойства CheckboxProps, кроме указанных.
 export type ControlledInputProps = UseControllerProps<any> &
@@ -12,7 +12,7 @@ export type ControlledInputProps = UseControllerProps<any> &
 
 //ControlledInput - это функциональный компонент, который принимает
 // name, rules, shouldUnregister, control, defaultValue
-// из ControlledCheckboxProps и остальные свойства из checkboxProps
+// из ControlledInputProps и остальные свойства из CardsInputProps
 export const ControlledInput = ({
   name,
   rules,
