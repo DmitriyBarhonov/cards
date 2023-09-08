@@ -1,28 +1,19 @@
+import { FC } from 'react'
+
 import { clsx } from 'clsx'
-import { FormProvider, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
 import s from './personal-info.module.scss'
 
-import { Button, Card, Typography } from '@/components/ui'
-import { CardsInput } from '@/components/ui/input'
+import { Avatar, Button, Card, Typography } from '@/components/ui'
 
 export type PersonalInfoProps = {
-  value?: string
+  name?: string
+  avatar?: string
   onInputValueChange?: (value: string) => void
 }
 
-type FormValues = {
-  email: string
-  password: string
-}
-export const PersonalInfo = () => {
-  const { register, handleSubmit } = useForm<FormValues>()
-  const methods = useForm()
-  const onSubmit = (data: FormValues) => {
-    console.log(data)
-  }
-
+export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, ...restProps }) => {
   const classNames = {
     formContainer: clsx(s.formContainer),
     card: clsx(s.card),
@@ -34,40 +25,37 @@ export const PersonalInfo = () => {
     question: clsx(s.bottomText),
     signIn: clsx(s.signLink),
   }
+  const nameForPersonalInfo = name ? name : 'Kilobucks Lover'
+  const imgForPersonalInfo = avatar
+    ? avatar
+    : 'https://kartinkof.club/uploads/posts/2022-03/1648314602_1-kartinkof-club-p-negr-dumaet-mem-1.jpg'
 
   return (
     <div className={classNames.formContainer}>
       <Card className={classNames.card}>
-        <FormProvider {...methods}>
-          <form className={classNames.form} onSubmit={handleSubmit(onSubmit)}>
-            <Typography className={classNames.mainTitle} variant={'large'}>
-              {' '}
-              Forgot your password?
-            </Typography>
-            <CardsInput
-              className={classNames.input}
-              variant={'standard'}
-              {...register('email')}
-              label={'Email'}
-            />
+        <form className={classNames.form}>
+          <Typography className={classNames.mainTitle} variant={'large'}>
+            {' '}
+            Personal Information
+          </Typography>
+          <Avatar name={nameForPersonalInfo} avatar={imgForPersonalInfo} />
 
-            <Typography className={classNames.info} variant={'body2'}>
-              {' '}
-              Enter your email address and we will send you further instructions
-            </Typography>
-          </form>
-          <Button className={classNames.submit} type="submit">
-            Send Instructions
-          </Button>
-          <Typography className={classNames.question} variant={'body2'}>
+          <Typography className={classNames.info} variant={'body2'}>
             {' '}
-            Did you remember your password?
+            Enter your email address and we will send you further instructions
           </Typography>
-          <Typography as={'a'} href={''} className={classNames.signIn} variant={'h3'}>
-            {' '}
-            <Link to="/login">Try logging in</Link>
-          </Typography>
-        </FormProvider>
+        </form>
+        <Button className={classNames.submit} type="submit">
+          Send Instructions
+        </Button>
+        <Typography className={classNames.question} variant={'body2'}>
+          {' '}
+          Did you remember your password?
+        </Typography>
+        <Typography as={'a'} href={''} className={classNames.signIn} variant={'h3'}>
+          {' '}
+          <Link to="/login">Try logging in</Link>
+        </Typography>
       </Card>
     </div>
   )
