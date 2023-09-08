@@ -34,7 +34,7 @@
 .checkboxRoot {
   @include checkbox-styling(#00000000, #ffffff);
   &:hover {
-    border-color: #808080;
+    // border-color: #808080;
 
     &::before {
       @include pseudo-element-styling(#808080);
@@ -48,7 +48,7 @@
   }
 }
 
-.disabledCheckboxRoot {
+.checkboxRootDisabled {
   @include checkbox-styling(#dcdae000, #808080);
 }
 

@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
@@ -38,6 +39,7 @@ export type SignInProps = {
   // onInputValueChange?: (value: string) => void
   onSubmit: (data: SignInFormType) => void //при сабмите отправляем данные типа мыло, пароль, запомниМеня
 }
+
 
 // type FormValues = {
 //   email: string

@@ -1,0 +1,95 @@
+/* reset */
+
+button {
+  all: unset;
+}
+
+// mixin
+@mixin pseudo-element-styling($background-color) {
+  content: '';
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: $background-color;
+  opacity: 0.5;
+  top: -40%;
+  left: -40%;
+}
+@mixin radio-group-item($color-elemet) {
+  background-color: rgba(255, 255, 255, 0);
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border: 2px solid $color-elemet;
+  position: relative;
+  margin-bottom: 12px;
+}
+@mixin radio-group-item-after($color-elemet) {
+  content: '';
+  display: block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: $color-elemet;
+  position: absolute;
+}
+
+// redio syle
+.wrapperItem {
+  display: flex;
+}
+.radioGroupRoot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.radioGroupItem {
+  @include radio-group-item(#8c61ff);
+  cursor: pointer;
+  &:hover {
+    &::before {
+      @include pseudo-element-styling(#808080);
+    }
+  }
+  &:focus {
+    outline: none;
+    &::before {
+      @include pseudo-element-styling(#2f2f2f);
+    }
+  }
+}
+.radioGroupItemDisabled{
+  @include radio-group-item(#382766);
+}
+.radioGroupIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  &::after {
+    @include radio-group-item-after(#8c61ff);
+  }
+}
+.radioGroupIndicatorDisabled {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  &::after {
+    @include radio-group-item-after(#382766);
+  }
+}
+
+.label {
+  margin-left: 13px;
+}
+.labelDisabled {
+  color: #c3c1c7;
+  margin-left: 13px;
+}

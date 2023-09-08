@@ -8,8 +8,8 @@ export const Check = (props: PropsType) => {
     <svg
       className={props.className}
       xmlns="http://www.w3.org/2000/svg"
-      width="27"
-      height="27"
+      width="32"
+      height="32"
       viewBox="0 0 24 24"
       fill="none"
     >
@@ -21,78 +21,3 @@ export const Check = (props: PropsType) => {
     </svg>
   )
 }
-// @mixin checkbox-styling($background-color, $border-color) {
-//   width: 20px;
-//   height: 20px;
-//   background-color: $background-color;
-//   border: 2px solid $border-color;
-//   border-radius: 2px;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   margin-right: 8px;
-//   position: relative;
-//   z-index: 222;
-// }
-// @mixin label-styling($color) {
-//   display: flex;
-//   align-items: center;
-//   color: $color;
-//   cursor: pointer;
-// }
-// @mixin pseudo-element-styling($background-color) {
-//   content: '';
-//   position: absolute;
-//   width: 38px;
-//   height: 38px;
-//   border-radius: 50%;
-//   background-color: $background-color;
-//   opacity: 0.5;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   z-index: 1;
-// }
-
-// .checkboxRoot {
-//   @include checkbox-styling(#00000000, #ffffff);
-//   &:hover {
-//     border-color: #808080;
-
-//     &::before {
-//       @include pseudo-element-styling(#808080);
-//     }
-//   }
-//   &:focus {
-//     outline: none;
-//     &::before {
-//       @include pseudo-element-styling(#c3c1c7);
-//     }
-//   }
-// }
-
-// .disabledCheckboxRoot {
-//   @include checkbox-styling(#dcdae000, #DCDAE0);
-// }
-
-// .w {
-//   margin: 20px;
-// }
-// .label {
-//   display: flex;
-//   align-items: center;
-//   color: var(--light-100, #fff);
-//   cursor: pointer;
-// }
-// .icons {
-//   position: relative;
-//   z-index: 10;
-//   display: flex;
-// }
-/* width: 36px;  #DCDAE0*/
-/* height: 36px; */
-/* background: aqua; */
-/* border-radius: 50%; */
-/* display: flex; */
-/* align-items: center; */
-/* justify-content: center; */
