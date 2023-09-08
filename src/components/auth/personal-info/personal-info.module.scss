@@ -5,41 +5,51 @@
 
   .card {
     @include mixins.cardContainer;
-    height: 456px;
+    height: 420px;
 
     .formBody {
       @include mixins.formContainer;
 
       .formTitle {
         @include mixins.authMainTitle;
-        margin: 38px 0 28px;
+        margin: 18px 0 28px;
+      }
+
+      .avatarContainer {
+        width: 100px;
+        height: 100px;
       }
 
       .formInput {
         @include mixins.authInput;
+        box-sizing: border-box;
       }
 
       .secondaryText {
         @include mixins.authSecondaryText;
         margin: 12px 0 2px;
       }
+
+      .submitButton {
+        @include mixins.authSubmitButton;
+        height: 36px;
+        margin: 20px 0 26px;
+      }
+
+      .bottomText {
+        @include mixins.authBottomText;
+        margin: 12px 0 2px;
+      }
+
+      .signLink {
+        @include mixins.authMainBottomLink;
+        margin-bottom: 20px;
+
+      }
+
     }
 
-    .submitButton {
-      @include mixins.authSubmitButton;
-      margin-top: 56px;
-    }
 
-    .bottomText {
-      @include mixins.authBottomText;
-      margin: 12px 0 2px;
-    }
-
-    .signLink {
-      @include mixins.authMainBottomLink;
-      margin-bottom: 20px;
-
-    }
   }
 }
 
