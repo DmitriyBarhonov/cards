@@ -13,6 +13,7 @@ type AvatarProps = {
    * If there is no image show initials
    */
   name: string
+  className?: string
 }
 const getInitials = (name: string) => {
   return name
@@ -21,9 +22,9 @@ const getInitials = (name: string) => {
     .join('')
 }
 
-export const Avatar: FC<AvatarProps> = ({ avatar, name }) => (
+export const Avatar: FC<AvatarProps> = ({ avatar, name, className }) => (
   <div style={{ display: 'flex', gap: 20 }}>
-    <AvatarRadix.Root className={s.AvatarRoot}>
+    <AvatarRadix.Root className={`${className} ${s.AvatarRoot}`}>
       <AvatarRadix.Image className="AvatarImage" src={avatar} alt={name} />
       <AvatarRadix.Fallback className={s.AvatarFallback}>{getInitials(name)}</AvatarRadix.Fallback>
     </AvatarRadix.Root>
