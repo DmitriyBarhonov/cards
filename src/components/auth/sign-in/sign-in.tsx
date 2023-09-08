@@ -1,3 +1,5 @@
+import { FC } from 'react'
+
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
@@ -18,7 +20,7 @@ type FormValues = {
   password: string
   rememberMe: boolean
 }
-export const SignIn = () => {
+export const SignIn: FC = () => {
   const { register, handleSubmit, control } = useForm<FormValues>()
 
   const onSubmit = (data: FormValues) => {

@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
+import clsx from 'clsx'
 
 import { Typography } from '../typography'
 
@@ -17,6 +18,24 @@ export type CheckboxProps = {
   label?: string
   id?: string
 }
+const classNames = {
+  icon: clsx(s.icon),
+  checkboxRoot(disabled?: boolean) {
+    return clsx(disabled ? s.checkboxRootDisabled : s.checkboxRoot)
+  },
+  label(disabled?: boolean) {
+    return clsx(disabled ? s.labelDisabled : s.label)
+  },
+  radioGroupItem(disabled?: boolean) {
+    return clsx(disabled ? s.radioGroupItemDisabled : s.radioGroupItem)
+  },
+  arrowColor(disabled?: boolean) {
+    return clsx(disabled ? '#DCDAE0' : 'black')
+  },
+  bgColor(disabled?: boolean) {
+    return clsx(disabled ? '#808080' : 'white')
+  },
+}
 
 export const Checkbox: FC<CheckboxProps> = ({
   className,
@@ -28,11 +47,11 @@ export const Checkbox: FC<CheckboxProps> = ({
   id,
 }) => {
   return (
-    <div className={className}>
+    <div>
       <Typography variant="body2" as="label" className={disabled ? s.labelDisabled : s.label}>
         <CheckboxRadix.Root
           disabled={disabled}
-          className={disabled ? s.disabledCheckboxRoot : s.checkboxRoot}
+          className={classNames.checkboxRoot(disabled)}
           onCheckedChange={onValueChange}
           checked={checked}
           id={id}
@@ -41,9 +60,9 @@ export const Checkbox: FC<CheckboxProps> = ({
           <CheckboxRadix.Indicator>
             {checked && (
               <Check
-                arrowColor={disabled ? '#DCDAE0' : 'black'}
-                bgColor={disabled ? '#808080' : 'white'}
-                className={s.icon}
+                arrowColor={classNames.arrowColor(disabled)}
+                bgColor={classNames.bgColor(disabled)}
+                className={classNames.icon}
               />
             )}
           </CheckboxRadix.Indicator>

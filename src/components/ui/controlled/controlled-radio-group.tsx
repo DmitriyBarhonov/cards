@@ -1,6 +1,6 @@
 import { UseControllerProps, useController } from 'react-hook-form'
 
-import { RadioGroupDemo, RadioGroupProps } from '../radio-group/radio-group'
+import { RadioGroupComponet, RadioGroupProps } from '../radio-group/radio-group'
 
 export type ControlledRadioProps = UseControllerProps<any> &
   Omit<RadioGroupProps, 'onChange' | 'value' | 'id'>
@@ -12,6 +12,7 @@ export const ControlledRadioGroup = ({
   control,
   defaultValue,
   options,
+  disabled,
   ...radioGroupProps
 }: ControlledRadioProps) => {
   const {
@@ -19,12 +20,13 @@ export const ControlledRadioGroup = ({
   } = useController({ name, rules, shouldUnregister, control, defaultValue })
 
   return (
-    <RadioGroupDemo
+    <RadioGroupComponet
       {...{
         ...radioGroupProps,
         value: value,
         onValueChange: onChange,
         options: options,
+        disabled: disabled,
       }}
     />
   )
