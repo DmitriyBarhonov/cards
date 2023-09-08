@@ -1,0 +1,48 @@
+@use "../../../assets/mixins/mixins" as mixins;
+
+.formContainer {
+  @include mixins.commonAuthContainer;
+
+  .card {
+    @include mixins.cardContainer;
+    height: 456px;
+
+    .formBody {
+      @include mixins.formContainer;
+
+      .formTitle {
+        @include mixins.authMainTitle;
+        margin: 38px 0 28px;
+      }
+
+      .formInput {
+        @include mixins.authInput;
+      }
+
+      .secondaryText {
+        @include mixins.authSecondaryText;
+        margin: 12px 0 2px;
+      }
+    }
+
+    .submitButton {
+      @include mixins.authSubmitButton;
+      margin-top: 56px;
+    }
+
+    .bottomText {
+      @include mixins.authBottomText;
+      margin: 12px 0 2px;
+    }
+
+    .signLink {
+      @include mixins.authMainBottomLink;
+      margin-bottom: 20px;
+
+    }
+  }
+}
+
+
+
+
