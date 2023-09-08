@@ -6,6 +6,7 @@ import s from './personal-info.module.scss'
 
 import { EdittextIcon } from '@/assets/icons/editText.tsx'
 import { LogOut } from '@/assets/icons/logOut.tsx'
+import { ProfileEditMode } from '@/components/auth/personal-info/edit-mode/profile-edit-mode.tsx'
 import { Avatar, Button, Card, CardsInput, Typography } from '@/components/ui'
 
 export type PersonalInfoProps = {
@@ -64,16 +65,17 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, email }) => 
           </div>
 
           {editMode ? (
-            <>
-              <CardsInput
-                onBlur={onInputBlurHandler}
-                className={classNames.input}
-                label={'Nickname'}
-              />
-              <Button className={classNames.submit} variant={'primary'}>
-                Save Changes
-              </Button>
-            </>
+            // <>
+            //   <CardsInput
+            //     onBlur={onInputBlurHandler}
+            //     className={classNames.input}
+            //     label={'Nickname'}
+            //   />
+            //   <Button className={classNames.submit} variant={'primary'}>
+            //     Save Changes
+            //   </Button>
+            // </>
+            <ProfileEditMode onInputBlurHandler={onInputBlurHandler} />
           ) : (
             <>
               <Typography className={classNames.info} variant={'h2'}>
