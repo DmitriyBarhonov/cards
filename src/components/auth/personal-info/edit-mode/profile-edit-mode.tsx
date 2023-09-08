@@ -14,6 +14,7 @@ export const ProfileEditMode: FC<Props> = ({ onInputBlurHandler }) => {
     submit: clsx(s.submitButton),
   }
 
+  //TODO here we should use controlled input
   return (
     <>
       <CardsInput onBlur={onInputBlurHandler} className={classNames.input} label={'Nickname'} />

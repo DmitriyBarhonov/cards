@@ -1,0 +1,19 @@
+@use "../../../../assets/mixins/mixins" as mixins;
+
+.formInput {
+  @include mixins.authInput;
+  box-sizing: border-box;
+}
+
+
+.submitButton {
+  @include mixins.authSubmitButton;
+  height: 36px;
+  margin: 20px 0 26px;
+}
+
+
+
+
+
+

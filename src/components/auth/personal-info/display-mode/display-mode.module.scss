@@ -1,46 +1,47 @@
 @use "../../../../assets/mixins/mixins" as mixins;
 
 
-      .profileTitle {
-        color: var(--color-light-100);
-        margin: 12px 0 2px;
-        padding-top: 15px;
-      }
+.profileTitle {
+  color: var(--color-light-100);
+  margin: 12px 0 2px;
+  padding-top: 15px;
+}
 
-      .editTextButton {
-        all: unset;
-        margin: 0 0 8px 6px;
-        cursor: pointer;
-        background: transparent;
-        border: none;
+.editTextButton {
+  all: unset;
+  margin: 0 0 8px 6px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
 
-        .editTextIcon {
-          padding-top: 2px;
-        }
+  .editTextIcon {
+    padding-top: 2px;
+  }
 
-        &:hover {
-          color: var(--color-accent-100);
-        }
-        &:active {
-          color: var(--color-accent-300);
-        }
-      }
+  &:hover {
+    color: var(--color-accent-100);
+  }
 
-      .bottomText {
-        @include mixins.authBottomText;
-        margin: 8px 0 2px;
-      }
+  &:active {
+    color: var(--color-accent-300);
+  }
+}
 
-      .logOutButton {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        text-align: center;
-        width: 122px;
-        height: 36px;
-        margin: 20px 0 26px;
-      }
+.bottomText {
+  @include mixins.authBottomText;
+  margin: 8px 0 2px;
+}
+
+.logOutButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  width: 122px;
+  height: 36px;
+  margin: 20px 0 26px;
+}
 
 
 
