@@ -4,10 +4,9 @@ import { clsx } from 'clsx'
 
 import s from './personal-info.module.scss'
 
-import { EdittextIcon } from '@/assets/icons/editText.tsx'
-import { LogOut } from '@/assets/icons/logOut.tsx'
-import { ProfileEditMode } from '@/components/auth/personal-info/edit-mode/profile-edit-mode.tsx'
-import { Avatar, Button, Card, CardsInput, Typography } from '@/components/ui'
+import { ProfileDisplayMode } from '@/components/auth/personal-info/display-mode'
+import { ProfileEditMode } from '@/components/auth/personal-info/edit-mode'
+import { Avatar, Card, Typography } from '@/components/ui'
 
 export type PersonalInfoProps = {
   name?: string
@@ -18,25 +17,18 @@ export type PersonalInfoProps = {
 export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, email }) => {
   const [editMode, setEditMode] = useState(false)
 
+  const nameForPersonalInfo = name ? name : 'Kilobucks Lover'
+  const imgForPersonalInfo = avatar
+    ? avatar
+    : 'https://kartinkof.club/uploads/posts/2022-03/1648314602_1-kartinkof-club-p-negr-dumaet-mem-1.jpg'
+
   const classNames = {
     formContainer: clsx(s.formContainer),
     card: clsx(s.card),
     form: clsx(s.formBody),
     mainTitle: clsx(s.formTitle),
     avatar: clsx(s.avatarContainer),
-    input: clsx(s.formInput),
-    submit: clsx(s.submitButton),
-    info: clsx(s.profileTitle),
-    editButton: clsx(s.editTextButton),
-    editIcon: clsx(s.editTextIcon),
-    email: clsx(s.bottomText),
-    logOut: clsx(s.logOutButton),
   }
-  const emailForPersonalInfo = email ? email : 'ihateincubatorexams@gmail.com'
-  const nameForPersonalInfo = name ? name : 'Kilobucks Lover'
-  const imgForPersonalInfo = avatar
-    ? avatar
-    : 'https://kartinkof.club/uploads/posts/2022-03/1648314602_1-kartinkof-club-p-negr-dumaet-mem-1.jpg'
 
   const onEditTextClickHandler = () => {
     setEditMode(true)
@@ -65,36 +57,14 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, email }) => 
           </div>
 
           {editMode ? (
-            // <>
-            //   <CardsInput
-            //     onBlur={onInputBlurHandler}
-            //     className={classNames.input}
-            //     label={'Nickname'}
-            //   />
-            //   <Button className={classNames.submit} variant={'primary'}>
-            //     Save Changes
-            //   </Button>
-            // </>
             <ProfileEditMode onInputBlurHandler={onInputBlurHandler} />
           ) : (
-            <>
-              <Typography className={classNames.info} variant={'h2'}>
-                {nameForPersonalInfo}
-                <button className={classNames.editButton}>
-                  <EdittextIcon className={classNames.editIcon} onClick={onEditTextClickHandler} />
-                </button>
-              </Typography>
-              <Typography className={classNames.email} variant={'body1'}>
-                {emailForPersonalInfo}
-              </Typography>
-              <Button
-                onClick={onLogoutClickHandler}
-                className={classNames.logOut}
-                variant={'secondary'}
-              >
-                <LogOut /> Logout
-              </Button>
-            </>
+            <ProfileDisplayMode
+              email={email}
+              name={name}
+              onEditTextClickHandler={onEditTextClickHandler}
+              onLogoutClickHandler={onLogoutClickHandler}
+            />
           )}
         </div>
       </Card>
