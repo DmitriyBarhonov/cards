@@ -4,9 +4,10 @@ import { clsx } from 'clsx'
 
 import s from './personal-info.module.scss'
 
+import { EdittextIcon } from '@/assets/icons/editText.tsx'
 import { ProfileDisplayMode } from '@/components/auth/personal-info/display-mode'
 import { ProfileEditMode } from '@/components/auth/personal-info/edit-mode'
-import { Avatar, Card, Typography } from '@/components/ui'
+import { Avatar, Button, Card, Typography } from '@/components/ui'
 
 export type PersonalInfoProps = {
   name?: string
@@ -27,11 +28,17 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, email }) => 
     card: clsx(s.card),
     form: clsx(s.formBody),
     mainTitle: clsx(s.formTitle),
+    avatarWrapper: clsx(s.avatarWrapper),
     avatar: clsx(s.avatarContainer),
+    editButton: clsx(s.editTextButton),
+    editIcon: clsx(s.editTextIcon),
   }
 
   const onEditTextClickHandler = () => {
     setEditMode(true)
+  }
+  const onEditAvatarClickHandler = () => {
+    //кваква заглушка лягушка о.О
   }
   const onInputBlurHandler = () => {
     setEditMode(false)
@@ -40,6 +47,7 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, email }) => 
   const onLogoutClickHandler = () => {
     //ляляля это заглушка =D
   }
+  //TODO need to add edit button for avatar image
 
   return (
     <div className={classNames.formContainer}>
@@ -48,12 +56,22 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, email }) => 
           <Typography className={classNames.mainTitle} variant={'large'}>
             Personal Information
           </Typography>
-          <div>
+          <div className={classNames.avatarWrapper}>
             <Avatar
               className={classNames.avatar}
               name={nameForPersonalInfo}
               avatar={imgForPersonalInfo}
             />
+            <Button
+              onClick={onEditAvatarClickHandler}
+              className={classNames.editButton}
+              variant={'secondary'}
+            >
+              <EdittextIcon className={classNames.editIcon} onClick={onEditTextClickHandler} />
+            </Button>
+            {/*<button className={classNames.editButton}>*/}
+            {/*  <EdittextIcon className={classNames.editIcon} onClick={onEditTextClickHandler} />*/}
+            {/*</button>*/}
           </div>
 
           {editMode ? (
