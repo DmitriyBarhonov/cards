@@ -1,4 +1,4 @@
-import { forwardRef, memo, SVGProps } from 'react'
+import { memo, SVGProps } from 'react'
 
 type PropsType = {
   size?: number
@@ -26,7 +26,7 @@ const SvgComponent = ({ size, ...props }: PropsType) => (
     </defs>
   </svg>
 )
-const ForwardRef = forwardRef(SvgComponent)
-const Memo = memo(ForwardRef)
+// const ForwardRef = forwardRef(SvgComponent)
+const Memo = memo(SvgComponent)
 
 export { Memo as ChevronDown }

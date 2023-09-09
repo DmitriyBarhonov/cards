@@ -52,7 +52,6 @@
     }
 
     .signUpLink {
-      @include mixins.authMainBottomLink;
       margin-bottom: 20px;
     }
   }

@@ -15,27 +15,18 @@ export type ControlledInputProps = UseControllerProps<any> &
 // из ControlledInputProps и остальные свойства из CardsInputProps
 export const ControlledInput = ({
   name,
-  rules,
-  shouldUnregister,
-  control,
-  defaultValue,
-  ...inputProps
+  // rules,
+  // shouldUnregister,
+  control, // defaultValue,
+  ...props // ...inputProps
 }: ControlledInputProps) => {
   //Затем компонент использует хук useController из react-hook-form
   // для получения контроллера для управления полем ввода.
   // useController возвращает объект field, содержащий свойства onChange и value
   const {
-    field: { onChange, value },
-  } = useController({ name, rules, shouldUnregister, control, defaultValue })
+    field,
+    fieldState: { error },
+  } = useController({ name, control })
 
-  return (
-    <CardsInput
-      {...{
-        onValueChange: onChange,
-        checked: value,
-        id: name,
-        ...inputProps,
-      }}
-    />
-  )
+  return <CardsInput {...props} {...field} errorMessage={error?.message} id={props.name} />
 }
