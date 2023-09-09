@@ -16,15 +16,16 @@
 
   .editTextIcon {
     padding-top: 2px;
-
   }
 
   &:hover {
     color: var(--color-accent-100);
+    background: none;
   }
 
   &:active {
     color: var(--color-accent-300);
+    background: none;
   }
 }
 
