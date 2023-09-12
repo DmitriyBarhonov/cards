@@ -1,0 +1,116 @@
+@use "../../../assets/mixins/mixins" as mixins;
+
+.formContainer {
+  @include mixins.commonAuthContainer;
+
+  .card {
+    @include mixins.cardContainer;
+    height: 420px;
+
+    .formBody {
+      @include mixins.formContainer;
+
+      .formTitle {
+        @include mixins.authMainTitle;
+        margin: 18px 0 28px;
+      }
+
+      .avatarWrapper {
+        position: relative;
+
+        .avatarContainer {
+          width: 120px;
+          height: 120px;
+        }
+
+        .editTextButton {
+          background: var(--color-dark-300);
+          box-shadow: 0px 2px 10px 0px rgba(109, 109, 109, 0.25);
+          opacity: 0.7;
+          width: 32px;
+          height: 32px;
+          border-radius: 4px;
+          position: absolute;
+          bottom: -8px;
+          left: 82px;
+
+          &:hover {
+            opacity: 1;
+          }
+
+          .editTextIcon {
+            padding-top: 2px;
+            padding-left: 4px;
+
+          }
+
+          &:hover {
+            color: var(--color-accent-100);
+          }
+
+          &:active {
+            color: var(--color-accent-300);
+          }
+        }
+      }
+
+
+      .formInput {
+        @include mixins.authInput;
+        box-sizing: border-box;
+      }
+
+      .profileTitle {
+        color: var(--color-light-100);
+        margin: 12px 0 2px;
+        padding-top: 15px;
+      }
+
+      .editTextButton {
+        all: unset;
+        margin: 0 0 8px 6px;
+        cursor: pointer;
+        background: transparent;
+        border: none;
+
+        .editTextIcon {
+          padding-top: 2px;
+        }
+
+        &:hover {
+          color: var(--color-accent-100);
+        }
+
+        &:active {
+          color: var(--color-accent-300);
+        }
+      }
+
+      .bottomText {
+        @include mixins.authBottomText;
+        margin: 8px 0 2px;
+      }
+
+      .submitButton {
+        @include mixins.authSubmitButton;
+        height: 36px;
+        margin: 20px 0 26px;
+      }
+
+      .logOutButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        text-align: center;
+        width: 122px;
+        height: 36px;
+        margin: 20px 0 26px;
+      }
+    }
+  }
+}
+
+
+
+
