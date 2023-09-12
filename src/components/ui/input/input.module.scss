@@ -51,6 +51,7 @@
     color: var(--color-dark-300);
   }
 }
+
 .fullWidth {
   width: 100%;
 }
@@ -60,7 +61,7 @@
   height: 60px;
   flex-shrink: 0;
   position: relative;
-  margin: 20px 0;
+  margin: 24px 0;
 
   .watchPassButton {
     all: unset;
@@ -78,8 +79,6 @@
     flex-direction: column;
     justify-content: space-evenly;
     font-size: var(--font-size-m);
-    position: relative;
-
 
     &.disabledLabel {
       color: var(--color-dark-300);
@@ -103,7 +102,7 @@
       color: var(--color-danger-300);
       font-size: var(--font-size-xs);
       position: absolute;
-      top: 60px
+      top: 62px;
     }
 
   }
