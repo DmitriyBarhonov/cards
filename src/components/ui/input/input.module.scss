@@ -78,6 +78,8 @@
     flex-direction: column;
     justify-content: space-evenly;
     font-size: var(--font-size-m);
+    position: relative;
+
 
     &.disabledLabel {
       color: var(--color-dark-300);
@@ -100,6 +102,8 @@
     .error {
       color: var(--color-danger-300);
       font-size: var(--font-size-xs);
+      position: absolute;
+      top: 60px
     }
 
   }
