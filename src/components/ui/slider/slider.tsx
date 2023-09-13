@@ -5,7 +5,8 @@ import clsx from 'clsx'
 
 import s from './slider.module.scss'
 
-import { Typography } from '@/components/ui'
+import { CardsInput, Typography } from '@/components/ui'
+import { ControlledInput } from '@/components/ui/controlled-input'
 
 type ToggleOptionsType = {
   label: string
@@ -32,18 +33,49 @@ export const SliderForCards: FC<TabSwitcherProps> = ({ options, disabled, ...res
   const activateEditMode = () => {
     setEditMode(true)
   }
-  const oValueChangeHandler = (value: number[]) => {
-    //здесь будет отправляться запрос на показ
-    //всех или только моих карточек
-    setRangeValue(value)
-    restProps.onValueChange && restProps.onValueChange(value[0], value[1])
+  const turnOffEditMode = () => {
+    setEditMode(false)
+  }
+  const oValueChangeHandler = (value: number | number[]) => {
+    //проверяем еслим массив, если да до отправляем оба значения
+    if (Array.isArray(value)) {
+      setRangeValue(value)
+      restProps.onValueChange && restProps.onValueChange(value[0], value[1])
+    }
+    // если пришел не массив а одно число
+    //решаем каким оно будет, минимальным или максимальным
+    else {
+      console.log(value)
+      if (value > rangeValue[0]) {
+        setRangeValue([rangeValue[1], value])
+        restProps.onValueChange && restProps.onValueChange(rangeValue[1], value)
+      } else if (value < rangeValue[0]) {
+        setRangeValue([value, rangeValue[1]])
+        restProps.onValueChange && restProps.onValueChange(value, rangeValue[1])
+      }
+    }
+    if (rangeValue[1] < rangeValue[0]) {
+      let biggerDigit = rangeValue[0]
+
+      setRangeValue([rangeValue[1], biggerDigit])
+    }
   }
 
   return (
     <div className={s.rangeContainer}>
-      <Typography onDoubleClick={activateEditMode} className={s.rangeDigit} variant={'body2'}>
-        {rangeValue[0]}
-      </Typography>
+      {editMode ? (
+        <CardsInput
+          className={s.rangeInput}
+          onBlur={turnOffEditMode}
+          value={rangeValue[0]}
+          onInputValueChange={oValueChangeHandler}
+        />
+      ) : (
+        <Typography onDoubleClick={activateEditMode} className={s.rangeDigit} variant={'body2'}>
+          {rangeValue[0]}
+        </Typography>
+      )}
+
       <Slider.Root
         className={s.SliderRoot}
         onValueChange={oValueChangeHandler}

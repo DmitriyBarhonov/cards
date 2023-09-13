@@ -100,7 +100,7 @@ export const CardsInput = forwardRef((props: CardsInputProps<any>, ref) => {
           ref={ref}
           onBlur={onInputValueChangeHandler}
           required={required}
-          value={valueForInput}
+          value={(value && value) || valueForInput}
           onChange={onInputValueChangeHandler}
           type={inputType}
           className={classNames.inputField}
