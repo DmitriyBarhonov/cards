@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
+import clsx from 'clsx'
 
 import s from './tab-switcher.module.scss'
 
@@ -17,9 +18,14 @@ type TabSwitcherProps = {
   value?: any
 }
 export const TabSwitcher: FC<TabSwitcherProps> = ({ options, ...restProps }) => {
+  const classNames = {
+    toggleGroup: clsx(s.toggleGroup),
+    toggleGroupItem: clsx(s.toggleGroupItem),
+  }
+
   return (
     <ToggleGroup.Root
-      className={s.toggleGroup}
+      className={classNames.toggleGroup}
       type="single"
       defaultValue={restProps.defaultValue}
       aria-label="Text alignment"
@@ -29,7 +35,7 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({ options, ...restProps }) => 
         return (
           <ToggleGroup.Item
             key={option.value}
-            className={s.toggleGroupItem}
+            className={classNames.toggleGroupItem}
             value={option.value}
             aria-label={option.label}
           >
