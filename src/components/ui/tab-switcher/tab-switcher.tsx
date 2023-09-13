@@ -12,21 +12,23 @@ type ToggleOptionsType = {
 
 type TabSwitcherProps = {
   options: ToggleOptionsType[]
+  disabled?: boolean
   defaultValue?: string
   onValueChange?: () => void
   className?: string
   value?: any
 }
-export const TabSwitcher: FC<TabSwitcherProps> = ({ options, ...restProps }) => {
+export const TabSwitcher: FC<TabSwitcherProps> = ({ options, disabled, ...restProps }) => {
   const classNames = {
-    toggleGroup: clsx(s.toggleGroup),
-    toggleGroupItem: clsx(s.toggleGroupItem),
+    toggleGroup: clsx(disabled ? s.toggleDisabled : s.toggleGroup),
+    toggleGroupItem: clsx(disabled ? s.toggleDisabledItem : s.toggleGroupItem),
   }
 
   return (
     <ToggleGroup.Root
-      className={classNames.toggleGroup}
+      className={`${classNames.toggleGroup} ${restProps.className}`}
       type="single"
+      disabled={disabled}
       defaultValue={restProps.defaultValue}
       aria-label="Text alignment"
       loop={false}
