@@ -14,14 +14,12 @@
     cursor: pointer;
 
     &:focus {
-      //box-sizing: border-box;
-      border: 2px solid var(--color-info-900);
+      outline: 2px solid var(--color-info-900);
       background-color: transparent;
     }
   }
 
   .toggleGroupItem {
-    //box-sizing: border-box;
     background-color: transparent;
     color: var(--color-light-100);
     @include mixins.toggleItem;
@@ -30,12 +28,6 @@
       color: var(--color-accent-100);
       transition: all 0.5s ease;
     }
-
-    //&:focus {
-    //  //box-sizing: border-box;
-    //  border: 2px solid var(--info-900, #234E99);
-    //  background-color: transparent;
-    //}
 
     &[data-state='on'] {
       background-color: var(--color-accent-500);

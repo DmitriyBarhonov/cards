@@ -28,7 +28,7 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({ options, disabled, ...restPr
 
   const oValueChangeHandler = (value: string) => {
     if (value) setValue(value)
-    //десь будет отправляться запрос на показ
+    //здесь будет отправляться запрос на показ
     //всех или только моих карточек
   }
 
