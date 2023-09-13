@@ -12,7 +12,6 @@ export const Decks = () => {
   })
   const [createDeck, { isLoading }] = useCreateDeckMutation()
 
-  console.log(decks)
   if (decks.isError) return <div>decks.isError</div>
 
   return (
@@ -25,6 +24,7 @@ export const Decks = () => {
             { label: 'All Cards', value: 'all-cards' },
           ]}
           disabled={false}
+          defaultValue={'all-cards'}
         />
       </div>
       <Button
