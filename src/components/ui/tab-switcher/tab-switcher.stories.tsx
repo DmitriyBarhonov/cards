@@ -17,6 +17,5 @@ export const Default: Story = {
       { label: 'My Cards', value: 'my-cards' },
       { label: 'All Cards', value: 'all-cards' },
     ],
-    label: 'Show packs cards',
   },
 }

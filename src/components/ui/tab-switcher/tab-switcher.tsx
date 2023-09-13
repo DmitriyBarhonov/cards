@@ -11,13 +11,12 @@ type ToggleOptionsType = {
 
 type TabSwitcherProps = {
   options: ToggleOptionsType[]
-  mainLabel: string
   defaultValue?: string
   onValueChange?: () => void
   className?: string
   value?: any
 }
-export const TabSwitcher: FC<TabSwitcherProps> = ({ options, mainLabel, ...restProps }) => {
+export const TabSwitcher: FC<TabSwitcherProps> = ({ options, ...restProps }) => {
   return (
     <ToggleGroup.Root
       className={s.toggleGroup}
@@ -38,10 +37,6 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({ options, mainLabel, ...restP
           </ToggleGroup.Item>
         )
       })}
-
-      {/*<ToggleGroup.Item className={s.toggleGroupItem} value="right" aria-label="Right aligned">*/}
-      {/*  <TextAlignRightIcon />*/}
-      {/*</ToggleGroup.Item>*/}
     </ToggleGroup.Root>
   )
 }

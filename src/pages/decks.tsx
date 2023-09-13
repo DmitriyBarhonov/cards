@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { Button } from '@/components/ui'
+import { TabSwitcher } from '@/components/ui/tab-switcher'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks'
 import { Deck } from '@/services/decks/types.ts'
 
@@ -16,6 +17,15 @@ export const Decks = () => {
 
   return (
     <div>
+      {/*таб свтчер времено размещен для испытаний*/}
+      <div>
+        <TabSwitcher
+          options={[
+            { label: 'My Cards', value: 'my-cards' },
+            { label: 'All Cards', value: 'all-cards' },
+          ]}
+        />
+      </div>
       <Button
         onClick={() => {
           createDeck({ name: '321312' })
