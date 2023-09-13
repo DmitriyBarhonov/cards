@@ -15,6 +15,7 @@ type TabSwitcherProps = {
   onValueChange?: () => void
   className?: string
   value?: any
+  label?: string
 }
 export const TabSwitcher: FC<TabSwitcherProps> = () => {
   return (
