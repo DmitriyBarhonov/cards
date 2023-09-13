@@ -43,3 +43,12 @@
   box-shadow: 0 0 0 5px green;
 }
 
+.rangeContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 300px;
+}
+.rangeDigit {
+  display: inline-block;
+}
