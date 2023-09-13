@@ -12,7 +12,8 @@
 
       .mainTitle {
         @include mixins.authMainTitle;
-        margin: 38px 0 6px;
+        margin-top: 6px !important;
+        //margin-bottom: 8px !important;
       }
 
       .signInInput {
@@ -21,29 +22,30 @@
 
       .rememberMe {
         align-self: flex-start;
-        margin-top: 12px;
+        margin-top: 22px;
         margin-left: 36px;
       }
-    }
 
-    .forgotPasswordLink {
-      align-self: flex-end;
-      margin-right: 36px;
-      color: var(--color-light-100);
-      text-decoration: none;
-      text-align: right;
+      .forgotPasswordLink {
+        align-self: flex-end;
+        margin-right: 36px;
+        color: var(--color-light-100);
+        text-decoration: none;
+        text-align: right;
 
-      &:hover {
-        color: var(--color-accent-100);
+        &:hover {
+          color: var(--color-accent-100);
+        }
+        &:active {
+          color: var(--color-accent-300);
+        }
       }
-      &:active {
-        color: var(--color-accent-300);
-      }
-    }
 
-    .submitButton {
-      @include mixins.authSubmitButton;
-      margin-top: 56px;
+      .submitButton {
+        @include mixins.authSubmitButton;
+        margin-top: 36px;
+      }
+
     }
 
     .bottomText {
@@ -52,6 +54,7 @@
     }
 
     .signUpLink {
+      @include mixins.authMainBottomLink;
       margin-bottom: 20px;
     }
   }

@@ -75,6 +75,7 @@ export const CardsInput = forwardRef((props: CardsInputProps<any>, ref) => {
     <div className={classNames.inputContainer}>
       {isInputPass && (
         <button
+          type={'button'}
           disabled={rest.disabled}
           className={classNames.watchPassButton}
           onClick={toggleWatchPassword}

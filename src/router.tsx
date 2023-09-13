@@ -17,7 +17,7 @@ import { Decks } from '@/pages/decks.tsx'
 const publicRoutes: RouteObject[] = [
   {
     path: '/login',
-    element: <SignIn />,
+    element: <SignIn onSubmit={() => {}} />,
   },
   {
     path: '/sign-up',

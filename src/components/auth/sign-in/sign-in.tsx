@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
@@ -39,7 +38,6 @@ export type SignInProps = {
   // onInputValueChange?: (value: string) => void
   onSubmit: (data: SignInFormType) => void //при сабмите отправляем данные типа мыло, пароль, запомниМеня
 }
-
 
 // type FormValues = {
 //   email: string
@@ -95,14 +93,16 @@ export const SignIn = (props: SignInProps) => {
             name={'password'}
             control={control}
           />
-          <ControlledCheckbox
-            // name передаем такой же как и в типизации
-            name="rememberMe"
-            className={classNames.rememberMe}
-            label={'Remember me'}
-            // Передаем control
-            control={control}
-          />
+          <div className={classNames.rememberMe}>
+            <ControlledCheckbox
+              // name передаем такой же как и в типизации
+              name="rememberMe"
+              label={'Remember me'}
+              // Передаем control
+              control={control}
+            />
+          </div>
+
           <Typography
             as={Link}
             to="/forgot-password"
