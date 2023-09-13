@@ -11,7 +11,7 @@ type ToggleOptionsType = {
 }
 
 type TabSwitcherProps = {
-  options: ToggleOptionsType[]
+  options?: ToggleOptionsType[]
   disabled?: boolean
   defaultValue?: string
   onValueChange?: (value: string) => void
@@ -19,22 +19,25 @@ type TabSwitcherProps = {
   value?: any
 }
 export const SliderForCards: FC<TabSwitcherProps> = ({ options, disabled, ...restProps }) => {
-  const [value, setValue] = useState(options[1].value)
-
   const classNames = {
     toggleGroup: clsx(disabled ? s.toggleDisabled : s.toggleGroup),
     toggleGroupItem: clsx(disabled ? s.toggleDisabledItem : s.toggleGroupItem),
   }
 
   const oValueChangeHandler = (value: string) => {
-    if (value) setValue(value)
     //здесь будет отправляться запрос на показ
     //всех или только моих карточек
     restProps.onValueChange && restProps.onValueChange(value)
   }
 
   return (
-    <Slider.Root className={s.SliderRoot} defaultValue={[50]} max={100} step={1}>
+    <Slider.Root
+      className={s.SliderRoot}
+      defaultValue={[25, 75]}
+      max={100}
+      step={1}
+      minStepsBetweenThumbs={1}
+    >
       <Slider.Track className={s.SliderTrack}>
         <Slider.Range className={s.SliderRange} />
       </Slider.Track>
