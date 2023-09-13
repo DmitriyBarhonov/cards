@@ -14,7 +14,7 @@ type TabSwitcherProps = {
   options: ToggleOptionsType[]
   disabled?: boolean
   defaultValue?: string
-  onValueChange?: () => void
+  onValueChange?: (value: string) => void
   className?: string
   value?: any
 }
@@ -30,6 +30,7 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({ options, disabled, ...restPr
     if (value) setValue(value)
     //здесь будет отправляться запрос на показ
     //всех или только моих карточек
+    restProps.onValueChange && restProps.onValueChange(value)
   }
 
   return (
