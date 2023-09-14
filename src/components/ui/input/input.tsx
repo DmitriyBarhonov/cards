@@ -36,7 +36,7 @@ export const CardsInput = forwardRef((props: CardsInputProps<any>, ref) => {
     ...rest
   } = props
   const [hidePass, setHidePass] = useState(true)
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState((value && value) || '')
 
   const toggleWatchPassword = () => {
     setHidePass(!hidePass)
