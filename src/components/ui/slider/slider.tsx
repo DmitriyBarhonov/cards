@@ -5,8 +5,7 @@ import clsx from 'clsx'
 
 import s from './slider.module.scss'
 
-import { CardsInput, Typography } from '@/components/ui'
-import { ControlledInput } from '@/components/ui/controlled-input'
+import { Typography } from '@/components/ui'
 
 type ToggleOptionsType = {
   label: string
@@ -23,74 +22,75 @@ type TabSwitcherProps = {
   value?: any
 }
 export const SliderForCards: FC<TabSwitcherProps> = ({ options, disabled, ...restProps }) => {
-  const [rangeValue, setRangeValue] = useState([0, 20])
-  const [editMode, setEditMode] = useState(false)
+  const [rangeValue, setRangeValue] = useState([0, 25])
+
+  //  на случай если захочется сделать инпуты
+  // по бокам от слайдера
+  //  const [editMode, setEditMode] = useState(false)
+  // const activateEditMode = () => {
+  //   setEditMode(true)
+  // }
+  // const turnOffEditMode = () => {
+  //   setEditMode(false)
+  // }
+  // const oValueChangeHandler = (value: number | number[]) => {
+  //   //проверяем еслим массив, если да до отправляем оба значения
+  //   if (Array.isArray(value)) {
+  //     setRangeValue(value)
+  //     restProps.onValueChange && restProps.onValueChange(value[0], value[1])
+  //   }
+  //   // если пришел не массив а одно число
+  //   //решаем каким оно будет, минимальным или максимальным
+  //   else {
+  //     console.log(value)
+  //     if (value > rangeValue[0]) {
+  //       setRangeValue([rangeValue[1], value])
+  //       restProps.onValueChange && restProps.onValueChange(rangeValue[1], value)
+  //     } else if (value < rangeValue[1]) {
+  //       setRangeValue([value, rangeValue[1]])
+  //       restProps.onValueChange && restProps.onValueChange(value, rangeValue[1])
+  //     }
+  //   }
+  //   if (rangeValue[1] < rangeValue[0]) {
+  //     let biggerDigit = rangeValue[0]
+  //
+  //     setRangeValue([rangeValue[1], biggerDigit])
+  //   }
+  // }
 
   const classNames = {
     toggleGroup: clsx(disabled ? s.toggleDisabled : s.toggleGroup),
     toggleGroupItem: clsx(disabled ? s.toggleDisabledItem : s.toggleGroupItem),
   }
-  const activateEditMode = () => {
-    setEditMode(true)
-  }
-  const turnOffEditMode = () => {
-    setEditMode(false)
-  }
-  const oValueChangeHandler = (value: number | number[]) => {
-    //проверяем еслим массив, если да до отправляем оба значения
-    if (Array.isArray(value)) {
-      setRangeValue(value)
-      restProps.onValueChange && restProps.onValueChange(value[0], value[1])
-    }
-    // если пришел не массив а одно число
-    //решаем каким оно будет, минимальным или максимальным
-    else {
-      console.log(value)
-      if (value > rangeValue[0]) {
-        setRangeValue([rangeValue[1], value])
-        restProps.onValueChange && restProps.onValueChange(rangeValue[1], value)
-      } else if (value < rangeValue[0]) {
-        setRangeValue([value, rangeValue[1]])
-        restProps.onValueChange && restProps.onValueChange(value, rangeValue[1])
-      }
-    }
-    if (rangeValue[1] < rangeValue[0]) {
-      let biggerDigit = rangeValue[0]
 
-      setRangeValue([rangeValue[1], biggerDigit])
-    }
+  const onRangeValueChange = (value: number[]) => {
+    setRangeValue(value)
+    restProps.onValueChange && restProps.onValueChange(value[0], value[1])
   }
 
   return (
     <div className={s.rangeContainer}>
-      {editMode ? (
-        <CardsInput
-          className={s.rangeInput}
-          onBlur={turnOffEditMode}
-          value={rangeValue[0]}
-          onInputValueChange={oValueChangeHandler}
-        />
-      ) : (
-        <Typography onDoubleClick={activateEditMode} className={s.rangeDigit} variant={'body2'}>
-          {rangeValue[0]}
-        </Typography>
-      )}
+      <Typography className={s.rangeDigit} variant={'h3'}>
+        {rangeValue[0]}
+      </Typography>
 
       <Slider.Root
-        className={s.SliderRoot}
-        onValueChange={oValueChangeHandler}
-        defaultValue={rangeValue}
-        max={(restProps.maxCardsAmount && restProps.maxCardsAmount) || 100}
+        className={s.sliderRoot}
+        onValueChange={onRangeValueChange}
+        defaultValue={[0, 25]}
+        max={(restProps.maxCardsAmount && restProps.maxCardsAmount) || 150}
         step={1}
-        minStepsBetweenThumbs={1}
+        minStepsBetweenThumbs={2}
       >
-        <Slider.Track className={s.SliderTrack}>
-          <Slider.Range className={s.SliderRange} />
+        <Slider.Track className={s.sliderTrack}>
+          <Slider.Range className={s.sliderRange} />
         </Slider.Track>
-        <Slider.Thumb className={s.SliderThumb} aria-label="min-amount" />
-        <Slider.Thumb className={s.SliderThumb} aria-label="max-amount" />
+        <Slider.Thumb className={s.sliderThumb} aria-label="min-amount" />
+        <Slider.Thumb className={s.sliderThumb} aria-label="max-amount" />
       </Slider.Root>
-      <Typography variant={'body2'}>{rangeValue[1]}</Typography>
+      <Typography className={s.rangeDigit} variant={'h3'}>
+        {rangeValue[1]}
+      </Typography>
     </div>
   )
 }
