@@ -21,7 +21,7 @@ const publicRoutes: RouteObject[] = [
   },
   {
     path: '/sign-up',
-    element: <SignUp />,
+    element: <SignUp onSubmit={() => {}} />,
   },
   {
     path: '/forgot-password',
