@@ -33,7 +33,7 @@ const publicRoutes: RouteObject[] = [
   },
   {
     path: '/set-new-password',
-    element: <SetNewPass />,
+    element: <SetNewPass onSubmit={() => {}} />,
   },
   {
     path: '/personal-info',
