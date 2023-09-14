@@ -59,8 +59,13 @@ export const SliderForCards: FC<TabSwitcherProps> = ({ options, disabled, ...res
   // }
 
   const classNames = {
-    toggleGroup: clsx(disabled ? s.toggleDisabled : s.toggleGroup),
-    toggleGroupItem: clsx(disabled ? s.toggleDisabledItem : s.toggleGroupItem),
+    container: clsx(s.rangeContainer),
+    num: clsx(s.rangeDigit),
+    toggleGroup: clsx(s.rangeDigit),
+    slider: clsx(s.sliderRoot),
+    track: clsx(s.sliderTrack),
+    range: clsx(s.sliderRange),
+    thumb: clsx(s.range),
   }
 
   const onRangeValueChange = (value: number[]) => {
@@ -69,26 +74,26 @@ export const SliderForCards: FC<TabSwitcherProps> = ({ options, disabled, ...res
   }
 
   return (
-    <div className={s.rangeContainer}>
-      <Typography className={s.rangeDigit} variant={'h3'}>
+    <div className={classNames.container}>
+      <Typography className={classNames.num} variant={'h3'}>
         {rangeValue[0]}
       </Typography>
 
       <Slider.Root
-        className={s.sliderRoot}
+        className={classNames.slider}
         onValueChange={onRangeValueChange}
         defaultValue={[0, 25]}
-        max={(restProps.maxCardsAmount && restProps.maxCardsAmount) || 150}
+        max={(restProps.maxCardsAmount && restProps.maxCardsAmount) || 50}
         step={1}
         minStepsBetweenThumbs={2}
       >
-        <Slider.Track className={s.sliderTrack}>
-          <Slider.Range className={s.sliderRange} />
+        <Slider.Track className={classNames.track}>
+          <Slider.Range className={classNames.range} />
         </Slider.Track>
-        <Slider.Thumb className={s.sliderThumb} aria-label="min-amount" />
-        <Slider.Thumb className={s.sliderThumb} aria-label="max-amount" />
+        <Slider.Thumb className={classNames.thumb} aria-label="min-amount" />
+        <Slider.Thumb className={classNames.thumb} aria-label="max-amount" />
       </Slider.Root>
-      <Typography className={s.rangeDigit} variant={'h3'}>
+      <Typography className={classNames.num} variant={'h3'}>
         {rangeValue[1]}
       </Typography>
     </div>
