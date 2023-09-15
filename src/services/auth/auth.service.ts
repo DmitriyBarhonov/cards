@@ -1,6 +1,6 @@
 import { baseApi } from '@/services/base-api.ts'
 
-const authApi = baseApi.injectEndpoints({
+const authService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       login: builder.mutation<any, { email: string; password: string }>({
@@ -9,12 +9,14 @@ const authApi = baseApi.injectEndpoints({
           method: 'POST',
           body: { email, password },
         }),
-        //когда выполнится запрос и даные придут
-        //сд. прошлые данные с этим тегом невалидными
-        invalidatesTags: ['Decks'],
+      }),
+      getMe: builder.query({
+        query: () => ({
+          url: `v1/auth/me`,
+        }),
       }),
     }
   },
 })
 
-export const { useLoginMutation } = authApi
+export const { useLoginMutation, useGetMeQuery } = authService

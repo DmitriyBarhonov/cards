@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 import { Button } from '@/components/ui'
 import { SliderForCards } from '@/components/ui/slider'
-import { TabSwitcher } from '@/components/ui/tab-switcher'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks'
 import { Deck } from '@/services/decks/types.ts'
 
