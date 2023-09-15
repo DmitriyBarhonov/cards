@@ -1,0 +1,70 @@
+@use "../../../assets/mixins/mixins" as mixins;
+
+
+.rangeContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 251px;
+  height: 36px;
+
+  .rangeDigit {
+    @include mixins.defaultBorder;
+    display: inline-block;
+    border-radius: 2px;
+    text-align: center;
+    font-weight: var(--font-weight-regular);
+    padding: 6px 8px;
+    min-width: 36px;
+    width: auto;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .sliderRoot {
+    position: relative;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    touch-action: none;
+    width: 155px;
+    height: 16px;
+    cursor: pointer;
+
+
+    .sliderTrack {
+      background-color: var(--color-accent-900);
+      position: relative;
+      flex-grow: 1;
+      border-radius: 9999px;
+      height: 5px;
+
+      .sliderRange {
+        position: absolute;
+        background-color: var(--color-accent-300);
+        border-radius: 9999px;
+        height: 100%;
+      }
+    }
+
+    .range {
+      display: block;
+      width: 12px;
+      height: 12px;
+      background-color: white;
+      box-shadow: 0 0 0 5px var(--color-accent-300);
+      border-radius: 10px;
+      transition: all 0.5s ease;
+
+      &:hover {
+        box-shadow: 0 0 0 5px var(--color-accent-100);
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 5px var(--color-accent-500);
+      }
+    }
+  }
+}
+
