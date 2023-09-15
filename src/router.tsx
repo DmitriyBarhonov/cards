@@ -10,14 +10,16 @@ import { CheckEmail } from '@/components/auth/check-email'
 import { ForgotPass } from '@/components/auth/forgot-pass'
 import { PersonalInfo } from '@/components/auth/personal-info'
 import { SetNewPass } from '@/components/auth/set-new-pass'
-import { SignIn } from '@/components/auth/sign-in'
 import { SignUp } from '@/components/auth/sign-up'
-import { Decks } from '@/pages/decks.tsx'
+import { Typography } from '@/components/ui'
+import { Decks } from '@/pages/decks-page/decks.tsx'
+import { SignInPage } from '@/pages/sign-in-page/sign-in-page.tsx'
+import { useGetMeQuery } from '@/services/auth'
 
 const publicRoutes: RouteObject[] = [
   {
     path: '/login',
-    element: <SignIn onSubmit={() => {}} />,
+    element: <SignInPage />,
   },
   {
     path: '/sign-up',
@@ -35,16 +37,16 @@ const publicRoutes: RouteObject[] = [
     path: '/set-new-password',
     element: <SetNewPass onSubmit={() => {}} />,
   },
-  {
-    path: '/personal-info',
-    element: <PersonalInfo />,
-  },
 ]
 
 const privateRoutes: RouteObject[] = [
   {
     path: '/',
     element: <Decks />,
+  },
+  {
+    path: '/personal-info',
+    element: <PersonalInfo />,
   },
 ]
 
@@ -61,7 +63,10 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = true
+  const { data: me, isLoading: isMeLoading } = useGetMeQuery()
+  const isAuthenticated = !!me
+
+  if (isMeLoading) return <Typography variant={'h1'}>Loading</Typography>
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }

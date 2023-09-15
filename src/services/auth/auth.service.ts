@@ -10,7 +10,7 @@ const authService = baseApi.injectEndpoints({
           body: { email, password },
         }),
       }),
-      getMe: builder.query({
+      getMe: builder.query<any, void>({
         query: () => ({
           url: `v1/auth/me`,
         }),
