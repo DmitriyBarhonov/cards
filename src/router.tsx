@@ -25,7 +25,7 @@ const publicRoutes: RouteObject[] = [
   },
   {
     path: '/forgot-password',
-    element: <ForgotPass />,
+    element: <ForgotPass onSubmit={() => {}} />,
   },
   {
     path: '/check-your-email',
