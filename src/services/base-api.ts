@@ -9,19 +9,13 @@ export const baseApi = createApi({
   //название и путь где будет храниться наш редюсер
   reducerPath: 'baseApi',
   //
-  tagTypes: ['Decks'],
+  tagTypes: ['Decks', 'Me'],
 
   //позволяет нам создать некий базовый инстанс
   //тоесть для каждого запроса будет создаваться некая основа
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://api.flashcards.andrii.es',
     credentials: 'include',
-    //хэддэры позволят нам вып. запрсы без авторизации
-    //TODO потом эти хэддэры нуно убрать
-    //в продакшене такого быть не должно
-    prepareHeaders: headers => {
-      headers.append('x-auth-skip', 'true')
-    },
   }),
   endpoints: () => ({}),
 })
