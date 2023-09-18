@@ -59,6 +59,10 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
+  const { isLoading: isMeLoading } = useGetMeQuery()
+
+  if (isMeLoading) return <Typography variant={'h1'}>Loading</Typography>
+
   return <RouterProvider router={router} />
 }
 
