@@ -6,7 +6,7 @@ const authService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       getMe: builder.query<any, void>({
-        //тут часть кода чтоыб предотвратить беспонечные
+        //тут часть кода чтобы предотвратить беспонечные
         //me запросы, взято откуда-то с гита
         async queryFn(_name, _api, _extraOptions, baseQuery) {
           const result = await baseQuery({

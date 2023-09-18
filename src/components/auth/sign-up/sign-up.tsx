@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
+import { omit } from 'lodash'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { z } from 'zod'
@@ -51,6 +52,8 @@ export type SignUpProps = {
 //   email: string
 //   password: string
 // } //не нужно, берем из схемы автоматически
+//TODO добавить в валидацию для регистрации проверку на совпадене пароля
+//чтобы оба поля содержали один и тот же новый пароль
 
 export const SignUp = (props: SignUpProps) => {
   const { handleSubmit, control } = useForm<SignUpFormType>({
@@ -59,13 +62,20 @@ export const SignUp = (props: SignUpProps) => {
     defaultValues: {
       email: '',
       password: '',
-      confirm: '',
     },
   })
   // const onSubmit = (data: SignUpFormType) => {
   //   console.log(data)
   // }
-  const handleFormSubmitted = handleSubmit(props.onSubmit)
+  //рабочий Викин код
+  //const handleFormSubmitted = handleSubmit(props.onSubmit)
+  //нам не надо на сервер отправлять confirm, поэтому
+  //с помощью библиотечки лоудаш исключаем его из отправлемых данных
+  const handleFormSubmitted = handleSubmit(data => {
+    const formData = omit(data, ['confirm']) // Исключаем поле 'confirm' из данных формы
+
+    props.onSubmit(formData)
+  })
 
   return (
     <div className={classNames.formContainer}>
