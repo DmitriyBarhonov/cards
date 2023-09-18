@@ -10,10 +10,10 @@ import { CheckEmail } from '@/components/auth/check-email'
 import { ForgotPass } from '@/components/auth/forgot-pass'
 import { PersonalInfo } from '@/components/auth/personal-info'
 import { SetNewPass } from '@/components/auth/set-new-pass'
-import { SignUp } from '@/components/auth/sign-up'
 import { Typography } from '@/components/ui'
 import { Decks } from '@/pages/decks-page/decks.tsx'
 import { SignInPage } from '@/pages/sign-in-page/sign-in-page.tsx'
+import { SignUpPage } from '@/pages/sign-up-page/sign-up-page.tsx'
 import { useGetMeQuery } from '@/services/auth'
 
 const publicRoutes: RouteObject[] = [
@@ -23,7 +23,7 @@ const publicRoutes: RouteObject[] = [
   },
   {
     path: '/sign-up',
-    element: <SignUp onSubmit={() => {}} />,
+    element: <SignUpPage />,
   },
   {
     path: '/forgot-password',
@@ -68,7 +68,7 @@ export const Router = () => {
 
 function PrivateRoutes() {
   const { data: me, isLoading: isMeLoading } = useGetMeQuery()
-  const isAuthenticated = !!me
+  const isAuthenticated = me && me?.success !== false
 
   if (isMeLoading) return <Typography variant={'h1'}>Loading</Typography>
 

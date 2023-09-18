@@ -1,4 +1,4 @@
-import { LoginArgs, LoginResponse } from './auth.types.ts'
+import { LoginArgs, LoginResponse, SignUpArgs, SignUpResponse } from './auth.types.ts'
 
 import { baseApi } from '@/services/base-api.ts'
 
@@ -15,27 +15,43 @@ const authService = baseApi.injectEndpoints({
           })
 
           if (result.error) {
-            // but refetch on another error
+            // если нам пришла ошибка, мы все равно присваиваем
+            // ее data, кэшируем так как потом data используем для
+            // вычисления isAuthorised для редиректа (стр логинизации)
+            // if (me && me?.success !== false) return <Navigate to={'/'} />
+            // там если success == false то останемся на логине
             return { data: { success: false } }
           }
 
+          //ну а если нету ошибки, присваиваем данные result.data
+          // главное чтобы не было success:false
           return { data: result.data }
         },
+        //чтобы при поулчении ошибки опять не отправлялся запрос
+        //так избегются бесконечные запросы
         extraOptions: {
           maxRetries: 0,
         },
         providesTags: ['Me'],
       }),
       login: builder.mutation<LoginResponse, LoginArgs>({
-        query: ({ email, password }) => ({
+        query: data => ({
           url: `v1/auth/login`,
           method: 'POST',
-          body: { email, password },
+          body: data,
         }),
         invalidatesTags: ['Me'],
+      }),
+      signUp: builder.mutation<SignUpResponse, SignUpArgs>({
+        query: data => ({
+          url: `v1/auth/sign-up`,
+          method: 'POST',
+          body: data,
+        }),
+        // invalidatesTags: ['Me'],
       }),
     }
   },
 })
 
-export const { useLoginMutation, useGetMeQuery } = authService
+export const { useLoginMutation, useGetMeQuery, useSignUpMutation } = authService
