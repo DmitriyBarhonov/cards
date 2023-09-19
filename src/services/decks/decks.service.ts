@@ -39,29 +39,46 @@ const deskApi = baseApi.injectEndpoints({
         invalidatesTags: ['Decks'],
       }),
       deleteDeck: builder.mutation<void, { id: string }>({
-        query: data => ({
-          url: `v1/decks/${data.id}`,
+        query: currentData => ({
+          url: `v1/decks/${currentData.id}`,
           method: 'DELETE',
         }),
-        // async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
-        //   const patchResult = dispatch(
-        //     deskApi.util.updateQueryData('getDecks', {}, draft => {
-        //       Object.assign(draft, patch)
-        //     })
-        //   )
-        //
-        //   try {
-        //     await queryFulfilled
-        //   } catch {
-        //     patchResult.undo()
-        //
-        //     /**
-        //      * Alternatively, on failure you can invalidate the corresponding cache tags
-        //      * to trigger a re-fetch:
-        //      * dispatch(api.util.invalidateTags(['Post']))
-        //      */
-        //   }
-        // },
+        //сначала добавляем async onQueryStarted
+        //тут все таки айди нужен
+        async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
+          const patchResult = dispatch(
+            deskApi.util.updateQueryData(
+              //тут будем давать адрес 1, 2 аргументы и 3 какое-то действие
+              'getDecks',
+              //мы же getDesks будем выполнять, вот и параметры для него тут
+              { authorId: '1', currentPage: 1 },
+              draft => {
+                //В предоставленном коде draft представляет собой неизменяемое (immutable)
+                // состояние данных, которое может быть изменено с использованием библиотеки
+                // В данном контексте, draft относится к состоянию кэша данных, которое можно
+                // модифицировать перед обновлением. Это позволяет изменять данные кэша
+                // без прямого мутирования (модификации) исходного состояния.
+                // т.е. здесь драфт это вся фигня =D что есть в кэше д тегом 'Decks'
+                draft.items = draft.items.filter(item => item.id !== id)
+              }
+            )
+          )
+
+          try {
+            //итак, на этом моменты попытаемся осуществитьь вышеписанное
+            await queryFulfilled
+          } catch {
+            //но, на случай если что-то пойдет не по плану
+            //есть undo, которая откатит наши оптимистичные изменения (на жизненные ;D)
+            patchResult.undo()
+
+            /**
+             * Alternatively, on failure you can invalidate the corresponding cache tags
+             * to trigger a re-fetch:
+             * dispatch(api.util.invalidateTags(['Post']))
+             */
+          }
+        },
         invalidatesTags: ['Decks'],
       }),
     }
