@@ -1,5 +1,10 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query'
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import { Mutex } from 'async-mutex'
+
+// create a new mutex
+const mutex = new Mutex()
+
 //это готовый код для реавторизации от ртк
 //здесь мы добавили эскпорт для baseQueryWithReauth
 //и свой baseUrl в baseQuery
@@ -13,24 +18,31 @@ export const baseQueryWithReauth: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
+  await mutex.waitForUnlock()
   let result = await baseQuery(args, api, extraOptions)
 
-  console.log(result)
   if (result.error && result.error.status === 401) {
-    // try to get a new token
-    //тут меняет урл как нам надо, /refresh-token
-    const refreshResult = await baseQuery(
-      {
-        url: '/v1/auth/refresh-token',
-        method: 'POST',
-      },
-      api,
-      extraOptions
-    )
+    if (!mutex.isLocked()) {
+      const release = await mutex.acquire()
 
-    if (refreshResult?.meta?.response?.status === 204) {
-      // store the new token
-      // retry the initial query
+      try {
+        const refreshResult = await baseQuery(
+          { url: 'v1/auth/refresh-token', method: 'POST' },
+          api,
+          extraOptions
+        )
+
+        if (refreshResult?.meta?.response?.status === 204) {
+          // Retry the initial query
+          result = await baseQuery(args, api, extraOptions)
+        } else {
+          // globalNavigate('/login')
+        }
+      } finally {
+        release()
+      }
+    } else {
+      await mutex.waitForUnlock()
       result = await baseQuery(args, api, extraOptions)
     }
   }

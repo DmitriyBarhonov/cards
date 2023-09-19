@@ -16,7 +16,7 @@ export const Decks = () => {
 
   return (
     <div>
-      {/*таб свтчер времено размещен для испытаний*/}
+      {/*таб свитчер времено размещен для испытаний*/}
       <div>
         <SliderForCards disabled={false} />
       </div>
