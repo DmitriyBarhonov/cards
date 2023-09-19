@@ -2,14 +2,15 @@ import { useState } from 'react'
 
 import { Button } from '@/components/ui'
 import { SliderForCards } from '@/components/ui/slider'
-import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks'
-import { Deck } from '@/services/decks/types.ts'
+import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks'
+import { Deck } from '@/services/decks/deck.types.ts'
 
 export const Decks = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const decks = useGetDecksQuery({
     itemsPerPage,
   })
+  const [deleteDeck] = useDeleteDeckMutation()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
 
   if (decks.isError) return <div>decks.isError</div>
@@ -51,6 +52,7 @@ export const Decks = () => {
             <th>Cards</th>
             <th>Updated</th>
             <th>Created By</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -61,6 +63,15 @@ export const Decks = () => {
                 <td>{deck.cardsCount}</td>
                 <td>{deck.updated}</td>
                 <td>{deck.author.name}</td>
+                <td>
+                  <Button
+                    onClick={() => {
+                      deleteDeck({ id: deck.id })
+                    }}
+                  >
+                    delete
+                  </Button>
+                </td>
               </tr>
             )
           })}
