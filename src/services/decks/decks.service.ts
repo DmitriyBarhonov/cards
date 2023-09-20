@@ -1,5 +1,6 @@
 import { baseApi } from '@/services/base-api.ts'
 import { Deck, DeckResponseType, DecksParams } from '@/services/decks/decks.types.ts'
+import { RootState } from '@/services/store.ts'
 
 const deskApi = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -20,14 +21,20 @@ const deskApi = baseApi.injectEndpoints({
           method: 'POST',
           body: { name },
         }),
-        async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        async onQueryStarted(_, { dispatch, queryFulfilled, getState }) {
+          const state = getState() as RootState
+
           try {
             const response = await queryFulfilled
 
             dispatch(
-              deskApi.util.updateQueryData('getDecks', { authorId: '1', currentPage: 1 }, draft => {
-                draft.items.unshift(response.data)
-              })
+              deskApi.util.updateQueryData(
+                'getDecks',
+                { currentPage: state.decks.currentPage },
+                draft => {
+                  draft.items.unshift(response.data)
+                }
+              )
             )
           } catch (error) {
             console.log(error)
@@ -45,13 +52,15 @@ const deskApi = baseApi.injectEndpoints({
         }),
         //сначала добавляем async onQueryStarted
         //тут все таки айди нужен
-        async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
+        async onQueryStarted({ id }, { dispatch, queryFulfilled, getState }) {
+          const state = getState() as RootState
+
           const patchResult = dispatch(
             deskApi.util.updateQueryData(
               //тут будем давать адрес 1, 2 аргументы и 3 какое-то действие
               'getDecks',
               //мы же getDesks будем выполнять, вот и параметры для него тут
-              { authorId: '1', currentPage: 1 },
+              { currentPage: state.decks.currentPage },
               draft => {
                 //В предоставленном коде draft представляет собой неизменяемое (immutable)
                 // состояние данных, которое может быть изменено с использованием библиотеки
