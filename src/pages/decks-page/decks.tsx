@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui'
 import { SliderForCards } from '@/components/ui/slider'
 import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks'
-import { Deck } from '@/services/decks/deck.types.ts'
+import { Deck } from '@/services/decks/decks.types.ts'
 
 export const Decks = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
