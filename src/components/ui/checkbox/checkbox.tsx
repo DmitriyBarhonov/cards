@@ -38,11 +38,11 @@ const classNames = {
 }
 
 export const Checkbox: FC<CheckboxProps> = ({
-  className,
+  // className,
   checked,
   onValueChange,
   disabled,
-  required,
+  // required,
   label,
   id,
 }) => {
