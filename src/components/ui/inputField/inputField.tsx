@@ -38,6 +38,8 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     { required, value, onInputValueChange, variant = 'standard', fullWidth, className, ...rest },
     ref
   ) => {
+    debugger
+
     const [hidePass, setHidePass] = useState(true)
     const [inputValue, setInputValue] = useState((value && value) || '')
 
@@ -53,10 +55,16 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       onInputValueChange?.(e.currentTarget.value)
     }
     const isInputSearch = variant === 'search'
-    // Поставил пустую строку в место null что бы React не ругался
-    const valueForInput = variant === 'search' ? inputValue : undefined
     const isInputPass = variant === 'password'
-    const inputType = isInputPass && hidePass ? 'password' : 'text'
+    const valueForInput = variant === 'search' ? inputValue : undefined
+    //если тип пароль (+ hidePass всегда по умолчанию включен) то типом
+    // ипнута будет password, если нет то проверяем след.выражение
+    // если вариант search то передаем в инпут type search  для того,
+    // чтобы появилась нативная кнопка очищения поля.
+    // И елси уже никакое из предыдущих двух условии не валидно
+    // тогда инпут будет обычным текстом
+    // eslint-disable-next-line no-nested-ternary
+    const inputType = isInputPass && hidePass ? 'password' : isInputSearch ? 'search' : 'text'
 
     const classNames = {
       inputContainer: clsx(s.inputContainer, className, fullWidth && s.fullWidth),
@@ -76,6 +84,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
 
     return (
       <div className={classNames.inputContainer}>
+        {/*логика кнопки show password*/}
         {isInputPass && (
           <button
             type={'button'}
@@ -86,7 +95,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             {hidePass ? <WatchPassIcon /> : <CrossedOutWatchPassIcon />}
           </button>
         )}
-
+        {/*логика показа кнопок поиска и очищения поля*/}
         {isInputSearch && (
           <div className={classNames.searchIconsContainer}>
             <SearchIcon className={classNames.searchIcon} />
@@ -99,7 +108,6 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         <label className={classNames.inputLabel}>
           {rest.label}
           <input
-            // добавил ref
             ref={ref}
             onBlur={onInputValueChangeHandler}
             required={required}

@@ -3,7 +3,8 @@ import { FC } from 'react'
 import { clsx } from 'clsx'
 
 import s from '@/components/auth/personal-info/personal-info.module.scss'
-import { Button, CardsInput } from '@/components/ui'
+import { Button } from '@/components/ui'
+import { InputField } from '@/components/ui/inputField'
 
 type Props = {
   onInputBlurHandler: () => void
@@ -17,7 +18,7 @@ export const ProfileEditMode: FC<Props> = ({ onInputBlurHandler }) => {
   //TODO here we should use controlled input
   return (
     <>
-      <CardsInput onBlur={onInputBlurHandler} className={classNames.input} label={'Nickname'} />
+      <InputField onBlur={onInputBlurHandler} className={classNames.input} label={'Nickname'} />
       <Button className={classNames.submit} variant={'primary'}>
         Save Changes
       </Button>
