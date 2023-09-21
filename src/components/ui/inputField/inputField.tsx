@@ -4,7 +4,6 @@ import { clsx } from 'clsx'
 
 import s from './inputField.module.scss'
 
-import { CleanInputIcon } from '@/assets/icons/CleanInput.tsx'
 import { SearchIcon } from '@/assets/icons/Search.tsx'
 import { WatchPassIcon } from '@/assets/icons/WatchPass.tsx'
 import { CrossedOutWatchPassIcon } from '@/assets/icons/WatchPassCrossedOut.tsx'
@@ -38,17 +37,15 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     { required, value, onInputValueChange, variant = 'standard', fullWidth, className, ...rest },
     ref
   ) => {
-    debugger
-
     const [hidePass, setHidePass] = useState(true)
     const [inputValue, setInputValue] = useState((value && value) || '')
 
     const toggleWatchPassword = () => {
       setHidePass(!hidePass)
     }
-    const clearInputHandler = () => {
-      setInputValue('')
-    }
+    // const clearInputHandler = () => {
+    //   setInputValue('')
+    // }
 
     const onInputValueChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.currentTarget.value)
@@ -95,13 +92,13 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             {hidePass ? <WatchPassIcon /> : <CrossedOutWatchPassIcon />}
           </button>
         )}
-        {/*логика показа кнопок поиска и очищения поля*/}
+        {/*логика показа кнопки поиска и очищения поля*/}
         {isInputSearch && (
           <div className={classNames.searchIconsContainer}>
             <SearchIcon className={classNames.searchIcon} />
-            {inputValue && (
-              <CleanInputIcon onClick={clearInputHandler} className={classNames.clearFieldIcon} />
-            )}
+            {/*{inputValue && (*/}
+            {/*  <CleanInputIcon onClick={clearInputHandler} className={classNames.clearFieldIcon} />*/}
+            {/*)}*/}
           </div>
         )}
 
