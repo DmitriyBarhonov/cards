@@ -14,7 +14,7 @@ type ModalProps = {
   modalTitleVariant?: 'default' | 'large'
 }
 export const Modal: FC<ModalProps> = ({ modalButtonTitle, modalMainTitle, ...restProps }) => {
-  const typographyVariant = restProps.modalTitleVariant === 'default' ? 'h2' : 'large'
+  const typographyVariant = restProps.modalTitleVariant === 'default' ? 'h1' : 'large'
 
   const classNames = {
     root: clsx(s.rootModalContainer),
