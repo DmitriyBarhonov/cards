@@ -9,17 +9,19 @@ import s from './modal.module.scss'
 import { Button } from '@/components/ui'
 
 type ModalProps = {
-  modalButtonTitle?: string
+  modalButtonTitle: string
+  modalMainTitle?: string
 }
 export const Modal: FC<ModalProps> = ({ modalButtonTitle, ...restProps }) => {
   const classNames = {
     root: clsx(s.rootModalContainer),
+    button: clsx(s.modalButton),
   }
 
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <Button className="Button violet">{modalButtonTitle}</Button>
+        <Button className={classNames.button}>{modalButtonTitle}</Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="DialogOverlay" />

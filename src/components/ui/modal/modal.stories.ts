@@ -13,6 +13,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    modalTitle: 'Ah shit, here we go again',
+    modalButtonTitle: 'Тра-та-та, тра-та-та',
+    modalMainTitle: 'Ah shit, here we go again',
   },
 }

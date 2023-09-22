@@ -45,7 +45,7 @@ input {
   line-height: 1.5;
 }
 
-.Button {
+.modalButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -56,25 +56,25 @@ input {
   font-weight: 500;
   height: 35px;
 }
-.Button.violet {
+.modalButton.violet {
   background-color: var(--color-light-100);
   color: var(--violet-11);
   box-shadow: 0 2px 10px var(--color-dark-700);
 }
-.Button.violet:hover {
+.modalButton.violet:hover {
   background-color: #660a1d;
 }
-.Button.violet:focus {
+.modalButton.violet:focus {
   box-shadow: 0 0 0 2px black;
 }
-.Button.green {
+.modalButton.green {
   background-color: #0a6638;
   color: var(--green-11);
 }
-.Button.green:hover {
+.modalButton.green:hover {
   background-color: #0a6638;
 }
-.Button.green:focus {
+.modalButton.green:focus {
   box-shadow: 0 0 0 2px #66bf3c;
 }
 
