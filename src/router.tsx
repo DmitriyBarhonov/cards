@@ -12,6 +12,7 @@ import { PersonalInfo } from '@/components/auth/personal-info'
 import { SetNewPass } from '@/components/auth/set-new-pass'
 import { SignIn } from '@/components/auth/sign-in'
 import { SignUp } from '@/components/auth/sign-up'
+import { Layout } from '@/pages'
 import { Decks } from '@/pages/decks.tsx'
 
 const publicRoutes: RouteObject[] = [
@@ -35,10 +36,6 @@ const publicRoutes: RouteObject[] = [
     path: '/set-new-password',
     element: <SetNewPass onSubmit={() => {}} />,
   },
-  {
-    path: '/personal-info',
-    element: <PersonalInfo />,
-  },
 ]
 
 const privateRoutes: RouteObject[] = [
@@ -46,14 +43,27 @@ const privateRoutes: RouteObject[] = [
     path: '/',
     element: <Decks />,
   },
+  {
+    path: '/personal-info', //todo не забыть повесить логику на id пользователя
+    element: <PersonalInfo />,
+  },
 ]
 
 const router = createBrowserRouter([
   {
-    element: <PrivateRoutes />,
-    children: privateRoutes,
+    path: '/',
+    element: <Layout />,
+    children: [
+      {
+        element: <PrivateRoutes />,
+        children: privateRoutes,
+      },
+    ],
   },
-  ...publicRoutes,
+  {
+    element: <Layout />,
+    children: publicRoutes,
+  },
 ])
 
 export const Router = () => {
