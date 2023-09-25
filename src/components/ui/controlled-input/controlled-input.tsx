@@ -1,6 +1,8 @@
 import { useController, UseControllerProps } from 'react-hook-form'
 
-import { CardsInput, CardsInputProps } from '../input'
+import { Input, InputFieldProps } from '../input'
+
+//import { CardsInput } from '@/components/ui'
 
 //ControlledInputProps расширяет UseControllerProps<any>
 // и исключает некоторые свойства из CardsInputProps, такие как
@@ -8,7 +10,7 @@ import { CardsInput, CardsInputProps } from '../input'
 // принимает все свойства UseControllerProps
 // и все свойства CheckboxProps, кроме указанных.
 export type ControlledInputProps = UseControllerProps<any> &
-  Omit<CardsInputProps<any>, 'onChange' | 'value' | 'id'>
+  Omit<InputFieldProps, 'onChange' | 'value' | 'id'>
 
 //ControlledInput - это функциональный компонент, который принимает
 // name, rules, shouldUnregister, control, defaultValue
@@ -28,5 +30,6 @@ export const ControlledInput = ({
     fieldState: { error },
   } = useController({ name, control })
 
-  return <CardsInput {...props} {...field} errorMessage={error?.message} id={props.name} />
+  return <Input {...props} {...field} errorMessage={error?.message} id={props.label} />
+  //return <CardsInput {...props} {...field} errorMessage={error?.message} id={props.label} />
 }
