@@ -11,12 +11,11 @@ import { ForgotPass } from '@/components/auth/forgot-pass'
 import { PersonalInfo } from '@/components/auth/personal-info'
 import { SetNewPass } from '@/components/auth/set-new-pass'
 import { Typography } from '@/components/ui'
+import { PageNotFound, Layout } from '@/pages'
 import { Decks } from '@/pages/decks-page/decks.tsx'
 import { SignInPage } from '@/pages/sign-in-page/sign-in-page.tsx'
 import { SignUpPage } from '@/pages/sign-up-page/sign-up-page.tsx'
 import { useGetMeQuery } from '@/services/auth'
-import { Layout } from '@/pages'
-import { PageNotFound } from '@/pages'
 
 const publicRoutes: RouteObject[] = [
   {
