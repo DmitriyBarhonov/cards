@@ -12,6 +12,7 @@ import { PersonalInfo } from '@/components/auth/personal-info'
 import { SetNewPass } from '@/components/auth/set-new-pass'
 import { SignIn } from '@/components/auth/sign-in'
 import { SignUp } from '@/components/auth/sign-up'
+import { Layout } from '@/pages'
 import { PageNotFound } from '@/pages'
 import { Decks } from '@/pages/decks.tsx'
 
@@ -51,14 +52,27 @@ const privateRoutes: RouteObject[] = [
     path: '/',
     element: <Decks />,
   },
+  {
+    path: '/personal-info', //todo не забыть повесить логику на id пользователя
+    element: <PersonalInfo />,
+  },
 ]
 
 const router = createBrowserRouter([
   {
-    element: <PrivateRoutes />,
-    children: privateRoutes,
+    path: '/',
+    element: <Layout />,
+    children: [
+      {
+        element: <PrivateRoutes />,
+        children: privateRoutes,
+      },
+    ],
   },
-  ...publicRoutes,
+  {
+    element: <Layout />,
+    children: publicRoutes,
+  },
 ])
 
 export const Router = () => {
