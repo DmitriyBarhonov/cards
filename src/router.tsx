@@ -15,6 +15,8 @@ import { Decks } from '@/pages/decks-page/decks.tsx'
 import { SignInPage } from '@/pages/sign-in-page/sign-in-page.tsx'
 import { SignUpPage } from '@/pages/sign-up-page/sign-up-page.tsx'
 import { useGetMeQuery } from '@/services/auth'
+import { Layout } from '@/pages'
+import { PageNotFound } from '@/pages'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -37,6 +39,10 @@ const publicRoutes: RouteObject[] = [
     path: '/set-new-password',
     element: <SetNewPass onSubmit={() => {}} />,
   },
+  {
+    path: '/*',
+    element: <PageNotFound />,
+  },
 ]
 
 const privateRoutes: RouteObject[] = [
@@ -45,17 +51,26 @@ const privateRoutes: RouteObject[] = [
     element: <Decks />,
   },
   {
-    path: '/personal-info',
+    path: '/personal-info', //todo не забыть повесить логику на id пользователя
     element: <PersonalInfo />,
   },
 ]
 
 const router = createBrowserRouter([
   {
-    element: <PrivateRoutes />,
-    children: privateRoutes,
+    path: '/',
+    element: <Layout />,
+    children: [
+      {
+        element: <PrivateRoutes />,
+        children: privateRoutes,
+      },
+    ],
   },
-  ...publicRoutes,
+  {
+    element: <Layout />,
+    children: publicRoutes,
+  },
 ])
 
 export const Router = () => {
