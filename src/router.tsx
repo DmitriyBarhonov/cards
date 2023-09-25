@@ -10,20 +10,22 @@ import { CheckEmail } from '@/components/auth/check-email'
 import { ForgotPass } from '@/components/auth/forgot-pass'
 import { PersonalInfo } from '@/components/auth/personal-info'
 import { SetNewPass } from '@/components/auth/set-new-pass'
-import { SignIn } from '@/components/auth/sign-in'
-import { SignUp } from '@/components/auth/sign-up'
+import { Typography } from '@/components/ui'
+import { Decks } from '@/pages/decks-page/decks.tsx'
+import { SignInPage } from '@/pages/sign-in-page/sign-in-page.tsx'
+import { SignUpPage } from '@/pages/sign-up-page/sign-up-page.tsx'
+import { useGetMeQuery } from '@/services/auth'
 import { Layout } from '@/pages'
 import { PageNotFound } from '@/pages'
-import { Decks } from '@/pages/decks.tsx'
 
 const publicRoutes: RouteObject[] = [
   {
     path: '/login',
-    element: <SignIn onSubmit={() => {}} />,
+    element: <SignInPage />,
   },
   {
     path: '/sign-up',
-    element: <SignUp onSubmit={() => {}} />,
+    element: <SignUpPage />,
   },
   {
     path: '/forgot-password',
@@ -36,10 +38,6 @@ const publicRoutes: RouteObject[] = [
   {
     path: '/set-new-password',
     element: <SetNewPass onSubmit={() => {}} />,
-  },
-  {
-    path: '/personal-info',
-    element: <PersonalInfo />,
   },
   {
     path: '/*',
@@ -76,11 +74,18 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
+  const { isLoading: isMeLoading } = useGetMeQuery()
+
+  if (isMeLoading) return <Typography variant={'h1'}>Loading</Typography>
+
   return <RouterProvider router={router} />
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = true
+  const { data: me, isLoading: isMeLoading } = useGetMeQuery()
+  const isAuthenticated = me && me?.success !== false
+
+  if (isMeLoading) return <Typography variant={'h1'}>Loading</Typography>
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }

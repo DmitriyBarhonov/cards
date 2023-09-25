@@ -1,4 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
+
+import { baseQueryWithReauth } from '@/services/base-query-with-reauth.ts'
 
 export const baseApi = createApi({
   //createApi создает нам умный редюсер, который по мотом интегрим в стор
@@ -9,19 +11,13 @@ export const baseApi = createApi({
   //название и путь где будет храниться наш редюсер
   reducerPath: 'baseApi',
   //
-  tagTypes: ['Decks'],
+  tagTypes: ['Decks', 'Me'],
 
   //позволяет нам создать некий базовый инстанс
   //тоесть для каждого запроса будет создаваться некая основа
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://api.flashcards.andrii.es',
-    credentials: 'include',
-    //хэддэры позволят нам вып. запрсы без авторизации
-    //TODO потом эти хэддэры нуно убрать
-    //в продакшене такого быть не должно
-    prepareHeaders: headers => {
-      headers.append('x-auth-skip', 'true')
-    },
-  }),
+
+  //тут вместо fetchBaseQuery мы подключим baseQueryWithReauth
+  // тоеть готовый код для реавторизации с сайта ртк
+  baseQuery: baseQueryWithReauth,
   endpoints: () => ({}),
 })
