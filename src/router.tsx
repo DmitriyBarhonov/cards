@@ -12,6 +12,7 @@ import { PersonalInfo } from '@/components/auth/personal-info'
 import { SetNewPass } from '@/components/auth/set-new-pass'
 import { SignIn } from '@/components/auth/sign-in'
 import { SignUp } from '@/components/auth/sign-up'
+import { PageNotFound } from '@/pages'
 import { Decks } from '@/pages/decks.tsx'
 
 const publicRoutes: RouteObject[] = [
@@ -38,6 +39,10 @@ const publicRoutes: RouteObject[] = [
   {
     path: '/personal-info',
     element: <PersonalInfo />,
+  },
+  {
+    path: '/*',
+    element: <PageNotFound />,
   },
 ]
 
