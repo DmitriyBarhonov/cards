@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { CardsInput } from './index.ts'
+import { Input } from './index.ts'
 
 const meta = {
-  title: 'Components/input',
-  component: CardsInput,
-  id: 'components-input',
+  title: 'Components/Input',
+  component: Input,
+  id: 'components-input-field',
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -13,7 +13,7 @@ const meta = {
       control: { type: 'radio' },
     },
   },
-} satisfies Meta<typeof CardsInput>
+} satisfies Meta<typeof Input>
 
 export default meta
 type Story = StoryObj<typeof meta>
