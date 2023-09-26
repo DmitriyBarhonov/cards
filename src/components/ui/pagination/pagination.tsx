@@ -40,6 +40,7 @@ export const Pagination: FC<PaginationProps> = ({
   selectValue,
   selectOptions,
   onSelectChange,
+  className,
   siblingCount = 1,
 }) => {
   const paginationRange = usePagination({
@@ -72,7 +73,7 @@ export const Pagination: FC<PaginationProps> = ({
   //в селекте все значения строки, поэтому
 
   return (
-    <div className={classNames.container}>
+    <div className={`${className} ${s.container}`}>
       {/* Кнопка налево, если на первой странице то задизэйблена*/}
       <Button className={classNames.item} onClick={onPrevious} disabled={firstPage}>
         <ChevronLeft />

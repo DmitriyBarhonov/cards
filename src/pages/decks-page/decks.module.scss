@@ -1,0 +1,21 @@
+.container {
+  width: 90%;
+  max-width: 1280px;
+  height: 100%;
+  margin: 33px auto;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search {
+  max-width: 300px;
+}
+.pagination {
+  margin:20px auto;
+  display: flex;
+  justify-content: center;
+}
