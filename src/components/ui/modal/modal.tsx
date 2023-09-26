@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 
 import * as Dialog from '@radix-ui/react-dialog'
 import { Cross2Icon } from '@radix-ui/react-icons'
@@ -9,11 +9,19 @@ import s from './modal.module.scss'
 import { Button, Typography } from '@/components/ui'
 
 type ModalProps = {
+  open?: boolean
+  onOpenChange: (open: boolean) => void
+  children: ReactNode
   modalButtonTitle: string
   modalMainTitle?: string
   modalTitleVariant?: 'default' | 'large'
 }
-export const Modal: FC<ModalProps> = ({ modalButtonTitle, modalMainTitle, ...restProps }) => {
+export const Modal: FC<ModalProps> = ({
+  modalButtonTitle,
+  modalMainTitle,
+  children,
+  ...restProps
+}) => {
   const typographyVariant = restProps.modalTitleVariant === 'default' ? 'h1' : 'large'
 
   const classNames = {
@@ -28,9 +36,10 @@ export const Modal: FC<ModalProps> = ({ modalButtonTitle, modalMainTitle, ...res
 
   return (
     <Dialog.Root>
-      <Dialog.Trigger asChild>
-        <Button className={classNames.button}>{modalButtonTitle}</Button>
-      </Dialog.Trigger>
+      {/*<Dialog.Trigger asChild>*/}
+      {/*  <Button className={classNames.button}>{modalButtonTitle}</Button>*/}
+      {/*</Dialog.Trigger>*/}
+      {children}
       <Dialog.Portal>
         <Dialog.Overlay className={classNames.overlay} />
         <Dialog.Content className={classNames.content}>
@@ -74,3 +83,4 @@ export const Modal: FC<ModalProps> = ({ modalButtonTitle, modalMainTitle, ...res
     </Dialog.Root>
   )
 }
+Modal.Button = Dialog.Trigger
