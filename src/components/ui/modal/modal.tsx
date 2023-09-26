@@ -9,14 +9,19 @@ import s from './modal.module.scss'
 import { Button, Typography } from '@/components/ui'
 
 type ModalProps = {
-  open?: boolean
+  open: boolean
+  onClose?: () => void
   onOpenChange: (open: boolean) => void
   children: ReactNode
   modalButtonTitle: string
+  showCloseIcon?: boolean
   modalMainTitle?: string
   modalTitleVariant?: 'default' | 'large'
 }
 export const Modal: FC<ModalProps> = ({
+  onClose,
+
+  open,
   modalButtonTitle,
   modalMainTitle,
   children,
@@ -34,12 +39,22 @@ export const Modal: FC<ModalProps> = ({
     typography: clsx(s.dialogTypographyTitle),
   }
 
+  function closeModalHandler() {
+    onClose?.()
+  }
+
   return (
-    <Dialog.Root>
+    <Dialog.Root onOpenChange={closeModalHandler} open={open}>
+      {/*<Dialog.Trigger asChild>*/}
+      {/*  <Button className={classNames.button}>{modalButtonTitle}</Button>*/}
+      {/*</Dialog.Trigger>
+      В модалках от радикса ест триггер, то что при нажатии открывает
+      Я посмотрел что Андрей это не исползует, а вешает эту функцию
+      на то, что ему надо. Решил пойти по тому же пути
+      Потому что там проще. Поэтмоу триггер тут гакоментен*/}
       {/*<Dialog.Trigger asChild>*/}
       {/*  <Button className={classNames.button}>{modalButtonTitle}</Button>*/}
       {/*</Dialog.Trigger>*/}
-      {children}
       <Dialog.Portal>
         <Dialog.Overlay className={classNames.overlay} />
         <Dialog.Content className={classNames.content}>
@@ -53,34 +68,17 @@ export const Modal: FC<ModalProps> = ({
               </Typography>
             </Dialog.Title>
           )}
-          <Dialog.Description className="DialogDescription">
-            Make changes to your profile here. Click save when done.
-          </Dialog.Description>
-          <fieldset className="Fieldset">
-            <label className="Label" htmlFor="name">
-              Name
-            </label>
-            <input className="Input" id="name" defaultValue="Pedro Duarte" />
-          </fieldset>
-          <fieldset className="Fieldset">
-            <label className="Label" htmlFor="username">
-              Username
-            </label>
-            <input className="Input" id="username" defaultValue="@peduarte" />
-          </fieldset>
-          <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
+          {restProps.showCloseIcon && (
             <Dialog.Close asChild>
-              <button className="Button green">Save changes</button>
+              <button className="IconButton" aria-label="Close">
+                <Cross2Icon />
+              </button>
             </Dialog.Close>
-          </div>
-          <Dialog.Close asChild>
-            <button className="IconButton" aria-label="Close">
-              <Cross2Icon />
-            </button>
-          </Dialog.Close>
+          )}
+          {/*<div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>*/}
+          <div>{children}</div>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
   )
 }
-Modal.Button = Dialog.Trigger
