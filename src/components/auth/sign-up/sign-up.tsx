@@ -70,6 +70,7 @@ export const SignUp = (props: SignUpProps) => {
   //const handleFormSubmitted = handleSubmit(props.onSubmit)
   //нам не надо на сервер отправлять confirm, поэтому
   //с помощью библиотечки лоудаш исключаем его из отправлемых данных
+  //убрала confirm по другому
   const handleFormSubmitted = handleSubmit(data => {
     //     const formData = omit(data, ['confirm']) // Исключаем поле 'confirm' из данных формы
     // console.log(formData)
