@@ -11,6 +11,9 @@ export const ModalCard = () => {
   const openModalHandler = () => {
     setOpenModal(true)
   }
+  const closeModalHandler = () => {
+    setOpenModal(false)
+  }
 
   return (
     <div>
@@ -28,7 +31,12 @@ export const ModalCard = () => {
         modalButtonTitle={'whoawhoa'}
         onOpenChange={() => {}}
       >
-        <Button>{'YYEEEEEESSSSS WE DID IT!'}</Button>
+        <div className={'flex items-center justify-between'}>
+          <Button style={{ background: 'red' }} onClick={closeModalHandler} variant={'secondary'}>
+            Cancel
+          </Button>
+          <Button type={'submit'}>Create</Button>
+        </div>
       </Modal>
     </div>
   )
