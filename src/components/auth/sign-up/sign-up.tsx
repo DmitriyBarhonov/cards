@@ -65,9 +65,7 @@ export const SignUp = (props: SignUpProps) => {
       password: '',
     },
   })
-  // const onSubmit = (data: SignUpFormType) => {
-  //   console.log(data)
-  // }
+
   //рабочий Викин код
   //const handleFormSubmitted = handleSubmit(props.onSubmit)
   //нам не надо на сервер отправлять confirm, поэтому
