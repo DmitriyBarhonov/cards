@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
-import { omit } from 'lodash'
+// import { omit } from 'lodash'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { z } from 'zod'
@@ -72,9 +72,9 @@ export const SignUp = (props: SignUpProps) => {
   //нам не надо на сервер отправлять confirm, поэтому
   //с помощью библиотечки лоудаш исключаем его из отправлемых данных
   const handleFormSubmitted = handleSubmit(data => {
-    const formData = omit(data, ['confirm']) // Исключаем поле 'confirm' из данных формы
+    // const formData = omit(data, ['confirm']) // Исключаем поле 'confirm' из данных формы
 
-    props.onSubmit(formData)
+    props.onSubmit(data)
   })
 
   return (
