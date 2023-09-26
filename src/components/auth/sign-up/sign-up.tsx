@@ -42,10 +42,11 @@ const schema = z
   })
 
 export type SignUpFormType = z.infer<typeof schema> //вытаскивает типизацию для данных формы из схемы выше
+export type FormType = Omit<SignUpFormType, 'confirm'>
 export type SignUpProps = {
   // value?: string
   // onInputValueChange?: (value: string) => void
-  onSubmit: (data: SignUpFormType) => void //при сабмите отправляем данные типа мыло, пароль, подтверждение пароля
+  onSubmit: (data: FormType) => void //при сабмите отправляем данные типа мыло, пароль, подтверждение пароля
 }
 
 // type FormValues = {
@@ -72,8 +73,8 @@ export const SignUp = (props: SignUpProps) => {
   //нам не надо на сервер отправлять confirm, поэтому
   //с помощью библиотечки лоудаш исключаем его из отправлемых данных
   const handleFormSubmitted = handleSubmit(data => {
-    // const formData = omit(data, ['confirm']) // Исключаем поле 'confirm' из данных формы
-
+    //     const formData = omit(data, ['confirm']) // Исключаем поле 'confirm' из данных формы
+    // console.log(formData)
     props.onSubmit(data)
   })
 
