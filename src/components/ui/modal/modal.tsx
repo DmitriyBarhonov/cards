@@ -6,7 +6,7 @@ import { clsx } from 'clsx'
 
 import s from './modal.module.scss'
 
-import { Button, Typography } from '@/components/ui'
+import { Typography } from '@/components/ui'
 
 type ModalProps = {
   open: boolean
@@ -48,13 +48,10 @@ export const Modal: FC<ModalProps> = ({
       {/*<Dialog.Trigger asChild>*/}
       {/*  <Button className={classNames.button}>{modalButtonTitle}</Button>*/}
       {/*</Dialog.Trigger>
-      В модалках от радикса ест триггер, то что при нажатии открывает
+      В модалках от радикса есть триггер, то что при нажатии открывает
       Я посмотрел что Андрей это не исползует, а вешает эту функцию
       на то, что ему надо. Решил пойти по тому же пути
-      Потому что там проще. Поэтмоу триггер тут гакоментен*/}
-      {/*<Dialog.Trigger asChild>*/}
-      {/*  <Button className={classNames.button}>{modalButtonTitle}</Button>*/}
-      {/*</Dialog.Trigger>*/}
+      Потому что так проще. Поэтмоу триггер тут закоментен*/}
       <Dialog.Portal>
         <Dialog.Overlay className={classNames.overlay} />
         <Dialog.Content className={classNames.content}>
