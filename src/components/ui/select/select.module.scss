@@ -24,6 +24,7 @@
   background-color: var(--color-dark-900);
   border: 1px solid var(--color-dark-300);
   border-radius: 0.125rem;
+  transition: all 0.5s ease;
 
   &:focus-visible {
     border: var(--color-info-700);
@@ -33,6 +34,8 @@
     border-color: var(--color-dark-100);
     border-bottom: none;
     border-radius: 0.125rem 0.125rem 0 0;
+    transition: all 0.5s ease;
+
   }
 
   span {
@@ -83,6 +86,7 @@
   background-color: var(--color-dark-900);
   border: 1px solid var(--color-dark-100);
   border-radius: 0 0 0.125rem 0.125rem;
+  transition: all 0.5s ease;
 
   &.pagination {
     width: var(--radix-select-trigger-width);
@@ -114,6 +118,7 @@
   line-height: var(--line-height-m);
 
   background-color: var(--color-dark-900);
+  transition: all 0.5s ease;
 
   &.pagination {
     padding: 0 0 0 6px;
@@ -135,7 +140,7 @@
 
 .label {
   display: block;
-  font-size: var(--font-size-s);
+  font-size: var(--font-size-m);
   line-height: var(--line-height-m);
   color: var(--color-dark-100);
 
