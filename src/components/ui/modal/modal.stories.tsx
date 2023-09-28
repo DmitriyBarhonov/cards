@@ -25,7 +25,7 @@ export const Default: Story = {
           name={'newCardTitle'}
         />
         <div className={'center'}>
-          <Button className={'w-96'}>Add a new card</Button>
+          <Button fullWidthForModal={true}>Add a new card</Button>
         </div>
       </>
     ),
@@ -51,7 +51,10 @@ export const LargeTitle: Story = {
           label={'New card name'}
           name={'newCardTitle'}
         />
-        <Button>Add a new card</Button>
+        <div className={'flex justify-between'}>
+          <Button variant={'secondary'}>Cancel</Button>
+          <Button>Add new pack</Button>
+        </div>
       </>
     ),
     modalMainTitle: 'Ah shit, here we go again',
@@ -75,7 +78,10 @@ export const NoTitle: Story = {
           label={'New card name'}
           name={'newCardTitle'}
         />
-        <Button className={'fWidth'}>Add a new card</Button>
+        <div className={'flex justify-between'}>
+          <Button variant={'secondary'}>Cancel</Button>
+          <Button>Add new pack</Button>
+        </div>
       </>
     ),
   },
