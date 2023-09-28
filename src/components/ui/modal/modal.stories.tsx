@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Modal } from './index.ts'
 
-import { Button } from '@/components/ui'
+import { Button, Input } from '@/components/ui'
 
 const meta = {
   title: 'Components/Modal',
@@ -15,7 +15,24 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    children: <Button>Add a new card</Button>,
+    children: (
+      <>
+        <Input
+          className={'fWidth'}
+          variant={'standard'}
+          placeholder={'Type in the new card name'}
+          label={'New card name'}
+          name={'newCardTitle'}
+        />
+        <Input
+          variant={'standard'}
+          placeholder={'Type in the new card name'}
+          label={'New card name'}
+          name={'newCardTitle'}
+        />
+        <Button>Add a new card</Button>
+      </>
+    ),
     open: true,
     modalMainTitle: 'Ah shit, here we go again',
   },
@@ -23,7 +40,24 @@ export const Default: Story = {
 export const LargeTitle: Story = {
   args: {
     open: true,
-    children: <Button>Add a new card</Button>,
+    children: (
+      <>
+        <Input
+          className={'fWidth'}
+          variant={'standard'}
+          placeholder={'Type in the new card name'}
+          label={'New card name'}
+          name={'newCardTitle'}
+        />
+        <Input
+          variant={'standard'}
+          placeholder={'Type in the new card name'}
+          label={'New card name'}
+          name={'newCardTitle'}
+        />
+        <Button>Add a new card</Button>
+      </>
+    ),
     modalMainTitle: 'Ah shit, here we go again',
     modalTitleVariant: 'large',
   },
@@ -31,6 +65,22 @@ export const LargeTitle: Story = {
 export const NoTitleModal: Story = {
   args: {
     open: true,
-    children: <Button>Add a new card</Button>,
+    children: (
+      <>
+        <Input
+          variant={'standard'}
+          placeholder={'Type in the new card name'}
+          label={'New card name'}
+          name={'newCardTitle'}
+        />
+        <Input
+          variant={'standard'}
+          placeholder={'Type in the new card name'}
+          label={'New card name'}
+          name={'newCardTitle'}
+        />
+        <Button className={'fWidth'}>Add a new card</Button>
+      </>
+    ),
   },
 }
