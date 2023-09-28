@@ -63,6 +63,7 @@ export const AddNewCard: Story = {
       <>
         <div className={'mt-6'}>
           <Select
+            label={'Chose question format'}
             width={398}
             placeholder={'Text'}
             options={questionTypeOptions}
@@ -70,29 +71,29 @@ export const AddNewCard: Story = {
             value={'Text'}
           ></Select>
         </div>
-        <div></div>
-        <Input
-          className={'fWidth'}
-          variant={'standard'}
-          placeholder={'Type in the new card name'}
-          label={'New card name'}
-          name={'newCardTitle'}
-        />
-        <Input
-          className={'fWidth'}
-          variant={'standard'}
-          placeholder={'Type in the new card name'}
-          label={'New card name'}
-          name={'newCardTitle'}
-        />
-        <Input
-          className={'fWidth'}
-          variant={'standard'}
-          placeholder={'Type in the new card name'}
-          label={'New card name'}
-          name={'newCardTitle'}
-        />
-        <Button fullWidthForModal={true}>Add a new card</Button>
+        <div className={'mt-6'}>
+          <Input
+            className={'fWidth'}
+            variant={'standard'}
+            placeholder={'Type in the question'}
+            label={'Question'}
+            name={'newCardTitle'}
+          />
+        </div>
+        <div className={'mt-8'}>
+          <Input
+            className={'fWidth'}
+            variant={'standard'}
+            placeholder={'Type in the proper answer'}
+            label={'Answer'}
+            name={'newCardTitle'}
+          />
+        </div>
+        <div className={'flex justify-between mt-12 mb-4'}>
+          <Button variant={'secondary'}>Cancel</Button>
+          <Button>Add Card</Button>
+        </div>
+        {/*<Button fullWidthForModal={true}>Add a new card</Button>*/}
       </>
     ),
     open: true,
