@@ -10,10 +10,9 @@ import { Typography } from '@/components/ui'
 
 type ModalProps = {
   open: boolean
-  onClose?: () => void
   onOpenChange: (open: boolean) => void
   children: ReactNode
-  modalButtonTitle: string
+  onClose?: () => void
   showCloseIcon?: boolean
   modalMainTitle?: string
   modalTitleVariant?: 'default' | 'large'
@@ -22,7 +21,6 @@ export const Modal: FC<ModalProps> = ({
   onClose,
 
   open,
-  modalButtonTitle,
   modalMainTitle,
   children,
   ...restProps
