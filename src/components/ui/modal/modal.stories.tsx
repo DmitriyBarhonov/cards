@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Modal } from './index.ts'
 
-import { Button, Input } from '@/components/ui'
+import { Button, Checkbox, Input } from '@/components/ui'
 
 const meta = {
   title: 'Components/Modal',
@@ -24,13 +24,9 @@ export const Default: Story = {
           label={'New card name'}
           name={'newCardTitle'}
         />
-        <Input
-          variant={'standard'}
-          placeholder={'Type in the new card name'}
-          label={'New card name'}
-          name={'newCardTitle'}
-        />
-        <Button>Add a new card</Button>
+        <div className={'center'}>
+          <Button className={'w-96'}>Add a new card</Button>
+        </div>
       </>
     ),
     open: true,
@@ -82,5 +78,31 @@ export const NoTitle: Story = {
         <Button className={'fWidth'}>Add a new card</Button>
       </>
     ),
+  },
+}
+
+export const AddNewPack: Story = {
+  args: {
+    children: (
+      <>
+        <Input
+          className={'fWidth'}
+          variant={'standard'}
+          placeholder={'Name'}
+          label={'New pack name'}
+          name={'newPackTitle'}
+        />
+        <div className={'my-8'}>
+          <Checkbox label={'Private pack'} />
+        </div>
+        <div className={'flex justify-between'}>
+          <Button variant={'secondary'}>Cancel</Button>
+          <Button>Add new pack</Button>
+        </div>
+      </>
+    ),
+    open: true,
+    modalTitleVariant: 'default',
+    modalMainTitle: 'Ad New Pack',
   },
 }
