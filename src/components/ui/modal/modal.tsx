@@ -13,7 +13,7 @@ type ModalProps = {
   onOpenChange: (open: boolean) => void
   children: ReactNode
   onClose?: () => void
-  showCloseIcon?: boolean
+  hideCloseIcon?: boolean
   modalMainTitle?: string
   modalTitleVariant?: 'default' | 'large'
 }
@@ -28,13 +28,13 @@ export const Modal: FC<ModalProps> = ({
   const typographyVariant = restProps.modalTitleVariant === 'default' ? 'h1' : 'large'
 
   const classNames = {
-    root: clsx(s.rootModalContainer),
-    button: clsx(s.modalButton),
     overlay: clsx(s.dialogOverlay),
     content: clsx(s.dialogContent),
     //если будет нужен большой тайтл, добавим доп.класс
     title: clsx(typographyVariant === 'large' ? `${s.dialogTitle} ${s.largeTitle}` : s.dialogTitle),
     typography: clsx(s.dialogTypographyTitle),
+    closeBtn: clsx(s.closeButton),
+    button: clsx(s.modalButton),
   }
 
   function closeModalHandler() {
@@ -63,9 +63,9 @@ export const Modal: FC<ModalProps> = ({
               </Typography>
             </Dialog.Title>
           )}
-          {restProps.showCloseIcon && (
+          {!restProps.hideCloseIcon && (
             <Dialog.Close asChild>
-              <button className="IconButton" aria-label="Close">
+              <button className={classNames.closeBtn} aria-label="Close">
                 <Cross2Icon />
               </button>
             </Dialog.Close>

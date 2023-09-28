@@ -105,7 +105,7 @@ input {
   box-shadow: 0 0 0 2px #66bf3c;
 }
 
-.IconButton {
+.closeButton {
   font-family: inherit;
   border-radius: 100%;
   height: 25px;
@@ -113,17 +113,20 @@ input {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-accent-100);
+  color: var(--color-light-100);
   position: absolute;
   top: 10px;
   right: 10px;
+  cursor: pointer;
+  transition: all 0.5s ease;
 }
 
-.IconButton:hover {
-  background-color: var(--color-accent-300);
+.closeButton:hover {
+  color: var(--color-accent-300);
+  background-color: var(--color-dark-500);
 }
 
-.IconButton:focus {
+.closeButton:focus {
   box-shadow: 0 0 0 2px var(--color-accent-500);
 }
 
