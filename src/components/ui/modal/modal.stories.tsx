@@ -1,10 +1,8 @@
-import { useState } from 'react'
-
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Modal } from './index.ts'
 
-import { Button, Checkbox, Input, Select, SelectProps } from '@/components/ui'
+import { Button, Checkbox, Input, Select } from '@/components/ui'
 
 const meta = {
   title: 'Components/Modal',
