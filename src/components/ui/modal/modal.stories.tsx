@@ -1,8 +1,10 @@
+import { useState } from 'react'
+
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Modal } from './index.ts'
 
-import { Button, Checkbox, Input } from '@/components/ui'
+import { Button, Checkbox, Input, Select, SelectProps } from '@/components/ui'
 
 const meta = {
   title: 'Components/Modal',
@@ -13,10 +15,62 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
+export const AddNewDeck: Story = {
   args: {
     children: (
       <>
+        <Input
+          className={'fWidth'}
+          variant={'standard'}
+          placeholder={'Name'}
+          label={'New pack name'}
+          name={'newPackTitle'}
+        />
+        <div className={'my-8'}>
+          <Checkbox label={'Private pack'} />
+        </div>
+
+        <div className={'flex justify-between'}>
+          <Button variant={'secondary'}>Cancel</Button>
+          <Button>Add Deck</Button>
+        </div>
+      </>
+    ),
+    open: true,
+    modalTitleVariant: 'default',
+    modalMainTitle: 'Add New Deck',
+  },
+}
+
+const questionTypeOptions = [
+  {
+    value: 'text',
+    label: 'Text',
+  },
+  {
+    value: 'image',
+    label: 'Image',
+  },
+  {
+    value: 'video',
+    label: 'Video',
+  },
+]
+
+export const AddNewCard: Story = {
+  args: {
+    children: (
+      <>
+        <div className={'mt-6'}>
+          <Select
+            width={398}
+            placeholder={'Text'}
+            options={questionTypeOptions}
+            onChange={() => {}}
+            value={'Text'}
+          ></Select>
+        </div>
+        <div></div>
         <Input
           className={'fWidth'}
           variant={'standard'}
@@ -24,9 +78,21 @@ export const Default: Story = {
           label={'New card name'}
           name={'newCardTitle'}
         />
-        <div className={'center'}>
-          <Button fullWidthForModal={true}>Add a new card</Button>
-        </div>
+        <Input
+          className={'fWidth'}
+          variant={'standard'}
+          placeholder={'Type in the new card name'}
+          label={'New card name'}
+          name={'newCardTitle'}
+        />
+        <Input
+          className={'fWidth'}
+          variant={'standard'}
+          placeholder={'Type in the new card name'}
+          label={'New card name'}
+          name={'newCardTitle'}
+        />
+        <Button fullWidthForModal={true}>Add a new card</Button>
       </>
     ),
     open: true,
@@ -84,31 +150,5 @@ export const NoTitle: Story = {
         </div>
       </>
     ),
-  },
-}
-
-export const AddNewPack: Story = {
-  args: {
-    children: (
-      <>
-        <Input
-          className={'fWidth'}
-          variant={'standard'}
-          placeholder={'Name'}
-          label={'New pack name'}
-          name={'newPackTitle'}
-        />
-        <div className={'my-8'}>
-          <Checkbox label={'Private pack'} />
-        </div>
-        <div className={'flex justify-between'}>
-          <Button variant={'secondary'}>Cancel</Button>
-          <Button>Add new pack</Button>
-        </div>
-      </>
-    ),
-    open: true,
-    modalTitleVariant: 'default',
-    modalMainTitle: 'Ad New Pack',
   },
 }
