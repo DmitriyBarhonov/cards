@@ -127,7 +127,10 @@ input {
 }
 
 .closeButton:focus {
-  box-shadow: 0 0 0 2px var(--color-accent-500);
+  //box-shadow: 0 0 0 2px var(--color-accent-500);
+  //это был фокус по умолчанию, ниже наш
+  color: var(--color-info-300);
+  background-color: var(--color-dark-500);
 }
 
 .Fieldset {

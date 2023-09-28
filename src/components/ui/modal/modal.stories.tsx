@@ -62,7 +62,7 @@ export const LargeTitle: Story = {
     modalTitleVariant: 'large',
   },
 }
-export const NoTitleModal: Story = {
+export const NoTitle: Story = {
   args: {
     open: true,
     children: (
