@@ -1,9 +1,7 @@
 import { useState } from 'react'
 
-import * as Dialog from '@radix-ui/react-dialog'
-
 import { EdittextIcon } from '@/assets/icons/editText.tsx'
-import { Button, Modal, Typography } from '@/components/ui'
+import { Button, Input, Modal, Typography } from '@/components/ui'
 
 export const ModalCard = () => {
   let [openModal, setOpenModal] = useState(false)
@@ -28,11 +26,13 @@ export const ModalCard = () => {
         modalMainTitle={'Set new card name'}
         modalTitleVariant={'large'}
         open={openModal}
-        modalButtonTitle={'whoawhoa'}
         onOpenChange={() => {}}
       >
-        <div className={'flex items-center justify-between'}>
-          <Button style={{ background: 'red' }} onClick={closeModalHandler} variant={'secondary'}>
+        <div className={'center'}>
+          <Input className={'fWidth'} label={'Hello there'}></Input>
+        </div>
+        <div className={'flex justify-between'}>
+          <Button onClick={closeModalHandler} variant={'secondary'}>
             Cancel
           </Button>
           <Button type={'submit'}>Create</Button>
