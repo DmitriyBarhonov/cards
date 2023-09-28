@@ -11,4 +11,3 @@ export * from './tab-switcher'
 export * from './slider'
 export * from './radio-group'
 export * from './modal'
-
