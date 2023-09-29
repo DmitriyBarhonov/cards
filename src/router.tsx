@@ -13,7 +13,6 @@ import { SetNewPass } from '@/components/auth/set-new-pass'
 import { Typography } from '@/components/ui'
 import { PageNotFound, Layout } from '@/pages'
 import { Decks } from '@/pages/decks-page/decks.tsx'
-import { ModalCard } from '@/pages/modalCard'
 import { SignInPage } from '@/pages/sign-in-page/sign-in-page.tsx'
 import { SignUpPage } from '@/pages/sign-up-page/sign-up-page.tsx'
 import { useGetMeQuery } from '@/services/auth'
@@ -43,11 +42,10 @@ const publicRoutes: RouteObject[] = [
     path: '/*',
     element: <PageNotFound />,
   },
-  ,
-  {
-    path: '/card',
-    element: <ModalCard />,
-  },
+  // {
+  //   path: '/card',
+  //   element: <ModalCard />,
+  // },
 ]
 
 const privateRoutes: RouteObject[] = [
