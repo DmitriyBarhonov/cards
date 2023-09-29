@@ -31,7 +31,7 @@ export const ModalCard = () => {
         <div className={'center'}>
           <Input className={'fWidth'} label={'Hello there'}></Input>
         </div>
-        <div className={'flex justify-between'}>
+        <div className={'flex justify-between mt-5 mb-3'}>
           <Button onClick={closeModalHandler} variant={'secondary'}>
             Cancel
           </Button>

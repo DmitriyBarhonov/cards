@@ -34,7 +34,6 @@ export const Modal: FC<ModalProps> = ({
     title: clsx(typographyVariant === 'large' ? `${s.dialogTitle} ${s.largeTitle}` : s.dialogTitle),
     typography: clsx(s.dialogTypographyTitle),
     closeBtn: clsx(s.closeButton),
-    button: clsx(s.modalButton),
   }
 
   function closeModalHandler() {
