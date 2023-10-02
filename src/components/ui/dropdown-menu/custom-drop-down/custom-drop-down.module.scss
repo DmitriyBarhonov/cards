@@ -1,0 +1,45 @@
+@mixin wrapper-styling() {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.wrapperBorder {
+  @include wrapper-styling();
+   border-top: #808080 1px solid;
+}
+
+.wrapper{
+  @include wrapper-styling();
+}
+
+.elmentDropDown > * {
+  background-color: rgba(255, 255, 255, 0);
+}
+.elmentDropDown a {
+  font-size: 12px;
+  padding: 0px;
+}
+.DropdownMenuItem {
+  outline: none;
+}
+.DropdownMenuItemUser {
+  outline: none;
+}
+.icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+}
+
+.email {
+  font-size: 12px;
+  color: #808080;
+}
+.name {
+  font-size: 14px;
+}
+
+.userInfo {
+  margin-left: 8px;
+}
