@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
-import { omit } from 'lodash'
+// import { omit } from 'lodash'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { z } from 'zod'
@@ -42,10 +42,11 @@ const schema = z
   })
 
 export type SignUpFormType = z.infer<typeof schema> //вытаскивает типизацию для данных формы из схемы выше
+export type FormType = Omit<SignUpFormType, 'confirm'>
 export type SignUpProps = {
   // value?: string
   // onInputValueChange?: (value: string) => void
-  onSubmit: (data: SignUpFormType) => void //при сабмите отправляем данные типа мыло, пароль, подтверждение пароля
+  onSubmit: (data: FormType) => void //при сабмите отправляем данные типа мыло, пароль, подтверждение пароля
 }
 
 // type FormValues = {
@@ -64,17 +65,16 @@ export const SignUp = (props: SignUpProps) => {
       password: '',
     },
   })
-  // const onSubmit = (data: SignUpFormType) => {
-  //   console.log(data)
-  // }
+
   //рабочий Викин код
   //const handleFormSubmitted = handleSubmit(props.onSubmit)
   //нам не надо на сервер отправлять confirm, поэтому
   //с помощью библиотечки лоудаш исключаем его из отправлемых данных
+  //убрала confirm по другому
   const handleFormSubmitted = handleSubmit(data => {
-    const formData = omit(data, ['confirm']) // Исключаем поле 'confirm' из данных формы
-
-    props.onSubmit(formData)
+    //     const formData = omit(data, ['confirm']) // Исключаем поле 'confirm' из данных формы
+    // console.log(formData)
+    props.onSubmit(data)
   })
 
   return (

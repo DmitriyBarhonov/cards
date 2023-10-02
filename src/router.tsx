@@ -42,6 +42,10 @@ const publicRoutes: RouteObject[] = [
     path: '/*',
     element: <PageNotFound />,
   },
+  // {
+  //   path: '/card',
+  //   element: <ModalCard />,
+  // },
 ]
 
 const privateRoutes: RouteObject[] = [
