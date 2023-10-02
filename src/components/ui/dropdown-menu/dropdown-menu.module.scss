@@ -3,6 +3,22 @@ background-color: #333333;
 border-radius: 4px;
 padding: 0 12px 0 12px;
 width: 200px;
+position: relative;
+left: -15%;
 }
+.DropdownMenuContent:after {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid #333333;
+    right: 30%;
+    top: -18px;
+  }
 
-
+.trigger{
+ cursor: pointer;
+}

@@ -4,8 +4,8 @@ import { clsx } from 'clsx'
 
 import s from './display-mode.module.scss'
 
-import { EdittextIcon } from '@/assets/icons/editText.tsx'
-import { LogOut } from '@/assets/icons/logOut.tsx'
+import { EdittextIcon } from '@/assets/icons/edit-text'
+import { LogOut } from '@/assets/icons/log-out'
 import { Button, Typography } from '@/components/ui'
 
 type Props = {

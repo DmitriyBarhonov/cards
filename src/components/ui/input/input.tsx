@@ -4,9 +4,9 @@ import { clsx } from 'clsx'
 
 import s from './input.module.scss'
 
-import { SearchIcon } from '@/assets/icons/Search.tsx'
-import { WatchPassIcon } from '@/assets/icons/WatchPass.tsx'
-import { CrossedOutWatchPassIcon } from '@/assets/icons/WatchPassCrossedOut.tsx'
+import { SearchIcon } from '@/assets/icons/search'
+import { WatchPassIcon } from '@/assets/icons/watch-pass'
+import { CrossedOutWatchPassIcon } from '@/assets/icons/watch-pass-crossed-out'
 
 export type InputFieldProps = {
   label?: string
