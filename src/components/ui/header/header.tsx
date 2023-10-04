@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
-import { Logo } from './../../../assets/icons/logo'
+import { Logo } from '../../../assets/icons/Logo'
+
 import s from './header.module.scss'
 
 import { Button, Typography } from '@/components/ui'
