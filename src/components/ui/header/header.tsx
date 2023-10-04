@@ -2,8 +2,7 @@ import { FC } from 'react'
 
 import s from './header.module.scss'
 
-// @ts-ignore
-import { Logo } from '@/assets/icons/logo'
+import { Logo } from '@/assets/icons/logo.tsx'
 import { Button, Typography } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
 
