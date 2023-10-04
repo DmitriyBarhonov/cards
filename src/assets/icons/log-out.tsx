@@ -1,6 +1,6 @@
-import { memo, SVGProps } from 'react'
+import { memo } from 'react'
 
-export const LogOut = memo((props: SVGProps<SVGSVGElement>) => (
+export const LogOut = memo(() => (
   <svg width="16" height="16" viewBox="0 0 24 24">
     <path
       fill="currentColor"
