@@ -1,4 +1,4 @@
-import { memo, SVGProps } from 'react'
+import { memo } from 'react'
 
 // type PropsType = {
 //   size?: number
