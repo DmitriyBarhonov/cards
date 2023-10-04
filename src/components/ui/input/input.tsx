@@ -5,7 +5,7 @@ import { clsx } from 'clsx'
 import s from './input.module.scss'
 
 // @ts-ignore
-import SearchIcon from '@/assets/icons/search'
+import SearchIcon from '@/assets/icons/Search'
 import { WatchPassIcon } from '@/assets/icons/watch-pass'
 import { CrossedOutWatchPassIcon } from '@/assets/icons/watch-pass-crossed-out'
 
