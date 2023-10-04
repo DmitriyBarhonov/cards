@@ -19,6 +19,7 @@ export type InputFieldProps = {
 } & ComponentPropsWithoutRef<'input'>
 
 // Обернул forwardRef для передачи ref
+
 // forwardRef - это функция высшего порядка в React,
 // которая позволяет передавать ref из
 // родительского компонента в дочерний компонент.

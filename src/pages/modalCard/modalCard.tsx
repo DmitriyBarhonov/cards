@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { EdittextIcon } from '@/assets/icons/editText.tsx'
+import { EdittextIcon } from '@/assets/icons/edit-text'
 import { Button, Input, Modal, Typography } from '@/components/ui'
 
 export const ModalCard = () => {
