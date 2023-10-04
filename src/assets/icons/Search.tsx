@@ -1,5 +1,5 @@
 import { SVGProps, memo } from 'react'
-const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
+const SearchIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" {...props}>
     <path
       fill="currentColor"
@@ -8,4 +8,4 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 )
 
-export const SearchIcon = memo(SvgComponent)
+export default memo(SearchIcon)
