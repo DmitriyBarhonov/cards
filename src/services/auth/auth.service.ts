@@ -1,4 +1,11 @@
-import { LoginArgs, LoginResponse, SignUpArgs, SignUpResponse } from './auth.types.ts'
+import {
+  LoginArgs,
+  LoginResponse,
+  RecoverPasswordArgs,
+  ResendVerificationEmailArgs,
+  SignUpArgs,
+  SignUpResponse,
+} from './auth.types.ts'
 
 import { baseApi } from '@/services/base-api.ts'
 
@@ -50,11 +57,47 @@ const authService = baseApi.injectEndpoints({
         }),
         // invalidatesTags: ['Me'],
       }),
-      verifyEmail: builder.mutation<any, any>({
+      verifyEmail: builder.mutation<void, { code: string }>({
         query: code => ({
           url: `v1/auth/verify-email`,
           method: 'POST',
           body: code,
+        }),
+      }),
+      resendRerification: builder.mutation<void, ResendVerificationEmailArgs>({
+        query: ({ userId, subject }) => ({
+          url: `v1/auth/resend-verification-email`,
+          method: 'POST',
+          body: {
+            html: '<b>Hello, ##name##!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="http://localhost:3000/confirm-email/##token##">Confirm email</a>. If it doesn\'t work, copy and paste the following link in your browser:<br/>http://localhost:3000/confirm-email/##token##',
+            userId,
+            subject,
+          },
+        }),
+      }),
+      logOut: builder.mutation<void, void>({
+        query: () => ({
+          url: `v1/auth/logout`,
+          method: 'POST',
+          body: {},
+        }),
+      }),
+      recoverPassword: builder.mutation<void, RecoverPasswordArgs>({
+        query: ({ email, subject }) => ({
+          url: `v1/auth/recover-password`,
+          method: 'POST',
+          body: {
+            html: '<h1>Hi, ##name##</h1><p>Click <a href="##token##">here</a> to recover your password</p>',
+            email,
+            subject,
+          },
+        }),
+      }),
+      resetPassword: builder.mutation<void, { password: string; token: string }>({
+        query: ({ password, token }) => ({
+          url: `v1/auth/recover-password/${token}`,
+          method: 'POST',
+          body: password,
         }),
       }),
     }

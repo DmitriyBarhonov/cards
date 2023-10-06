@@ -21,3 +21,12 @@ export type SignUpResponse = {
   subject: string
   sendConfirmationEmail: false
 }
+
+export type ResendVerificationEmailArgs = {
+  userId: string
+  subject: string
+}
+export type RecoverPasswordArgs = {
+  email: string
+  subject: string
+}
