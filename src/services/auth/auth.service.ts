@@ -50,8 +50,16 @@ const authService = baseApi.injectEndpoints({
         }),
         // invalidatesTags: ['Me'],
       }),
+      verifyEmail: builder.mutation<any, any>({
+        query: code => ({
+          url: `v1/auth/verify-email`,
+          method: 'POST',
+          body: code,
+        }),
+      }),
     }
   },
 })
 
-export const { useLoginMutation, useGetMeQuery, useSignUpMutation } = authService
+export const { useLoginMutation, useGetMeQuery, useSignUpMutation, useVerifyEmailMutation } =
+  authService
