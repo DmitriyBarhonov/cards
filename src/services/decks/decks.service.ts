@@ -90,6 +90,26 @@ const deskApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
+      updateDecks: builder.mutation<any, { currentData: string; id: string }>({
+        query: ({ currentData, id }) => ({
+          url: `/v1/decks/${id}`,
+          method: 'PATCH',
+          body: currentData,
+        }),
+        async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled, getState }) {
+          const patchResult = dispatch(
+            deskApi.util.updateQueryData('getDecks', { authorId }, draft => {
+             draft.
+            })
+          )
+
+          try {
+            await queryFulfilled
+          } catch {
+            patchResult.undo()
+          }
+        },
+      }),
     }
   },
 })
