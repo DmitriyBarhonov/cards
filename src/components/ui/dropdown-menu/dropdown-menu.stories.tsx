@@ -26,8 +26,11 @@ export const Authorized: Story = {
             <Avatar name={'Kilobuks Lover'} />
           </span>
           <div className={'flex-col mt-2'}>
-            <Typography variant={'body2'}>{'Kilobuks Lover'}</Typography>
-            <Typography variant={'subtitle1'}>{'ilovekilubuks@gmail.com'}</Typography>
+            <Typography variant={'h3'}>{'Kilobuks Lover'}</Typography>
+
+            <span className={'text-zinc-400'}>
+              <Typography variant={'body2'}>{'ilovekilubuks@gmail.com'}</Typography>
+            </span>
           </div>
         </div>
         <Button>Option 2</Button>
