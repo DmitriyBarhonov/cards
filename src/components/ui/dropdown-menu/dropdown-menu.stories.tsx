@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Dropdown, Button, Avatar } from '@/components/ui'
+import { Dropdown, Button, Avatar, Typography } from '@/components/ui'
 
 const meta = {
   title: 'Components/Dropdown',
@@ -13,11 +13,23 @@ type Story = StoryObj<typeof meta>
 
 export const Authorized: Story = {
   args: {
-    trigger: <Avatar name={'Kilobuks Lover'} />,
-    width: '200px',
+    trigger: (
+      <span className={'mt-24'}>
+        <Avatar name={'Kilobuks Lover'} />
+      </span>
+    ),
+    width: '300px',
     children: (
       <>
-        <Button>Option 1</Button>
+        <div className={'flex'}>
+          <span className={'m-3'}>
+            <Avatar name={'Kilobuks Lover'} />
+          </span>
+          <div className={'flex-col mt-2'}>
+            <Typography variant={'body2'}>{'Kilobuks Lover'}</Typography>
+            <Typography variant={'subtitle1'}>{'ilovekilubuks@gmail.com'}</Typography>
+          </div>
+        </div>
         <Button>Option 2</Button>
         <Button>Option 3</Button>
       </>
