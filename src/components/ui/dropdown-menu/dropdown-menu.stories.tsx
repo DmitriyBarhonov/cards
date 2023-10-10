@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { Link, BrowserRouter } from 'react-router-dom'
 
-import { Dropdown, Button, Avatar, Typography } from '@/components/ui'
+import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
+import { PersonOutline } from '@/assets/icons/person-outline.tsx'
+import { Dropdown, Avatar, Typography } from '@/components/ui'
 
 const meta = {
   title: 'Components/Dropdown',
@@ -12,16 +15,24 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Authorized: Story = {
+  decorators: [
+    Story => (
+      <BrowserRouter>
+        <Story />
+      </BrowserRouter>
+    ),
+  ],
+
   args: {
     trigger: (
-      <span className={'mt-24'}>
+      <span>
         <Avatar name={'Kilobuks Lover'} />
       </span>
     ),
     width: '300px',
     children: (
       <>
-        <div className={'flex'}>
+        <div style={{ marginRight: '100px' }} className={'flex'}>
           <span className={'m-3'}>
             <Avatar name={'Kilobuks Lover'} />
           </span>
@@ -33,8 +44,15 @@ export const Authorized: Story = {
             </span>
           </div>
         </div>
-        <Button>Option 2</Button>
-        <Button>Option 3</Button>
+        <div className={'flex'}>
+          {/*    времннная дивка чтобы проверить ка котобразится иконка*/}
+          <Typography as={Link} to="/personal-info" variant={'h3'}>
+            {'My Profile'}
+            <EdittextIcon style={{ color: 'green' }} />
+          </Typography>
+          <Typography variant={'h3'}>{'Kilobuks Lover'}</Typography>
+          <PersonOutline className={'text-lime-500'} />
+        </div>
       </>
     ),
   },
