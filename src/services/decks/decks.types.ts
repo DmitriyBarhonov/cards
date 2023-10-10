@@ -41,3 +41,10 @@ export type DecksParams = {
   currentPage?: number
   itemsPerPage?: number
 } | void
+
+export type UpdateDecksParams = {
+  cover?: File // Поле cover ожидает файл (binary)
+  name?: string
+  isPrivate?: boolean
+  id: string
+}
