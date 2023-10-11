@@ -10,6 +10,7 @@ import { Avatar } from '@/components/ui/avatar'
 type HeaderProps = {
   isAuth: boolean //если авторизован то будет аватарка, если нет то кнопка sign in
   name?: string
+  email?: string
   avatar?: string
   onSignIn: () => void //на кнопку авторизации
   // onSignOut: () => void //передаем в дропдаун

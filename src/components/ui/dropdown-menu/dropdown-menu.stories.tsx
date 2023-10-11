@@ -47,8 +47,7 @@ export const Authorized: Story = {
         <div className={'flex flex-col'}>
           {/*    времннная дивка чтобы проверить ка котобразится иконка*/}
           <Typography as={Link} to="/personal-info" variant={'h3'} className={'flex-row'}>
-            {'My Profile'}
-            <EdittextIcon style={{ color: 'green' }} />
+            <EdittextIcon style={{ color: 'green' }} /> {'My Profile'}
           </Typography>
           <Typography variant={'h3'}>
             {'Kilobuks Lover'}
