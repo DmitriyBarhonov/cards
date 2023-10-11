@@ -58,8 +58,13 @@ export const Header: FC<HeaderProps> = ({
                   </span>
                 </div>
               </div>
-              <Typography as={Link} to="/personal-info" variant={'h3'} className={'flex'}>
-                <PersonOutline className={'text-white'} /> {'My Profile'}
+              <Typography
+                as={Link}
+                to="/personal-info"
+                variant={'h3'}
+                className={s.dropdownTextChildren}
+              >
+                <PersonOutline /> {'My Profile'}
               </Typography>
               <Typography
                 as={'button'}
