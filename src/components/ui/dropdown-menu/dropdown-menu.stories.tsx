@@ -26,13 +26,13 @@ export const Authorized: Story = {
   args: {
     trigger: (
       <span>
-        <Avatar name={'Kilobuks Lover'} />
+        <Avatar className={'m-17'} name={'Kilobuks Lover'} />
       </span>
     ),
-    width: '300px',
+    width: '100',
     children: (
       <>
-        <div style={{ marginRight: '100px' }} className={'flex'}>
+        <div className={'flex'}>
           <span className={'m-3'}>
             <Avatar name={'Kilobuks Lover'} />
           </span>
@@ -44,14 +44,16 @@ export const Authorized: Story = {
             </span>
           </div>
         </div>
-        <div className={'flex'}>
+        <div className={'flex flex-col'}>
           {/*    времннная дивка чтобы проверить ка котобразится иконка*/}
-          <Typography as={Link} to="/personal-info" variant={'h3'}>
+          <Typography as={Link} to="/personal-info" variant={'h3'} className={'flex-row'}>
             {'My Profile'}
             <EdittextIcon style={{ color: 'green' }} />
           </Typography>
-          <Typography variant={'h3'}>{'Kilobuks Lover'}</Typography>
-          <PersonOutline className={'text-lime-500'} />
+          <Typography variant={'h3'}>
+            {'Kilobuks Lover'}
+            <PersonOutline className={'text-white'} width={20} height={20} />
+          </Typography>
         </div>
       </>
     ),
