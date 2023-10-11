@@ -1,9 +1,11 @@
 import { baseApi } from '@/services/base-api.ts'
 import {
+  CardsResponse,
   Deck,
   DeckResponseType,
   DecksParams,
-  UpdateDecksParams,
+  DeckRequestParams,
+  GetCardsDeckParams,
 } from '@/services/decks/decks.types.ts'
 import { RootState } from '@/services/store.ts'
 
@@ -20,11 +22,11 @@ const deskApi = baseApi.injectEndpoints({
         //они будут храниться в кэше под тегом Decks
         providesTags: ['Decks'],
       }),
-      createDeck: builder.mutation<Deck, { name: string }>({
-        query: ({ name }) => ({
+      createDeck: builder.mutation<Deck, DeckRequestParams>({
+        query: data => ({
           url: `v1/decks`,
           method: 'POST',
-          body: { name },
+          body: data,
         }),
         async onQueryStarted(_, { dispatch, queryFulfilled, getState }) {
           const state = getState() as RootState
@@ -34,7 +36,7 @@ const deskApi = baseApi.injectEndpoints({
 
             debugger
 
-            const a = dispatch(
+            dispatch(
               deskApi.util.updateQueryData(
                 'getDecks',
                 { currentPage: state.decks.currentPage },
@@ -92,7 +94,7 @@ const deskApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
-      updateDecks: builder.mutation<Deck, UpdateDecksParams>({
+      updateDecks: builder.mutation<Deck, DeckRequestParams>({
         query: updateData => ({
           url: `/v1/decks/${updateData.id}`,
           method: 'PATCH',
@@ -126,6 +128,19 @@ const deskApi = baseApi.injectEndpoints({
       getDeckById: builder.query<Deck, { id: string }>({
         query: id => `/v1/decks/${id}`,
       }),
+      getACardsDeck: builder.query<CardsResponse, GetCardsDeckParams>({
+        query: params => ({
+          url: `/v1/decks/${params.id}/cards`,
+          method: 'GET',
+          params: {
+            question: params.question,
+            answer: params.answer,
+            orderBy: params.orderBy,
+            currentPage: params.currentPage,
+            itemsPerPage: params.itemsPerPage,
+          },
+        }),
+      }),
     }
   },
 })
@@ -136,4 +151,5 @@ export const {
   useCreateDeckMutation,
   useUpdateDecksMutation,
   useGetDeckByIdQuery,
+  useGetACardsDeckQuery,
 } = deskApi
