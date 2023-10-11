@@ -34,3 +34,18 @@
 .name {
   border-bottom: 1px dashed; // чтобы подчеркивалось черточками
 }
+
+.dropdownTextChildren {
+  display: flex;
+  color: var(--color-light-100);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-accent-100);
+  }
+
+  &:active {
+    color: var(--color-accent-300);
+  }
+
+}

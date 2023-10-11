@@ -2,11 +2,10 @@ import { FC } from 'react'
 
 import { Link } from 'react-router-dom'
 
-import { Logo } from '../../../assets/icons/Logo'
-
 import s from './header.module.scss'
 
-import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
+import { LogOut } from '@/assets/icons/log-out.tsx'
+import { Logo } from '@/assets/icons/Logo.tsx'
 import { PersonOutline } from '@/assets/icons/person-outline.tsx'
 import { Button, Dropdown, Typography } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
@@ -49,7 +48,7 @@ export const Header: FC<HeaderProps> = ({
             <>
               <div className={'flex'}>
                 <span className={'mr-3 mt-1'}>
-                  <Avatar name={'Kilobuks Lover'} />
+                  <Avatar name={name || 'no name'} />
                 </span>
                 <div className={'flex-col '}>
                   <Typography variant={'h3'}>{name}</Typography>
@@ -60,19 +59,19 @@ export const Header: FC<HeaderProps> = ({
                 </div>
               </div>
               <Typography as={Link} to="/personal-info" variant={'h3'} className={'flex'}>
-                <EdittextIcon style={{ color: 'green' }} /> {'My Profile'}
+                <PersonOutline className={'text-white'} /> {'My Profile'}
               </Typography>
-              <Typography as={Link} to="/personal-info" variant={'h3'} className={'flex'}>
-                <PersonOutline className={'text-white'} width={20} height={20} /> {'My Profile'}
+              <Typography
+                as={'button'}
+                onClick={() => {}}
+                variant={'h3'}
+                className={s.dropdownTextChildren}
+              >
+                <LogOut /> {'My Profile'}
               </Typography>
-              {/*<Typography variant={'h3'}>*/}
-              {/*  {email}*/}
-              {/*  <PersonOutline className={'text-white'} width={20} height={20} />*/}
-              {/*</Typography>*/}
             </>
           </Dropdown>
-          {/*<Avatar name={name || 'no name'} avatar={avatar} />*/}
-        </div> //здесь будет закрывающий тег дропдауна
+        </div>
       ) : (
         <div className={s.button}>
           <Button onClick={onSignIn}> Sign In </Button>

@@ -1,8 +1,8 @@
 @use "../../../assets/mixins/mixins" as mixins;
 
 .DropdownMenuContent {
-  @include mixins.defaultBorder;
-  background-color: #333333;
+  border: 1px solid var(--color-dark-300);
+  background-color: var(--color-dark-500);
   border-radius: 6px;
   padding: 12px;
   width: 200px;
@@ -11,7 +11,7 @@
 }
 
 .DropdownMenuContent:after {
-  @include mixins.defaultBorder;
+  border: 1px solid var(--color-dark-300);
   content: "";
   width: 0px;
   height: 0px;
