@@ -6,6 +6,8 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
+import { ModalCard } from './pages/modalCard'
+
 import { CheckEmail } from '@/components/auth/check-email'
 import { ForgotPass } from '@/components/auth/forgot-pass'
 import { PersonalInfo } from '@/components/auth/personal-info'
@@ -42,10 +44,6 @@ const publicRoutes: RouteObject[] = [
     path: '/*',
     element: <PageNotFound />,
   },
-  // {
-  //   path: '/card',
-  //   element: <ModalCard />,
-  // },
 ]
 
 const privateRoutes: RouteObject[] = [
@@ -56,6 +54,10 @@ const privateRoutes: RouteObject[] = [
   {
     path: '/personal-info', //todo не забыть повесить логику на id пользователя
     element: <PersonalInfo />,
+  },
+  {
+    path: '/card',
+    element: <ModalCard />,
   },
 ]
 
