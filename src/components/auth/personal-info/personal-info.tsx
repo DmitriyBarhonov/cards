@@ -32,6 +32,7 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, email }) => 
     avatar: clsx(s.avatarContainer),
     editButton: clsx(s.editTextButton),
     editIcon: clsx(s.editTextIcon),
+    editProfileNameIcon: clsx(s.editProfName),
   }
 
   const onEditTextClickHandler = () => {
