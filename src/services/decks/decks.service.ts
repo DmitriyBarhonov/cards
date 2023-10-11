@@ -92,12 +92,6 @@ const deskApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
-      // Тело запроса
-      // {
-      //   cover string($binary) обложка
-      //   name: string имя
-      //   isPrivate: boolean
-      // }
       updateDecks: builder.mutation<Deck, UpdateDecksParams>({
         query: updateData => ({
           url: `/v1/decks/${updateData.id}`,
@@ -124,10 +118,13 @@ const deskApi = baseApi.injectEndpoints({
               )
             )
           } catch {
-            console.log('error')
+            // patchResult.undo()
           }
         },
         invalidatesTags: ['Decks'],
+      }),
+      getDeckById: builder.query<Deck, { id: string }>({
+        query: id => `/v1/decks/${id}`,
       }),
     }
   },
@@ -138,4 +135,5 @@ export const {
   useDeleteDeckMutation,
   useCreateDeckMutation,
   useUpdateDecksMutation,
+  useGetDeckByIdQuery,
 } = deskApi
