@@ -23,6 +23,7 @@ type HeaderProps = {
 export const Header: FC<HeaderProps> = ({
   isAuth = false,
   name,
+  email,
   avatar,
   onSignIn,
   // onSignOut,
@@ -40,34 +41,34 @@ export const Header: FC<HeaderProps> = ({
           <Dropdown
             trigger={
               <span>
-                <Avatar avatar={avatar} className={'m-17'} name={'Kilobuks Lover'} />
+                <Avatar avatar={avatar} name={name || 'no name'} />
               </span>
             }
-            width={200}
+            width={250}
           >
             <>
               <div className={'flex'}>
-                <span className={'m-3'}>
+                <span className={'mr-3 mt-1'}>
                   <Avatar name={'Kilobuks Lover'} />
                 </span>
-                <div className={'flex-col mt-2'}>
-                  <Typography variant={'h3'}>{'Kilobuks Lover'}</Typography>
+                <div className={'flex-col '}>
+                  <Typography variant={'h3'}>{name}</Typography>
 
                   <span className={'text-zinc-400'}>
-                    <Typography variant={'body2'}>{'ilovekilubuks@gmail.com'}</Typography>
+                    <Typography variant={'body2'}>{email}</Typography>
                   </span>
                 </div>
               </div>
-              <div className={'flex flex-col'}>
-                {/*    времннная дивка чтобы проверить ка котобразится иконка*/}
-                <Typography as={Link} to="/personal-info" variant={'h3'} className={'flex-row'}>
-                  <EdittextIcon style={{ color: 'green' }} /> {'My Profile'}
-                </Typography>
-                <Typography variant={'h3'}>
-                  {'Kilobuks Lover'}
-                  <PersonOutline className={'text-white'} width={20} height={20} />
-                </Typography>
-              </div>
+              <Typography as={Link} to="/personal-info" variant={'h3'} className={'flex'}>
+                <EdittextIcon style={{ color: 'green' }} /> {'My Profile'}
+              </Typography>
+              <Typography as={Link} to="/personal-info" variant={'h3'} className={'flex'}>
+                <PersonOutline className={'text-white'} width={20} height={20} /> {'My Profile'}
+              </Typography>
+              {/*<Typography variant={'h3'}>*/}
+              {/*  {email}*/}
+              {/*  <PersonOutline className={'text-white'} width={20} height={20} />*/}
+              {/*</Typography>*/}
             </>
           </Dropdown>
           {/*<Avatar name={name || 'no name'} avatar={avatar} />*/}
