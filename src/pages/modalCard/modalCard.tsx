@@ -20,6 +20,7 @@ export const ModalCard = () => {
       <EdittextIcon onClick={openModalHandler} />
 
       <Modal
+        trigger={<Button>Ratata</Button>}
         onClose={() => {
           setOpenModal(false)
         }}
