@@ -15,6 +15,7 @@ type Story = StoryObj<typeof meta>
 
 export const AddNewDeck: Story = {
   args: {
+    trigger: <Button>Hello there</Button>,
     children: (
       <>
         <Input
@@ -24,6 +25,28 @@ export const AddNewDeck: Story = {
           label={'New pack name'}
           name={'newPackTitle'}
         />
+        <Input
+          className={'fWidth'}
+          variant={'standard'}
+          placeholder={'Name'}
+          label={'New pack name'}
+          name={'newPackTitle'}
+        />
+        <Input
+          className={'fWidth'}
+          variant={'standard'}
+          placeholder={'Name'}
+          label={'New pack name'}
+          name={'newPackTitle'}
+        />
+        <Input
+          className={'fWidth'}
+          variant={'standard'}
+          placeholder={'Name'}
+          label={'New pack name'}
+          name={'newPackTitle'}
+        />
+        <Button fullWidthForModal={true}>ratata</Button>
         <div className={'my-8'}>
           <Checkbox label={'Private pack'} />
         </div>
@@ -34,7 +57,6 @@ export const AddNewDeck: Story = {
         </div>
       </>
     ),
-    open: true,
     modalTitleVariant: 'default',
     modalMainTitle: 'Add New Deck',
   },
@@ -57,6 +79,7 @@ const questionTypeOptions = [
 
 export const AddNewCard: Story = {
   args: {
+    trigger: <Button>Hello there</Button>,
     children: (
       <>
         <div className={'mt-6'}>
@@ -94,13 +117,12 @@ export const AddNewCard: Story = {
         {/*<Button fullWidthForModal={true}>Add a new card</Button>*/}
       </>
     ),
-    open: true,
     modalMainTitle: 'Ah shit, here we go again',
   },
 }
 export const LargeTitle: Story = {
   args: {
-    open: true,
+    trigger: <Button>Hello there</Button>,
     children: (
       <>
         <Input
@@ -128,7 +150,7 @@ export const LargeTitle: Story = {
 }
 export const NoTitle: Story = {
   args: {
-    open: true,
+    trigger: <Button>Hello there</Button>,
     children: (
       <>
         <Input

@@ -9,7 +9,8 @@ import s from './modal.module.scss'
 import { Typography } from '@/components/ui'
 
 type ModalProps = {
-  open: boolean
+  open?: boolean
+  trigger: ReactNode
   onOpenChange: (open: boolean) => void
   children: ReactNode
   onClose?: () => void
@@ -19,7 +20,7 @@ type ModalProps = {
 }
 export const Modal: FC<ModalProps> = ({
   onClose,
-
+  trigger,
   open,
   modalMainTitle,
   children,
@@ -42,13 +43,9 @@ export const Modal: FC<ModalProps> = ({
 
   return (
     <Dialog.Root onOpenChange={closeModalHandler} open={open}>
-      {/*<Dialog.Trigger asChild>*/}
-      {/*  <Button className={classNames.button}>{modalButtonTitle}</Button>*/}
-      {/*</Dialog.Trigger>
-      В модалках от радикса есть триггер, то что при нажатии открывает
-      Я посмотрел что Андрей это не исползует, а вешает эту функцию
-      на то, что ему надо. Решил пойти по тому же пути
-      Потому что так проще. Поэтмоу триггер тут закоментен*/}
+      <Dialog.Trigger asChild>
+        <button aria-label="Trigger">{trigger}</button>
+      </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={classNames.overlay} />
         <Dialog.Content className={classNames.content}>
