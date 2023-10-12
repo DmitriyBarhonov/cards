@@ -1,9 +1,10 @@
 import { FC } from 'react'
 
-import { Logo } from '../../../assets/icons/Logo'
+import { Link } from 'react-router-dom'
 
 import s from './header.module.scss'
 
+import { Logo } from '@/assets/icons/Logo.tsx'
 import { Button, Typography } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
 
@@ -25,7 +26,9 @@ export const Header: FC<HeaderProps> = ({
 }) => {
   return (
     <div className={s.header}>
-      <Logo className={s.logo} />
+      <Button variant={'link'} as={Link} to={'/'}>
+        <Logo className={s.logo} />
+      </Button>
       {isAuth ? (
         //здесь будет открывающий тег дропдауна, тамбудет логика по sign out и onProfileClick
         <div className={s.avatar}>

@@ -18,7 +18,7 @@ const columns: Column[] = [
 ]
 
 export const Decks = () => {
-  const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'asc' })
+  const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
 
   // console.log(sort, sortString)
