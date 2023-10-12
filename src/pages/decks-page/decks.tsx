@@ -97,7 +97,7 @@ export const Decks = () => {
               <Table.Row key={deck.id}>
                 <Table.Data>{deck.name}</Table.Data>
                 <Table.Data>{deck.cardsCount}</Table.Data>
-                <Table.Data>{deck.updated}</Table.Data>
+                <Table.Data>{new Date(deck.updated).toLocaleDateString('ru-Ru')}</Table.Data>
                 <Table.Data>{deck.author.name}</Table.Data>
                 <Table.Data>
                   <Button
