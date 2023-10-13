@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import s from './decks.module.scss'
 
+import { AddNewPack } from '@/components/decks'
 import { Button, Input, Typography, Table, Pagination } from '@/components/ui'
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
@@ -20,23 +21,19 @@ const columns: Column[] = [
 export const Decks = () => {
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
-
+  const [addNewDeckModal, setAddNewDeckModal] = useState(false)
   // console.log(sort, sortString)
   const [search, setSearch] = useState('')
   const currentPage = useAppSelector(state => state.decks.currentPage)
   const dispatch = useAppDispatch()
   const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
-  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10)
   const { currentData: decks } = useGetDecksQuery({
     currentPage,
     itemsPerPage,
     name: search,
     orderBy: sortString,
   })
-  // totalPages: number
-  // currentPage: number
-  // itemsPerPage: number
-  // totalItems: number
   const [deleteDeck] = useDeleteDeckMutation()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
 
@@ -54,15 +51,14 @@ export const Decks = () => {
           placeholder="Search by name"
         />
         <SliderForCards disabled={false} />
-        <Button
-          style={{ marginLeft: '6px' }}
-          onClick={() => {
-            updateCurrentPage(1)
-            createDeck({ name: '321312' })
-          }}
-        >
-          create Deck
+        <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoading}>
+          {'Add New Deck'}
         </Button>
+        <AddNewPack
+          addDeck={createDeck}
+          isOpen={addNewDeckModal}
+          toggleModal={setAddNewDeckModal}
+        />
         <Button
           style={{ marginLeft: '6px' }}
           onClick={() => {
@@ -120,19 +116,12 @@ export const Decks = () => {
           currentPage={currentPage}
           pageSize={itemsPerPage}
           onPageChange={updateCurrentPage}
+          // selectValue={itemsPerPage}
+          // selectOptions={[5, 10, 20, 30]}
+          // onSelectChange={setItemsPerPage} тут ошибка в типах где-то в селекте или пагинации, решу потом
         />
       )}
-      {/*{[1, 2, 3, 4, 5, 6, 7, 8, 9].map(item => (*/}
-      {/*  <Button*/}
-      {/*    style={{ marginTop: '20px', marginLeft: '6px' }}*/}
-      {/*    key={item}*/}
-      {/*    onClick={() => {*/}
-      {/*      updateCurrentPage(item)*/}
-      {/*    }}*/}
-      {/*  >*/}
-      {/*    {item}*/}
-      {/*  </Button>*/}
-      {/*))}*/}
+      {/*<ModalCard />*/}
     </div>
   )
 }
