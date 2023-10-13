@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import s from './header.module.scss'
 
@@ -10,6 +10,7 @@ import { PersonOutline } from '@/assets/icons/person-outline.tsx'
 import { Button, Dropdown, Typography } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
 import { DropdownItem, DropdownItemUserInfo } from '@/components/ui/dropdown-menu/custom-drop-down'
+import { useLogOutMutation } from '@/services/auth'
 
 type HeaderProps = {
   isAuth: boolean //если авторизован то будет аватарка, если нет то кнопка sign in
@@ -29,6 +30,19 @@ export const Header: FC<HeaderProps> = ({
   // onSignOut,
   // onProfileClick,
 }) => {
+  const [logOut] = useLogOutMutation()
+  const navigate = useNavigate()
+
+  const handleLogOut = async () => {
+    try {
+      await logOut()
+      navigate('/')
+    } catch (error) {
+      // @ts-ignore
+      alert(error.data)
+    }
+  }
+
   return (
     <div className={s.header}>
       <Button variant={'link'} as={Link} to={'/'}>
@@ -70,7 +84,7 @@ export const Header: FC<HeaderProps> = ({
                   border={true}
                   icon={<LogOut />}
                   element={
-                    <Typography as={'button'} onClick={() => {}} variant={'h3'}>
+                    <Typography as={'button'} onClick={handleLogOut} variant={'h3'}>
                       {'Log Out'}
                     </Typography>
                   }
