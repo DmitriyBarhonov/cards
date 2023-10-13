@@ -53,7 +53,6 @@ export type SignUpProps = {
 //   email: string
 //   password: string
 // } //не нужно, берем из схемы автоматически
-//TODO добавить в валидацию для регистрации проверку на совпадене пароля
 //чтобы оба поля содержали один и тот же новый пароль
 
 export const SignUp = (props: SignUpProps) => {

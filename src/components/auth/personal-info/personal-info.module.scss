@@ -24,6 +24,11 @@
         }
 
         .editTextButton {
+          all: unset;
+          margin: 0 0 8px 6px;
+          cursor: pointer;
+          background: transparent;
+          border: none;
           background: var(--color-dark-300);
           box-shadow: 0px 2px 10px 0px rgba(109, 109, 109, 0.25);
           opacity: 0.7;
@@ -33,18 +38,15 @@
           position: absolute;
           bottom: -8px;
           left: 82px;
-
-          &:hover {
-            opacity: 1;
-          }
+          transition: all 0.3s ease;
 
           .editTextIcon {
             padding-top: 2px;
             padding-left: 4px;
-
           }
 
           &:hover {
+            opacity: 1;
             color: var(--color-accent-100);
           }
 
@@ -52,8 +54,9 @@
             color: var(--color-accent-300);
           }
         }
-      }
 
+
+      }
 
       .formInput {
         @include mixins.authInput;
@@ -66,25 +69,15 @@
         padding-top: 15px;
       }
 
-      .editTextButton {
-        all: unset;
-        margin: 0 0 8px 6px;
-        cursor: pointer;
-        background: transparent;
-        border: none;
-
-        .editTextIcon {
-          padding-top: 2px;
-        }
-
-        &:hover {
-          color: var(--color-accent-100);
-        }
-
-        &:active {
-          color: var(--color-accent-300);
-        }
-      }
+      //.editTextButton {
+      //  all: unset;
+      //  margin: 0 0 8px 6px;
+      //  cursor: pointer;
+      //  background: transparent;
+      //  border: none;
+      //
+      //
+      //}
 
       .bottomText {
         @include mixins.authBottomText;
@@ -106,6 +99,8 @@
         width: 122px;
         height: 36px;
         margin: 20px 0 26px;
+        transition: all 0.5s ease;
+
       }
     }
   }
