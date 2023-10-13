@@ -15,7 +15,7 @@ type HeaderProps = {
   name?: string
   email?: string
   avatar?: string
-  onSignIn: () => void //на кнопку авторизации
+  onSignIn: () => void
   // onSignOut: () => void //передаем в дропдаун
   // onProfileClick: () => void //передаем на аватурку чтобы открылся дропдаун
 }
