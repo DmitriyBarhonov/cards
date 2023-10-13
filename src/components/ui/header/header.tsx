@@ -65,32 +65,17 @@ export const Header: FC<HeaderProps> = ({
                   }
                 />
               </div>
-              <DropdownItem
-                border={true}
-                icon={<LogOut />}
-                element={
-                  <Typography as={'button'} onClick={() => {}} variant={'h3'}>
-                    {'Log Out'}
-                  </Typography>
-                }
-              />
-
-              {/*<Typography*/}
-              {/*  as={Link}*/}
-              {/*  to="/personal-info"*/}
-              {/*  variant={'h3'}*/}
-              {/*  className={s.dropdownTextChildren}*/}
-              {/*>*/}
-              {/*  <PersonOutline /> {'My Profile'}*/}
-              {/*</Typography>*/}
-              {/*<Typography*/}
-              {/*  as={'button'}*/}
-              {/*  onClick={() => {}}*/}
-              {/*  variant={'h3'}*/}
-              {/*  className={s.dropdownTextChildren}*/}
-              {/*>*/}
-              {/*  <LogOut /> {'My Profile'}*/}
-              {/*</Typography>*/}
+              <div className={s.dropdownElement}>
+                <DropdownItem
+                  border={true}
+                  icon={<LogOut />}
+                  element={
+                    <Typography as={'button'} onClick={() => {}} variant={'h3'}>
+                      {'Log Out'}
+                    </Typography>
+                  }
+                />
+              </div>
             </>
           </Dropdown>
         </div>
