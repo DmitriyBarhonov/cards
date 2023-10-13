@@ -10,7 +10,7 @@ type DropdownItemType = {
   element: ReactNode
   name: string
   email: string
-  border: boolean
+  border?: boolean
 }
 export const DropdownItemUserInfo: FC<DropdownItemType> = ({ element, border, name, email }) => {
   const wrapper = border ? s.wrapperBorder : s.wrapper

@@ -49,26 +49,11 @@ export const Header: FC<HeaderProps> = ({
             width={250}
           >
             <>
-              <div className={'flex'}>
-                <span className={'mr-3 mt-1'}>
-                  <Avatar name={name || 'no name'} />
-                </span>
-                <div className={'flex-col '}>
-                  <Typography variant={'h3'}>{name}</Typography>
-
-                  <span className={'text-zinc-400'}>
-                    <Typography variant={'body2'}>{email}</Typography>
-                  </span>
-                </div>
-              </div>
-              <div className={s.customDropdownAvatarContainer}>
-                <DropdownItemUserInfo
-                  name={name ? name : ''}
-                  email={email ? email : ''}
-                  border={true}
-                  element={<Avatar name={name || 'no name'} />}
-                />
-              </div>
+              <DropdownItemUserInfo
+                name={name ? name : ''}
+                email={email ? email : ''}
+                element={<Avatar name={name || 'no name'} />}
+              />
               <Typography
                 as={Link}
                 to="/personal-info"
