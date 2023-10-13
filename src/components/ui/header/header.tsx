@@ -9,6 +9,7 @@ import { Logo } from '@/assets/icons/Logo.tsx'
 import { PersonOutline } from '@/assets/icons/person-outline.tsx'
 import { Button, Dropdown, Typography } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
+import { DropdownItemUserInfo } from '@/components/ui/dropdown-menu/custom-drop-down'
 
 type HeaderProps = {
   isAuth: boolean //если авторизован то будет аватарка, если нет то кнопка sign in
@@ -59,6 +60,14 @@ export const Header: FC<HeaderProps> = ({
                     <Typography variant={'body2'}>{email}</Typography>
                   </span>
                 </div>
+              </div>
+              <div className={s.customDropdownAvatarContainer}>
+                <DropdownItemUserInfo
+                  name={name ? name : ''}
+                  email={email ? email : ''}
+                  border={true}
+                  element={<Avatar name={name || 'no name'} />}
+                />
               </div>
               <Typography
                 as={Link}
