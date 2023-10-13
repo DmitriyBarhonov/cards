@@ -10,7 +10,8 @@ import { PersonOutline } from '@/assets/icons/person-outline.tsx'
 import { Button, Dropdown, Typography } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
 import { DropdownItem, DropdownItemUserInfo } from '@/components/ui/dropdown-menu/custom-drop-down'
-import { useLogOutMutation } from '@/services/auth'
+import { useAppDispatch } from '@/hooks/hooks.ts'
+import { useLogOutMutation, util } from '@/services/auth'
 
 type HeaderProps = {
   isAuth: boolean //если авторизован то будет аватарка, если нет то кнопка sign in
@@ -32,15 +33,25 @@ export const Header: FC<HeaderProps> = ({
 }) => {
   const [logOut] = useLogOutMutation()
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
-  const handleLogOut = async () => {
-    try {
-      await logOut()
-      navigate('/')
-    } catch (error) {
-      // @ts-ignore
-      alert(error.data)
-    }
+  // const handleLogOut = async () => {
+  //   try {
+  //     await logOut()
+  //     navigate('/login')
+  //   } catch (error) {
+  //     // @ts-ignore
+  //     alert(error.data)
+  //   }
+  // }
+
+  const handleLogOut = () => {
+    logOut()
+      .unwrap()
+      .then(() => {
+        dispatch(util?.resetApiState())
+        navigate('/login')
+      })
   }
 
   return (
