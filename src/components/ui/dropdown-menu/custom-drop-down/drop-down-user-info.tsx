@@ -4,6 +4,8 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
 import s from './custom-drop-down.module.scss'
 
+import { Typography } from '@/components/ui'
+
 type DropdownItemType = {
   element: ReactNode
   name: string
@@ -17,9 +19,11 @@ export const DropdownItemUserInfo: FC<DropdownItemType> = ({ element, border, na
     <DropdownMenu.Item className={s.DropdownMenuItemUser}>
       <div className={wrapper}>
         <div className={s.element}>{element}</div>
-        <div className={s.userInfo}>
-          <div className={s.name}>{name}</div>
-          <div className={s.email}>{email}</div>
+        <div className={s.useNameAndEmail}>
+          <Typography variant={'h3'}>{name}</Typography>
+          <Typography className={s.email} variant={'body2'}>
+            {email}
+          </Typography>
         </div>
       </div>
     </DropdownMenu.Item>
