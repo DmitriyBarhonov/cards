@@ -9,7 +9,7 @@ import { Logo } from '@/assets/icons/Logo.tsx'
 import { PersonOutline } from '@/assets/icons/person-outline.tsx'
 import { Button, Dropdown, Typography } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
-import { DropdownItemUserInfo } from '@/components/ui/dropdown-menu/custom-drop-down'
+import { DropdownItem, DropdownItemUserInfo } from '@/components/ui/dropdown-menu/custom-drop-down'
 
 type HeaderProps = {
   isAuth: boolean //если авторизован то будет аватарка, если нет то кнопка sign in
@@ -54,22 +54,43 @@ export const Header: FC<HeaderProps> = ({
                 email={email ? email : ''}
                 element={<Avatar name={name || 'no name'} />}
               />
-              <Typography
-                as={Link}
-                to="/personal-info"
-                variant={'h3'}
-                className={s.dropdownTextChildren}
-              >
-                <PersonOutline /> {'My Profile'}
-              </Typography>
-              <Typography
-                as={'button'}
-                onClick={() => {}}
-                variant={'h3'}
-                className={s.dropdownTextChildren}
-              >
-                <LogOut /> {'My Profile'}
-              </Typography>
+              <div className={s.dropdownElement}>
+                <DropdownItem
+                  border={true}
+                  icon={<PersonOutline />}
+                  element={
+                    <Typography as={Link} to="/personal-info" variant={'h3'}>
+                      {'My Profile'}
+                    </Typography>
+                  }
+                />
+              </div>
+              <DropdownItem
+                border={true}
+                icon={<LogOut />}
+                element={
+                  <Typography as={'button'} onClick={() => {}} variant={'h3'}>
+                    {'Log Out'}
+                  </Typography>
+                }
+              />
+
+              {/*<Typography*/}
+              {/*  as={Link}*/}
+              {/*  to="/personal-info"*/}
+              {/*  variant={'h3'}*/}
+              {/*  className={s.dropdownTextChildren}*/}
+              {/*>*/}
+              {/*  <PersonOutline /> {'My Profile'}*/}
+              {/*</Typography>*/}
+              {/*<Typography*/}
+              {/*  as={'button'}*/}
+              {/*  onClick={() => {}}*/}
+              {/*  variant={'h3'}*/}
+              {/*  className={s.dropdownTextChildren}*/}
+              {/*>*/}
+              {/*  <LogOut /> {'My Profile'}*/}
+              {/*</Typography>*/}
             </>
           </Dropdown>
         </div>
