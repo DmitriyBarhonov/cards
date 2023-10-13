@@ -24,12 +24,17 @@ export const Decks = () => {
   // console.log(sort, sortString)
   const [search, setSearch] = useState('')
   const currentPage = useAppSelector(state => state.decks.currentPage)
+  const perPage = useAppSelector(state => state.decks.itemsPerPage)
+  const itemsPerPage = Number(perPage)
   const dispatch = useAppDispatch()
   const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
-  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const updateItemsPerPage = (items: string) =>
+    dispatch(decksSlice.actions.updateItemsPerPage(items))
+
+  // const [itemsPerPage, setItemsPerPage] = useState<number>(10)
   const { currentData: decks } = useGetDecksQuery({
     currentPage,
-    itemsPerPage,
+    itemsPerPage: itemsPerPage,
     name: search,
     orderBy: sortString,
   })
@@ -55,6 +60,7 @@ export const Decks = () => {
         />
         <SliderForCards disabled={false} />
         <Button
+          disabled={isLoading}
           style={{ marginLeft: '6px' }}
           onClick={() => {
             updateCurrentPage(1)
@@ -63,24 +69,24 @@ export const Decks = () => {
         >
           create Deck
         </Button>
-        <Button
-          style={{ marginLeft: '6px' }}
-          onClick={() => {
-            setItemsPerPage(20)
-          }}
-          disabled={isLoading}
-        >
-          set 20 items
-        </Button>
-        <Button
-          style={{ marginLeft: '6px' }}
-          onClick={() => {
-            setItemsPerPage(10)
-          }}
-          disabled={isLoading}
-        >
-          set 10 items
-        </Button>
+        {/*<Button*/}
+        {/*  style={{ marginLeft: '6px' }}*/}
+        {/*  onClick={() => {*/}
+        {/*    setItemsPerPage(20)*/}
+        {/*  }}*/}
+        {/*  disabled={isLoading}*/}
+        {/*>*/}
+        {/*  set 20 items*/}
+        {/*</Button>*/}
+        {/*<Button*/}
+        {/*  style={{ marginLeft: '6px' }}*/}
+        {/*  onClick={() => {*/}
+        {/*    setItemsPerPage(10)*/}
+        {/*  }}*/}
+        {/*  disabled={isLoading}*/}
+        {/*>*/}
+        {/*  set 10 items*/}
+        {/*</Button>*/}
       </div>
 
       <Table.Root>
@@ -116,10 +122,13 @@ export const Decks = () => {
       {decks?.pagination.totalItems && (
         <Pagination
           className={s.pagination}
-          totalCount={decks?.pagination.totalItems}
+          totalCount={decks?.pagination.totalItems ?? 10}
           currentPage={currentPage}
-          pageSize={itemsPerPage}
+          pageSize={decks?.pagination.itemsPerPage}
           onPageChange={updateCurrentPage}
+          selectValue={decks?.pagination.itemsPerPage}
+          selectOptions={[5, 10, 15, 20]}
+          onSelectChange={itemsPerPage => updateItemsPerPage(itemsPerPage)}
         />
       )}
       {/*{[1, 2, 3, 4, 5, 6, 7, 8, 9].map(item => (*/}
