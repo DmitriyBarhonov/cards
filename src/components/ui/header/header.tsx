@@ -30,7 +30,9 @@ export const Header: FC<HeaderProps> = ({
 }) => {
   return (
     <div className={s.header}>
-      <Logo className={s.logo} />
+      <Button variant={'link'} as={Link} to={'/'}>
+        <Logo className={s.logo} />
+      </Button>
       {isAuth ? (
         //здесь будет открывающий тег дропдауна, тамбудет логика по sign out и onProfileClick
         <div className={s.avatar}>
