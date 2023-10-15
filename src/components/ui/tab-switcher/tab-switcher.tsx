@@ -19,8 +19,8 @@ type TabSwitcherProps = {
   value?: any
 }
 export const TabSwitcher: FC<TabSwitcherProps> = ({ options, disabled, ...restProps }) => {
-  const [value, setValue] = useState(options[1].value)
-
+  const [value, setValue] = useState(restProps.defaultValue || restProps.value || options[1].value)
+  //не хардкодим на второй элемент из options, если есть в пропсах value или defaultValue то берем их
   const classNames = {
     toggleGroup: clsx(disabled ? s.toggleDisabled : s.toggleGroup),
     toggleGroupItem: clsx(disabled ? s.toggleDisabledItem : s.toggleGroupItem),

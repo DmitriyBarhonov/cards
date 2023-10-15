@@ -30,8 +30,12 @@ export const Body: FC<ComponentProps<'tbody'>> = props => {
 export const Row: FC<ComponentProps<'tr'>> = props => {
   return <tr {...props} />
 }
-export const Data: FC<ComponentProps<'td'>> = props => {
-  return <td className={s.data} {...props} />
+export const Data: FC<ComponentProps<'td'>> = ({ className, ...rest }) => {
+  const classNames = {
+    data: clsx(className, s.data),
+  } // в последем ряду будут разные стили,но базовые стилилтаблицы сохраняться
+
+  return <td className={classNames.data} {...rest} />
 }
 
 //кастомный заголовкок если используем сортировку
