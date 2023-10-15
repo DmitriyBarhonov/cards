@@ -1,13 +1,12 @@
 import { useState } from 'react'
 
 import s from './decks.module.scss'
-import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
 
 import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
 import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
-import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/components/ui'
+import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
 import { AddNewPack, DeleteDeck } from '@/components/decks'
-
+import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/components/ui'
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
 import { useGetMeQuery } from '@/services/auth'
@@ -15,6 +14,7 @@ import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '
 import { decksSlice } from '@/services/decks/decks.slice.ts'
 import { Deck } from '@/services/decks/decks.types.ts'
 import { Column, Sort } from '@/services/types'
+
 const columns: Column[] = [
   { key: 'name', title: 'Name', sortable: true },
   { key: 'cardsCount', title: 'Cards', sortable: true },
@@ -30,7 +30,7 @@ const tabOptions = [
 export const Decks = () => {
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
-  
+
   const [tabValue, setTabValue] = useState('my')
   const [addNewDeckModal, setAddNewDeckModal] = useState(false)
   const [search, setSearch] = useState('')
@@ -58,7 +58,7 @@ export const Decks = () => {
   const [deleteDeck] = useDeleteDeckMutation()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
   const [selectedDeck, setSelectedDeck] = useState<Deck>({} as Deck) //для удаления нужной колоды
-          const tabHandler = (value: string) => {
+  const tabHandler = (value: string) => {
     setTabValue(value)
   }
 
