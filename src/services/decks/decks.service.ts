@@ -34,8 +34,6 @@ const deskApi = baseApi.injectEndpoints({
           try {
             const response = await queryFulfilled
 
-            debugger
-
             dispatch(
               deskApi.util.updateQueryData(
                 'getDecks',
@@ -46,7 +44,7 @@ const deskApi = baseApi.injectEndpoints({
               )
             )
           } catch (error) {
-            console.log(error)
+            // console.log(error)
           }
         },
         //когда выполнится запрос и даные придут
