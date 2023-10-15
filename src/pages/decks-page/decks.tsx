@@ -30,7 +30,6 @@ const tabOptions = [
 export const Decks = () => {
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
-
   const [tabValue, setTabValue] = useState('my')
   const [addNewDeckModal, setAddNewDeckModal] = useState(false)
   const [search, setSearch] = useState('')
@@ -82,7 +81,6 @@ export const Decks = () => {
           <Typography variant={'caption'}>Number of cards</Typography>
           <SliderForCards disabled={false} />
         </div>
-        <SliderForCards disabled={false} />
         <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoading}>
           {'Add New Deck'}
         </Button>
@@ -121,7 +119,7 @@ export const Decks = () => {
                       setDeleteDeckModal(true) //открываем модалку для удаления
                     }}
                   >
-                    <TrashOutline />
+                    <TrashOutline size={24} />
                   </Button>
                 </Table.Data>
               </Table.Row>
