@@ -7,6 +7,7 @@ import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
 import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
 import { AddNewPack, DeleteDeck } from '@/components/decks'
 import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/components/ui'
+import { Rating } from '@/components/ui/rating/rating'
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
 import { useGetMeQuery } from '@/services/auth'
@@ -65,13 +66,12 @@ export const Decks: React.FC = () => {
     setTabValue(value)
   }
   const a = (n: any, b: any) => {
-    // dispatch(api.endpoints.get.initiate(arg)
-
     setCardsCount([n, b])
   }
 
   return (
     <div className={s.container}>
+      <Rating rating={3} />
       <Typography variant={'h2'}>Packs list</Typography>
       {/* времено размещен для испытаний*/}
       <div className={s.menu}>
