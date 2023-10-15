@@ -28,7 +28,7 @@ export const Body: FC<ComponentProps<'tbody'>> = props => {
   return <tbody {...props} />
 }
 export const Row: FC<ComponentProps<'tr'>> = props => {
-  return <tr {...props} />
+  return <tr className={s.row} {...props} />
 }
 export const Data: FC<ComponentProps<'td'>> = ({ className, ...rest }) => {
   const classNames = {

@@ -1,13 +1,12 @@
 import { useState } from 'react'
 
 import s from './decks.module.scss'
-import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
 
 import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
 import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
-import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/components/ui'
+import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
 import { AddNewPack, DeleteDeck } from '@/components/decks'
-
+import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/components/ui'
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
 import { useGetMeQuery } from '@/services/auth'
@@ -30,8 +29,8 @@ const tabOptions = [
 export const Decks = () => {
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
-  
-  const [tabValue, setTabValue] = useState('my')
+
+  const [tabValue, setTabValue] = useState('all')
   const [addNewDeckModal, setAddNewDeckModal] = useState(false)
   const [search, setSearch] = useState('')
   const [deleteDeckModal, setDeleteDeckModal] = useState(false)
@@ -58,7 +57,7 @@ export const Decks = () => {
   const [deleteDeck] = useDeleteDeckMutation()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
   const [selectedDeck, setSelectedDeck] = useState<Deck>({} as Deck) //для удаления нужной колоды
-          const tabHandler = (value: string) => {
+  const tabHandler = (value: string) => {
     setTabValue(value)
   }
 
@@ -82,7 +81,6 @@ export const Decks = () => {
           <Typography variant={'caption'}>Number of cards</Typography>
           <SliderForCards disabled={false} />
         </div>
-        <SliderForCards disabled={false} />
         <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoading}>
           {'Add New Deck'}
         </Button>
@@ -121,7 +119,7 @@ export const Decks = () => {
                       setDeleteDeckModal(true) //открываем модалку для удаления
                     }}
                   >
-                    <TrashOutline />
+                    <TrashOutline size={24} />
                   </Button>
                 </Table.Data>
               </Table.Row>
