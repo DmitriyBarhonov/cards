@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { useNavigate } from 'react-router-dom'
+
 import s from './decks.module.scss'
 
 import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
@@ -28,9 +30,10 @@ const tabOptions = [
 ]
 
 export const Decks = () => {
+  const navigate = useNavigate() //для перехода в карточки
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
-  const [tabValue, setTabValue] = useState('my')
+  const [tabValue, setTabValue] = useState('all')
   const [addNewDeckModal, setAddNewDeckModal] = useState(false)
   const [search, setSearch] = useState('')
   const [deleteDeckModal, setDeleteDeckModal] = useState(false)
@@ -103,7 +106,8 @@ export const Decks = () => {
             // console.log('table', deck)
             return (
               <Table.Row key={deck.id}>
-                <Table.Data>{deck.name}</Table.Data>
+                <Table.Data onClick={() => navigate(`/cards/${deck.id}`)}>{deck.name}</Table.Data>
+                {/*переходим в карточки и дальше айди колоды*/}
                 <Table.Data>{deck.cardsCount}</Table.Data>
                 <Table.Data>{new Date(deck.updated).toLocaleDateString('ru-Ru')}</Table.Data>
                 <Table.Data>{deck.author.name}</Table.Data>
