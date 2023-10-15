@@ -4,7 +4,7 @@ import s from './button.module.scss'
 
 export type ButtonProps<T extends ElementType> = {
   as?: T
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'link'
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'link' | 'icon'
   fullWidth?: boolean
   fullWidthForModal?: boolean
   children: ReactNode
@@ -23,7 +23,7 @@ export const Button = <T extends ElementType = 'button'>(
     ...rest
   } = props
 
-  //TODO пересмотреть использование fullWIdth
+  //пересмотреть использование fullWidth
   //скорее всего это свойство можно будет выпилить т.к. по факту
   //используется fullWidthForModal
 

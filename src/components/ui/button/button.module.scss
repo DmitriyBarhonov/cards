@@ -9,7 +9,6 @@
   border-radius: 4px;
   transition: all 0.5s ease;
 
-
   &:focus-visible {
     outline: 2px solid var(--color-info-700);
   }
@@ -38,7 +37,6 @@
   &:active:enabled {
     background-color: var(--color-accent-700);
     transition: none;
-
   }
 }
 
@@ -87,7 +85,17 @@
   background-color: transparent;
   border-radius: 20px;
 }
-
+.icon {
+  @include button;
+  all: unset;
+  color: transparent;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
 .fullWidth {
   width: 100%;
 }

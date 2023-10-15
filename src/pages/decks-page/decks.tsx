@@ -1,8 +1,9 @@
 import { useState } from 'react'
 
 import s from './decks.module.scss'
+import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
 
-import { AddNewPack } from '@/components/decks'
+import { AddNewPack, DeleteDeck } from '@/components/decks'
 import { Button, Input, Typography, Table, Pagination } from '@/components/ui'
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
@@ -21,9 +22,10 @@ const columns: Column[] = [
 export const Decks = () => {
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
+  
   const [addNewDeckModal, setAddNewDeckModal] = useState(false)
-  // console.log(sort, sortString)
   const [search, setSearch] = useState('')
+  const [deleteDeckModal, setDeleteDeckModal] = useState(false)
   const currentPage = useAppSelector(state => state.decks.currentPage)
   const perPage = useAppSelector(state => state.decks.itemsPerPage)
   const itemsPerPage = Number(perPage)
@@ -40,8 +42,8 @@ export const Decks = () => {
   })
   const [deleteDeck] = useDeleteDeckMutation()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
+  const [selectedDeck, setSelectedDeck] = useState<Deck>({} as Deck) //для удаления нужной колоды
 
-  //if (decks.isError) return <div>decks.isError</div>
   return (
     <div className={s.container}>
       <Typography variant={'h2'}>Packs list</Typography>
@@ -74,6 +76,7 @@ export const Decks = () => {
         {/*</Table.Row> если без сортировки*/}
         <Table.Body>
           {decks?.items?.map((deck: Deck) => {
+            // console.log('table', deck)
             return (
               <Table.Row key={deck.id}>
                 <Table.Data>{deck.name}</Table.Data>
@@ -82,11 +85,13 @@ export const Decks = () => {
                 <Table.Data>{deck.author.name}</Table.Data>
                 <Table.Data>
                   <Button
+                    variant={'icon'}
                     onClick={() => {
-                      deleteDeck({ id: deck.id })
+                      setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
+                      setDeleteDeckModal(true) //открываем модалку для удаления
                     }}
                   >
-                    delete
+                    <TrashOutline />
                   </Button>
                 </Table.Data>
               </Table.Row>
@@ -106,7 +111,14 @@ export const Decks = () => {
           onSelectChange={itemsPerPage => updateItemsPerPage(itemsPerPage)}
         />
       )}
-      {/*<ModalCard />*/}
+      <DeleteDeck
+        isOpen={deleteDeckModal} //открыта или нет конкретная модалка
+        toggleModal={setDeleteDeckModal} //переключатель для открытия и закрытия модалки
+        //отдаем нужную колоду для удаления, ее имя и id
+        name={selectedDeck.name}
+        id={selectedDeck.id}
+        deleteDeck={deleteDeck} //функция по удалению
+      />
     </div>
   )
 }
