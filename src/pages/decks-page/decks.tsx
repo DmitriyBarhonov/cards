@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import s from './decks.module.scss'
 
+import { AddNewPack } from '@/components/decks'
 import { Button, Input, Typography, Table, Pagination } from '@/components/ui'
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
@@ -20,7 +21,7 @@ const columns: Column[] = [
 export const Decks = () => {
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
-
+  const [addNewDeckModal, setAddNewDeckModal] = useState(false)
   // console.log(sort, sortString)
   const [search, setSearch] = useState('')
   const currentPage = useAppSelector(state => state.decks.currentPage)
@@ -31,17 +32,12 @@ export const Decks = () => {
   const updateItemsPerPage = (items: string) =>
     dispatch(decksSlice.actions.updateItemsPerPage(items))
 
-  // const [itemsPerPage, setItemsPerPage] = useState<number>(10)
   const { currentData: decks } = useGetDecksQuery({
     currentPage,
     itemsPerPage: itemsPerPage,
     name: search,
     orderBy: sortString,
   })
-  // totalPages: number
-  // currentPage: number
-  // itemsPerPage: number
-  // totalItems: number
   const [deleteDeck] = useDeleteDeckMutation()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
 
@@ -59,36 +55,15 @@ export const Decks = () => {
           placeholder="Search by name"
         />
         <SliderForCards disabled={false} />
-        <Button
-          disabled={isLoading}
-          style={{ marginLeft: '6px' }}
-          onClick={() => {
-            updateCurrentPage(1)
-            createDeck({ name: '321312' })
-          }}
-        >
-          create Deck
+        <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoading}>
+          {'Add New Deck'}
         </Button>
-        {/*<Button*/}
-        {/*  style={{ marginLeft: '6px' }}*/}
-        {/*  onClick={() => {*/}
-        {/*    setItemsPerPage(20)*/}
-        {/*  }}*/}
-        {/*  disabled={isLoading}*/}
-        {/*>*/}
-        {/*  set 20 items*/}
-        {/*</Button>*/}
-        {/*<Button*/}
-        {/*  style={{ marginLeft: '6px' }}*/}
-        {/*  onClick={() => {*/}
-        {/*    setItemsPerPage(10)*/}
-        {/*  }}*/}
-        {/*  disabled={isLoading}*/}
-        {/*>*/}
-        {/*  set 10 items*/}
-        {/*</Button>*/}
+        <AddNewPack
+          addDeck={createDeck}
+          isOpen={addNewDeckModal}
+          toggleModal={setAddNewDeckModal}
+        />
       </div>
-
       <Table.Root>
         <Table.SortedHeader columns={columns} sort={sort} onSort={setSort} />
         {/*<Table.Row>*/}
@@ -131,17 +106,7 @@ export const Decks = () => {
           onSelectChange={itemsPerPage => updateItemsPerPage(itemsPerPage)}
         />
       )}
-      {/*{[1, 2, 3, 4, 5, 6, 7, 8, 9].map(item => (*/}
-      {/*  <Button*/}
-      {/*    style={{ marginTop: '20px', marginLeft: '6px' }}*/}
-      {/*    key={item}*/}
-      {/*    onClick={() => {*/}
-      {/*      updateCurrentPage(item)*/}
-      {/*    }}*/}
-      {/*  >*/}
-      {/*    {item}*/}
-      {/*  </Button>*/}
-      {/*))}*/}
+      {/*<ModalCard />*/}
     </div>
   )
 }

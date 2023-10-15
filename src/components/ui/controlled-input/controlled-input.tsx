@@ -30,6 +30,6 @@ export const ControlledInput = ({
     fieldState: { error },
   } = useController({ name, control })
 
-  return <Input {...props} {...field} errorMessage={error?.message} id={props.label} />
+  return <Input {...props} {...field} errormessage={error?.message} id={props.label} />
   //return <CardsInput {...props} {...field} errorMessage={error?.message} id={props.label} />
 }
