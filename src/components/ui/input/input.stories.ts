@@ -29,7 +29,7 @@ export const Standard: Story = {
 
 export const StandardWithError: Story = {
   args: {
-    errorMessage: 'Enter a valid email',
+    errormessage: 'Enter a valid email',
     label: 'Login or email',
     variant: 'standard',
     placeholder: 'Enter your login of email',

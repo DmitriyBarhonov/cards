@@ -35,7 +35,6 @@
     border-bottom: none;
     border-radius: 0.125rem 0.125rem 0 0;
     transition: all 0.5s ease;
-
   }
 
   span {
@@ -46,6 +45,7 @@
   &.pagination {
     gap: 2px;
     height: 24px;
+    width: 50px;
     padding: 0 2px 0 6px;
     font-size: var(--font-size-s);
   }
