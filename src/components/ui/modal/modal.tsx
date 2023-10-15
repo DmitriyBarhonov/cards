@@ -10,7 +10,7 @@ import { Typography } from '@/components/ui'
 
 type ModalProps = {
   open?: boolean
-  trigger: ReactNode
+  trigger?: ReactNode //не обязательно, потому что триггер может быть не там где в коде лежит сама модалка
   onOpenChange: (open: boolean) => void
   children: ReactNode
   onClose?: () => void
@@ -22,6 +22,7 @@ export const Modal: FC<ModalProps> = ({
   onClose,
   trigger,
   open,
+  onOpenChange,
   modalMainTitle,
   children,
   ...restProps
@@ -37,12 +38,13 @@ export const Modal: FC<ModalProps> = ({
     closeBtn: clsx(s.closeButton),
   }
 
-  function closeModalHandler() {
-    onClose?.()
-  }
+  // function closeModalHandler() {
+  //   onClose?.()
+  // } пока не надо, нужна конкретная логика
 
   return (
-    <Dialog.Root onOpenChange={closeModalHandler} open={open}>
+    <Dialog.Root onOpenChange={onOpenChange} open={open}>
+      {/*было сразу закрытие, надо наоборот открытие*/}
       <Dialog.Trigger asChild>
         <button aria-label="Trigger">{trigger}</button>
       </Dialog.Trigger>
