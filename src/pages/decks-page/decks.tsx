@@ -25,12 +25,16 @@ export const Decks = () => {
   // console.log(sort, sortString)
   const [search, setSearch] = useState('')
   const currentPage = useAppSelector(state => state.decks.currentPage)
+  const perPage = useAppSelector(state => state.decks.itemsPerPage)
+  const itemsPerPage = Number(perPage)
   const dispatch = useAppDispatch()
   const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
-  const [itemsPerPage, setItemsPerPage] = useState<number>(10)
+  const updateItemsPerPage = (items: string) =>
+    dispatch(decksSlice.actions.updateItemsPerPage(items))
+
   const { currentData: decks } = useGetDecksQuery({
     currentPage,
-    itemsPerPage,
+    itemsPerPage: itemsPerPage,
     name: search,
     orderBy: sortString,
   })
@@ -59,26 +63,7 @@ export const Decks = () => {
           isOpen={addNewDeckModal}
           toggleModal={setAddNewDeckModal}
         />
-        <Button
-          style={{ marginLeft: '6px' }}
-          onClick={() => {
-            setItemsPerPage(20)
-          }}
-          disabled={isLoading}
-        >
-          set 20 items
-        </Button>
-        <Button
-          style={{ marginLeft: '6px' }}
-          onClick={() => {
-            setItemsPerPage(10)
-          }}
-          disabled={isLoading}
-        >
-          set 10 items
-        </Button>
       </div>
-
       <Table.Root>
         <Table.SortedHeader columns={columns} sort={sort} onSort={setSort} />
         {/*<Table.Row>*/}
@@ -112,13 +97,13 @@ export const Decks = () => {
       {decks?.pagination.totalItems && (
         <Pagination
           className={s.pagination}
-          totalCount={decks?.pagination.totalItems}
+          totalCount={decks?.pagination.totalItems ?? 10}
           currentPage={currentPage}
-          pageSize={itemsPerPage}
+          pageSize={decks?.pagination.itemsPerPage}
           onPageChange={updateCurrentPage}
-          // selectValue={itemsPerPage}
-          // selectOptions={[5, 10, 20, 30]}
-          // onSelectChange={setItemsPerPage} тут ошибка в типах где-то в селекте или пагинации, решу потом
+          selectValue={decks?.pagination.itemsPerPage}
+          selectOptions={[5, 10, 15, 20]}
+          onSelectChange={itemsPerPage => updateItemsPerPage(itemsPerPage)}
         />
       )}
       {/*<ModalCard />*/}
