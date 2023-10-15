@@ -10,6 +10,7 @@ import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/com
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
 import { useGetMeQuery } from '@/services/auth'
+import { baseApi } from '@/services/base-api'
 import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks'
 import { decksSlice } from '@/services/decks/decks.slice.ts'
 import { Deck } from '@/services/decks/decks.types.ts'
@@ -27,7 +28,7 @@ const tabOptions = [
   { label: 'All Cards', value: 'all' },
 ]
 
-export const Decks = () => {
+export const Decks: React.FC = () => {
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
   const [tabValue, setTabValue] = useState('my')
@@ -40,11 +41,13 @@ export const Decks = () => {
   const dispatch = useAppDispatch()
   const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
   const { data: user } = useGetMeQuery()
-
+  const [cardsCount, setCardsCount] = useState<number[]>([0, 25])
   const updateItemsPerPage = (items: string) =>
     dispatch(decksSlice.actions.updateItemsPerPage(items))
   const { currentData: decks } = useGetDecksQuery({
     currentPage,
+    minCardsCount: cardsCount[0],
+    maxCardsCount: cardsCount[1],
     itemsPerPage: itemsPerPage,
     name: search,
     orderBy: sortString,
@@ -57,8 +60,14 @@ export const Decks = () => {
   const [deleteDeck] = useDeleteDeckMutation()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
   const [selectedDeck, setSelectedDeck] = useState<Deck>({} as Deck) //для удаления нужной колоды
+
   const tabHandler = (value: string) => {
     setTabValue(value)
+  }
+  const a = (n: any, b: any) => {
+    // dispatch(api.endpoints.get.initiate(arg)
+
+    setCardsCount([n, b])
   }
 
   return (
@@ -79,7 +88,7 @@ export const Decks = () => {
         </div>
         <div>
           <Typography variant={'caption'}>Number of cards</Typography>
-          <SliderForCards disabled={false} />
+          <SliderForCards onValueChange={a} disabled={false} />
         </div>
         <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoading}>
           {'Add New Deck'}
