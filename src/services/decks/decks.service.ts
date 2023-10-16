@@ -92,7 +92,7 @@ const deskApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
-      updateDecks: builder.mutation<Deck, DeckRequestParams>({
+      updateDeck: builder.mutation<Deck, DeckRequestParams>({
         query: updateData => ({
           url: `/v1/decks/${updateData.id}`,
           method: 'PATCH',
@@ -147,7 +147,7 @@ export const {
   useGetDecksQuery,
   useDeleteDeckMutation,
   useCreateDeckMutation,
-  useUpdateDecksMutation,
+  useUpdateDeckMutation,
   useGetDeckByIdQuery,
   useGetACardsDeckQuery,
 } = deskApi

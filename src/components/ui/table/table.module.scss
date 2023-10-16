@@ -1,4 +1,5 @@
 .table {
+  cursor: pointer;
   border-collapse: collapse;
   margin-top: 36px;
   color: var(--color-text-primary);
@@ -30,6 +31,7 @@
   padding: 6px 24px;
   font-size: var(--font-size-s);
   line-height: var(--line-height-m);
+  cursor: pointer;
 }
 
 .empty {
