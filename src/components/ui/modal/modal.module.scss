@@ -79,6 +79,10 @@ input {
       background-color: var(--color-dark-500);
     }
   }
+  .line {
+    margin: 10px -24px;
+    border-color: var(--color-dark-300);
+  }
 }
 
 .Input:focus {

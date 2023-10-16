@@ -17,6 +17,7 @@ type ModalProps = {
   hideCloseIcon?: boolean
   modalMainTitle?: string
   modalTitleVariant?: 'default' | 'large'
+  line?: boolean
 }
 export const Modal: FC<ModalProps> = ({
   onClose,
@@ -25,6 +26,7 @@ export const Modal: FC<ModalProps> = ({
   onOpenChange,
   modalMainTitle,
   children,
+  line = true,
   ...restProps
 }) => {
   const typographyVariant = restProps.modalTitleVariant === 'default' ? 'h1' : 'large'
@@ -36,6 +38,7 @@ export const Modal: FC<ModalProps> = ({
     title: clsx(typographyVariant === 'large' ? `${s.dialogTitle} ${s.largeTitle}` : s.dialogTitle),
     typography: clsx(s.dialogTypographyTitle),
     closeBtn: clsx(s.closeButton),
+    line: clsx(s.line),
   }
 
   // function closeModalHandler() {
@@ -61,6 +64,7 @@ export const Modal: FC<ModalProps> = ({
               </Typography>
             </Dialog.Title>
           )}
+          {line && <hr className={classNames.line} />}
           {!restProps.hideCloseIcon && (
             <Dialog.Close asChild>
               <button className={classNames.closeBtn} aria-label="Close">
