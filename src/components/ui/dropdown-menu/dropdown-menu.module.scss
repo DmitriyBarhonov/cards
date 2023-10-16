@@ -1,4 +1,4 @@
-@use "../../../assets/mixins/mixins" as mixins;
+@use '../../../assets/mixins/mixins' as mixins;
 
 .DropdownMenuContent {
   border: 1px solid var(--color-dark-300);
@@ -12,9 +12,9 @@
 
 .DropdownMenuContent:after {
   border: 1px solid var(--color-dark-300);
-  content: "";
-  width: 0px;
-  height: 0px;
+  content: '';
+  width: 0;
+  height: 0;
   position: absolute;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;

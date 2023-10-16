@@ -29,8 +29,7 @@ const tabOptions = [
   { label: 'All Cards', value: 'all' },
 ]
 
-
-export const Decks: React.FC = () => {
+export const Decks = () => {
   const navigate = useNavigate() //для перехода в карточки
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
