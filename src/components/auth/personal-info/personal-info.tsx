@@ -1,6 +1,7 @@
 import { FC, useState } from 'react'
 
 import { clsx } from 'clsx'
+import { useNavigate } from 'react-router-dom'
 
 import s from './personal-info.module.scss'
 
@@ -8,6 +9,7 @@ import { EdittextIcon } from '@/assets/icons/edit-text'
 import { ProfileDisplayMode } from '@/components/auth/personal-info/display-mode'
 import { ProfileEditMode } from '@/components/auth/personal-info/edit-mode'
 import { Avatar, Button, Card, Typography } from '@/components/ui'
+import { useGetMeQuery, useLogOutMutation } from '@/services/auth'
 
 export type PersonalInfoProps = {
   name?: string
@@ -15,10 +17,12 @@ export type PersonalInfoProps = {
   email?: string
 }
 
-export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, email }) => {
+export const PersonalInfo: FC<PersonalInfoProps> = ({ avatar, email }) => {
   const [editMode, setEditMode] = useState(false)
+  const { data: me } = useGetMeQuery()
+  const [logOut] = useLogOutMutation()
+  const navigate = useNavigate()
 
-  const nameForPersonalInfo = name ? name : 'Kilobucks Lover'
   const imgForPersonalInfo = avatar
     ? avatar
     : 'https://kartinkof.club/uploads/posts/2022-03/1648314602_1-kartinkof-club-p-negr-dumaet-mem-1.jpg'
@@ -34,7 +38,6 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, email }) => 
     editIcon: clsx(s.editTextIcon),
     editProfileNameIcon: clsx(s.editProfName),
   }
-
   const onEditTextClickHandler = () => {
     setEditMode(true)
   }
@@ -45,10 +48,16 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, email }) => 
     setEditMode(false)
   }
 
-  const onLogoutClickHandler = () => {
-    //ляляля это заглушка =D
+  const handleLogOut = async () => {
+    try {
+      await logOut()
+      alert('DONE LOGOUT, BABY!')
+      navigate('/')
+    } catch (error) {
+      // @ts-ignore
+      alert(`AH SHIT, HERE WE GO AGAIN .-. ${error.data}`)
+    }
   }
-  //TODO need to add edit button for avatar image
 
   return (
     <div className={classNames.formContainer}>
@@ -58,11 +67,7 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, email }) => 
             Personal Information
           </Typography>
           <div className={classNames.avatarWrapper}>
-            <Avatar
-              className={classNames.avatar}
-              name={nameForPersonalInfo}
-              avatar={imgForPersonalInfo}
-            />
+            <Avatar className={classNames.avatar} name={me.name} avatar={imgForPersonalInfo} />
             <Button
               onClick={onEditAvatarClickHandler}
               className={classNames.editButton}
@@ -80,9 +85,9 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({ name, avatar, email }) => 
           ) : (
             <ProfileDisplayMode
               email={email}
-              name={name}
+              name={me.name}
               onEditTextClickHandler={onEditTextClickHandler}
-              onLogoutClickHandler={onLogoutClickHandler}
+              onLogoutClickHandler={handleLogOut}
             />
           )}
         </div>

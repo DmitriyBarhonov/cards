@@ -22,7 +22,6 @@
 
 .avatar {
   cursor: pointer;
-
   display: flex;
   flex-shrink: 0;
   gap: 14px; //между именем пользвателя и аватаркой
@@ -37,6 +36,20 @@
 
 .dropdownTextChildren {
   display: flex;
+  color: var(--color-light-100);
+  cursor: pointer;
+  transition: all 0.4s ease;
+
+  &:hover {
+    color: var(--color-accent-100);
+  }
+
+  &:active {
+    color: var(--color-accent-300);
+  }
+
+}
+.dropdownElement {
   color: var(--color-light-100);
   cursor: pointer;
   transition: all 0.4s ease;

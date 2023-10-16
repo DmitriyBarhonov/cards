@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import s from './header.module.scss'
 
@@ -9,6 +9,9 @@ import { Logo } from '@/assets/icons/logo.tsx'
 import { PersonOutline } from '@/assets/icons/person-outline.tsx'
 import { Button, Dropdown, Typography } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
+import { DropdownItem, DropdownItemUserInfo } from '@/components/ui/dropdown-menu/custom-drop-down'
+import { useAppDispatch } from '@/hooks/hooks.ts'
+import { useLogOutMutation, util } from '@/services/auth'
 
 type HeaderProps = {
   isAuth: boolean //если авторизован то будет аватарка, если нет то кнопка sign in
@@ -28,6 +31,29 @@ export const Header: FC<HeaderProps> = ({
   // onSignOut,
   // onProfileClick,
 }) => {
+  const [logOut] = useLogOutMutation()
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  // const handleLogOut = async () => {
+  //   try {
+  //     await logOut()
+  //     navigate('/login')
+  //   } catch (error) {
+  //     // @ts-ignore
+  //     alert(error.data)
+  //   }
+  // }
+
+  const handleLogOut = () => {
+    logOut()
+      .unwrap()
+      .then(() => {
+        dispatch(util?.resetApiState())
+        navigate('/login')
+      })
+  }
+
   return (
     <div className={s.header}>
       <Button variant={'link'} as={Link} to={'/'}>
@@ -48,34 +74,33 @@ export const Header: FC<HeaderProps> = ({
             width={250}
           >
             <>
-              <div className={'flex'}>
-                <span className={'mr-3 mt-1'}>
-                  <Avatar name={name || 'no name'} />
-                </span>
-                <div className={'flex-col '}>
-                  <Typography variant={'h3'}>{name}</Typography>
-
-                  <span className={'text-zinc-400'}>
-                    <Typography variant={'body2'}>{email}</Typography>
-                  </span>
-                </div>
+              <DropdownItemUserInfo
+                name={name ? name : ''}
+                email={email ? email : ''}
+                element={<Avatar name={name || 'no name'} />}
+              />
+              <div className={s.dropdownElement}>
+                <DropdownItem
+                  border={true}
+                  icon={<PersonOutline />}
+                  element={
+                    <Typography as={Link} to="/personal-info" variant={'h3'}>
+                      {'My Profile'}
+                    </Typography>
+                  }
+                />
               </div>
-              <Typography
-                as={Link}
-                to="/personal-info"
-                variant={'h3'}
-                className={s.dropdownTextChildren}
-              >
-                <PersonOutline /> {'My Profile'}
-              </Typography>
-              <Typography
-                as={'button'}
-                onClick={() => {}}
-                variant={'h3'}
-                className={s.dropdownTextChildren}
-              >
-                <LogOut /> {'My Profile'}
-              </Typography>
+              <div className={s.dropdownElement}>
+                <DropdownItem
+                  border={true}
+                  icon={<LogOut />}
+                  element={
+                    <Typography as={'button'} onClick={handleLogOut} variant={'h3'}>
+                      {'Log Out'}
+                    </Typography>
+                  }
+                />
+              </div>
             </>
           </Dropdown>
         </div>

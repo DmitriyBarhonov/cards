@@ -1,18 +1,30 @@
 @mixin wrapper-styling() {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
-  padding: 10px 0;
+  padding: 14px 0;
 }
 
 .wrapperBorder {
   @include wrapper-styling();
-  border-top: #808080 1px solid;
+  border-top: var(--color-dark-100) 1px solid;
 }
 
 .wrapper {
   @include wrapper-styling();
 }
 
+//.elmentDropDown > * {
+//  background-color: rgba(255, 255, 255, 0);
+//  margin: 8px 0 0 4px;
+//}
+
+.elementDropdown {
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.icon {
+  margin-right: 8px;
 .elementDropDown > * {
   background-color: rgba(255, 255, 255, 0);
 }
@@ -20,26 +32,28 @@
   font-size: 12px;
   padding: 0;
 }
+
+
+.elementDropdown a {
+  //font-size: 12px;
+  //padding: 0px;
+}
+
 .DropdownMenuItem {
   outline: none;
+  display: flex;
+  align-items: center;
 }
+
 .DropdownMenuItemUser {
   outline: none;
 }
-.icon {
-  width: 16px;
-  height: 16px;
-  margin-right: 6px;
-}
+
 
 .email {
-  font-size: 12px;
-  color: #808080;
-}
-.name {
-  font-size: 14px;
+  color: var(--color-dark-100);
 }
 
-.userInfo {
-  margin-left: 8px;
+.useNameAndEmail {
+  margin-left: 10px;
 }
