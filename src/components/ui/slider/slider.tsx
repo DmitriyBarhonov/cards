@@ -22,7 +22,8 @@ type TabSwitcherProps = {
   value?: any
 }
 export const SliderForCards: FC<TabSwitcherProps> = ({ options, disabled, ...restProps }) => {
-  const [rangeValue, setRangeValue] = useState([0, 25])
+  const [rangeValue, setRangeValue] = useState<number[]>([0, 25])
+  const [timerId, setTimerId] = useState<NodeJS.Timeout | undefined>(undefined)
 
   //  на случай если захочется сделать инпуты
   // по бокам от слайдера
@@ -70,7 +71,13 @@ export const SliderForCards: FC<TabSwitcherProps> = ({ options, disabled, ...res
 
   const onRangeValueChange = (value: number[]) => {
     setRangeValue(value)
-    restProps.onValueChange && restProps.onValueChange(value[0], value[1])
+
+    if (timerId) clearTimeout(timerId)
+    const newTimerId = setTimeout(() => {
+      restProps.onValueChange && restProps.onValueChange(value[0], value[1])
+    }, 1500)
+
+    setTimerId(newTimerId)
   }
 
   return (

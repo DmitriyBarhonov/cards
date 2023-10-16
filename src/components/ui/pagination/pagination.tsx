@@ -94,7 +94,7 @@ export const Pagination: FC<PaginationProps> = ({
         return (
           <Button
             key={index}
-            disabled={selected || currentPage === lastPage}
+            disabled={selected}
             className={classNames.currentButton(selected)}
             onClick={() => onPageChange(pageNumber)}
           >

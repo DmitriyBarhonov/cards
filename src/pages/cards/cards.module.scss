@@ -1,0 +1,16 @@
+.container {
+  width: 90%;
+  max-width: 1280px;
+  height: 100%;
+  margin: 33px auto;
+}
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin-top: 70px;
+  p {
+    color: var(--color-dark-100);
+  }
+}

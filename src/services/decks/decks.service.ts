@@ -34,8 +34,6 @@ const deskApi = baseApi.injectEndpoints({
           try {
             const response = await queryFulfilled
 
-            debugger
-
             dispatch(
               deskApi.util.updateQueryData(
                 'getDecks',
@@ -46,7 +44,7 @@ const deskApi = baseApi.injectEndpoints({
               )
             )
           } catch (error) {
-            console.log(error)
+            alert(error)
           }
         },
         //когда выполнится запрос и даные придут
@@ -55,8 +53,8 @@ const deskApi = baseApi.injectEndpoints({
         invalidatesTags: ['Decks'],
       }),
       deleteDeck: builder.mutation<void, { id: string }>({
-        query: currentData => ({
-          url: `v1/decks/${currentData.id}`,
+        query: data => ({
+          url: `v1/decks/${data.id}`,
           method: 'DELETE',
         }),
         //сначала добавляем async onQueryStarted
@@ -69,7 +67,7 @@ const deskApi = baseApi.injectEndpoints({
               //тут будем давать адрес 1, 2 аргументы и 3 какое-то действие
               'getDecks',
               //мы же getDesks будем выполнять, вот и параметры для него тут
-              { currentPage: state.decks.currentPage, itemsPerPage: 10 },
+              { currentPage: state.decks.currentPage },
 
               draft => {
                 //В предоставленном коде draft представляет собой неизменяемое (immutable)
@@ -94,7 +92,7 @@ const deskApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
-      updateDecks: builder.mutation<Deck, DeckRequestParams>({
+      updateDeck: builder.mutation<Deck, DeckRequestParams>({
         query: updateData => ({
           url: `/v1/decks/${updateData.id}`,
           method: 'PATCH',
@@ -126,7 +124,7 @@ const deskApi = baseApi.injectEndpoints({
         invalidatesTags: ['Decks'],
       }),
       getDeckById: builder.query<Deck, { id: string }>({
-        query: id => `/v1/decks/${id}`,
+        query: ({ id }) => `/v1/decks/${id}`,
       }),
       getACardsDeck: builder.query<CardsResponse, GetCardsDeckParams>({
         query: params => ({
@@ -149,7 +147,7 @@ export const {
   useGetDecksQuery,
   useDeleteDeckMutation,
   useCreateDeckMutation,
-  useUpdateDecksMutation,
+  useUpdateDeckMutation,
   useGetDeckByIdQuery,
   useGetACardsDeckQuery,
 } = deskApi

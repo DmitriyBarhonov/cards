@@ -8,7 +8,6 @@
 .wrapperBorder {
   @include wrapper-styling();
   border-top: var(--color-dark-100) 1px solid;
-  width: 100%;
 }
 
 .wrapper {
@@ -26,6 +25,12 @@
 
 .icon {
   margin-right: 8px;
+.elementDropDown > * {
+  background-color: rgba(255, 255, 255, 0);
+}
+.elementDropDown a {
+  font-size: 12px;
+  padding: 0;
 }
 
 

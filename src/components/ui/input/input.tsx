@@ -5,14 +5,14 @@ import { clsx } from 'clsx'
 import s from './input.module.scss'
 
 // @ts-ignore
-import SearchIcon from '@/assets/icons/Search'
+import SearchIcon from '@/assets/icons/search.tsx'
 import { WatchPassIcon } from '@/assets/icons/watch-pass'
 import { CrossedOutWatchPassIcon } from '@/assets/icons/watch-pass-crossed-out'
 
 export type InputFieldProps = {
   label?: string
   required?: boolean
-  errorMessage?: string
+  errormessage?: string
   value?: string
   onInputValueChange?: (value: string) => void
   variant?: 'standard' | 'password' | 'search'
@@ -67,7 +67,7 @@ export const Input = forwardRef<HTMLInputElement, InputFieldProps>(
       inputLabel: clsx(s.label, rest.disabled && s.disabledLabel),
       inputLabelText: clsx(s.inputLabelText),
       error: clsx(s.error),
-      inputField: clsx(s[variant], rest.errorMessage && s.errorInput),
+      inputField: clsx(s[variant], rest.errormessage && s.errorInput),
     }
 
     return (
@@ -102,7 +102,7 @@ export const Input = forwardRef<HTMLInputElement, InputFieldProps>(
             className={classNames.inputField}
             {...rest}
           />
-          {rest.errorMessage && <p className={classNames.error}>{rest.errorMessage}</p>}
+          {rest.errormessage && <p className={classNames.error}>{rest.errormessage}</p>}
         </label>
       </div>
     )

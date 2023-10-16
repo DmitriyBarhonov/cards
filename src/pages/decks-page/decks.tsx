@@ -1,14 +1,22 @@
 import { useState } from 'react'
 
+import { useNavigate } from 'react-router-dom'
+
 import s from './decks.module.scss'
 
-import { Button, Input, Typography, Table, Pagination } from '@/components/ui'
+import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
+import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
+import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
+import { AddNewPack, DeleteDeck } from '@/components/decks'
+import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/components/ui'
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
+import { useGetMeQuery } from '@/services/auth'
 import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks'
 import { decksSlice } from '@/services/decks/decks.slice.ts'
 import { Deck } from '@/services/decks/decks.types.ts'
 import { Column, Sort } from '@/services/types'
+
 const columns: Column[] = [
   { key: 'name', title: 'Name', sortable: true },
   { key: 'cardsCount', title: 'Cards', sortable: true },
@@ -16,31 +24,53 @@ const columns: Column[] = [
   { key: 'created', title: 'Created by' },
   { key: 'action', title: 'Action' },
 ]
+const tabOptions = [
+  { label: 'My Cards', value: 'my' },
+  { label: 'All Cards', value: 'all' },
+]
 
 export const Decks = () => {
+
+  const navigate = useNavigate() //для перехода в карточки
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
-
-  // console.log(sort, sortString)
+  const [tabValue, setTabValue] = useState('all')
+  const [addNewDeckModal, setAddNewDeckModal] = useState(false)
   const [search, setSearch] = useState('')
+  const [deleteDeckModal, setDeleteDeckModal] = useState(false)
   const currentPage = useAppSelector(state => state.decks.currentPage)
+  const perPage = useAppSelector(state => state.decks.itemsPerPage)
+  const itemsPerPage = Number(perPage)
   const dispatch = useAppDispatch()
   const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
-  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const { data: user } = useGetMeQuery()
+  const [cardsCount, setCardsCount] = useState<number[]>([0, 25])
+  const updateItemsPerPage = (items: string) =>
+    dispatch(decksSlice.actions.updateItemsPerPage(items))
   const { currentData: decks } = useGetDecksQuery({
     currentPage,
-    itemsPerPage,
+    minCardsCount: cardsCount[0],
+    maxCardsCount: cardsCount[1],
+    itemsPerPage: itemsPerPage,
     name: search,
     orderBy: sortString,
+    authorId: tabValue === 'my' ? user?.id : undefined,
+    //если на табе Моя колода, то в useGetDecksQuery передаст в параметр имя автора,
+    //то есть пользователя из useGetMeQuery
+    //если на табе будет Все колоды, то запрос пойдет с undefined, и покажутся все колоды
   })
-  // totalPages: number
-  // currentPage: number
-  // itemsPerPage: number
-  // totalItems: number
+
   const [deleteDeck] = useDeleteDeckMutation()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
+  const [selectedDeck, setSelectedDeck] = useState<Deck>({} as Deck) //для удаления нужной колоды
 
-  //if (decks.isError) return <div>decks.isError</div>
+  const tabHandler = (value: string) => {
+    setTabValue(value)
+  }
+  const setCardsHandler = (n: number, b: number) => {
+    setCardsCount([n, b])
+  }
+
   return (
     <div className={s.container}>
       <Typography variant={'h2'}>Packs list</Typography>
@@ -53,36 +83,23 @@ export const Decks = () => {
           onChange={e => setSearch(e.currentTarget.value)}
           placeholder="Search by name"
         />
-        <SliderForCards disabled={false} />
-        <Button
-          style={{ marginLeft: '6px' }}
-          onClick={() => {
-            updateCurrentPage(1)
-            createDeck({ name: '321312' })
-          }}
-        >
-          create Deck
+        <div>
+          <Typography variant={'caption'}>Show packs cards</Typography>
+          <TabSwitcher options={tabOptions} value={tabValue} onValueChange={tabHandler} />
+        </div>
+        <div>
+          <Typography variant={'caption'}>Number of cards</Typography>
+          <SliderForCards onValueChange={setCardsHandler} disabled={false} />
+        </div>
+        <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoading}>
+          {'Add New Deck'}
         </Button>
-        <Button
-          style={{ marginLeft: '6px' }}
-          onClick={() => {
-            setItemsPerPage(20)
-          }}
-          disabled={isLoading}
-        >
-          set 20 items
-        </Button>
-        <Button
-          style={{ marginLeft: '6px' }}
-          onClick={() => {
-            setItemsPerPage(10)
-          }}
-          disabled={isLoading}
-        >
-          set 10 items
-        </Button>
+        <AddNewPack
+          addDeck={createDeck}
+          isOpen={addNewDeckModal}
+          toggleModal={setAddNewDeckModal}
+        />
       </div>
-
       <Table.Root>
         <Table.SortedHeader columns={columns} sort={sort} onSort={setSort} />
         {/*<Table.Row>*/}
@@ -93,19 +110,27 @@ export const Decks = () => {
         {/*</Table.Row> если без сортировки*/}
         <Table.Body>
           {decks?.items?.map((deck: Deck) => {
+            // console.log('table', deck)
             return (
               <Table.Row key={deck.id}>
-                <Table.Data>{deck.name}</Table.Data>
+                <Table.Data onClick={() => navigate(`/cards/${deck.id}`)}>{deck.name}</Table.Data>
+                {/*переходим в карточки и дальше айди колоды*/}
                 <Table.Data>{deck.cardsCount}</Table.Data>
                 <Table.Data>{new Date(deck.updated).toLocaleDateString('ru-Ru')}</Table.Data>
                 <Table.Data>{deck.author.name}</Table.Data>
-                <Table.Data>
+                <Table.Data className={s.iconsRow}>
+                  <PlayCircle size={24} />
+                  {/*если это моя колода, то покажи все иконки, иначе только learn */}
+                  {user.id === deck.author.id ? <EdittextIcon /> : null}
+
                   <Button
+                    variant={'icon'}
                     onClick={() => {
-                      deleteDeck({ id: deck.id })
+                      setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
+                      setDeleteDeckModal(true) //открываем модалку для удаления
                     }}
                   >
-                    delete
+                    <TrashOutline size={24} />
                   </Button>
                 </Table.Data>
               </Table.Row>
@@ -116,23 +141,23 @@ export const Decks = () => {
       {decks?.pagination.totalItems && (
         <Pagination
           className={s.pagination}
-          totalCount={decks?.pagination.totalItems}
+          totalCount={decks?.pagination.totalItems ?? 10}
           currentPage={currentPage}
-          pageSize={itemsPerPage}
+          pageSize={decks?.pagination.itemsPerPage}
           onPageChange={updateCurrentPage}
+          selectValue={decks?.pagination.itemsPerPage}
+          selectOptions={[5, 10, 15, 20]}
+          onSelectChange={itemsPerPage => updateItemsPerPage(itemsPerPage)}
         />
       )}
-      {/*{[1, 2, 3, 4, 5, 6, 7, 8, 9].map(item => (*/}
-      {/*  <Button*/}
-      {/*    style={{ marginTop: '20px', marginLeft: '6px' }}*/}
-      {/*    key={item}*/}
-      {/*    onClick={() => {*/}
-      {/*      updateCurrentPage(item)*/}
-      {/*    }}*/}
-      {/*  >*/}
-      {/*    {item}*/}
-      {/*  </Button>*/}
-      {/*))}*/}
+      <DeleteDeck
+        isOpen={deleteDeckModal} //открыта или нет конкретная модалка
+        toggleModal={setDeleteDeckModal} //переключатель для открытия и закрытия модалки
+        //отдаем нужную колоду для удаления, ее имя и id
+        name={selectedDeck.name}
+        id={selectedDeck.id}
+        deleteDeck={deleteDeck} //функция по удалению
+      />
     </div>
   )
 }

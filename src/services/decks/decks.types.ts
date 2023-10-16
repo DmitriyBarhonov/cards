@@ -59,7 +59,7 @@ export type GetCardsDeckParams = {
 }
 
 // Cards type
-type Card = {
+export type Card = {
   id: string
   question: string
   answer: string

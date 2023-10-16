@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import s from './header.module.scss'
 
 import { LogOut } from '@/assets/icons/log-out.tsx'
-import { Logo } from '@/assets/icons/Logo.tsx'
+import { Logo } from '@/assets/icons/logo.tsx'
 import { PersonOutline } from '@/assets/icons/person-outline.tsx'
 import { Button, Dropdown, Typography } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
