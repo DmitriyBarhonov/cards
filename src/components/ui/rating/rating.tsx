@@ -1,17 +1,13 @@
 import { Star } from './star'
 
-export const Rating = (props: any) => {
-  let a = []
-
-  for (let i = 0; i < 5; i++) {
-    a.push(i)
-  }
+export const Rating: React.FC<{ rating: number }> = ({ rating }) => {
+  let itemCount = [1, 2, 3, 4, 5]
 
   return (
-    <>
-      {a.map((item, index) => {
-        return <Star selected={props.rating > item} key={index} />
+    <div style={{ display: 'flex' }}>
+      {itemCount.map((item, index) => {
+        return <Star selected={rating >= item} key={index} />
       })}
-    </>
+    </div>
   )
 }
