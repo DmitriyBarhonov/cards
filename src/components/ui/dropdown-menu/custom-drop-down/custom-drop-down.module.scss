@@ -6,19 +6,19 @@
 
 .wrapperBorder {
   @include wrapper-styling();
-   border-top: #808080 1px solid;
+  border-top: #808080 1px solid;
 }
 
-.wrapper{
+.wrapper {
   @include wrapper-styling();
 }
 
-.elmentDropDown > * {
+.elementDropDown > * {
   background-color: rgba(255, 255, 255, 0);
 }
-.elmentDropDown a {
+.elementDropDown a {
   font-size: 12px;
-  padding: 0px;
+  padding: 0;
 }
 .DropdownMenuItem {
   outline: none;

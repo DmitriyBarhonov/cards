@@ -18,7 +18,7 @@ export const DropdownItem: FC<DropdownItemType> = props => {
     <DropdownMenu.Item className={s.DropdownMenuItem}>
       <div className={wrapper}>
         <div className={s.icon}>{props.icon}</div>
-        <div className={s.elmentDropDown}>{props.element}</div>
+        <div className={s.elementDropDown}>{props.element}</div>
       </div>
     </DropdownMenu.Item>
   )

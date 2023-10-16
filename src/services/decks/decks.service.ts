@@ -124,7 +124,7 @@ const deskApi = baseApi.injectEndpoints({
         invalidatesTags: ['Decks'],
       }),
       getDeckById: builder.query<Deck, { id: string }>({
-        query: id => `/v1/decks/${id}`,
+        query: ({ id }) => `/v1/decks/${id}`,
       }),
       getACardsDeck: builder.query<CardsResponse, GetCardsDeckParams>({
         query: params => ({
