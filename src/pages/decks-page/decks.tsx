@@ -29,7 +29,8 @@ const tabOptions = [
   { label: 'All Cards', value: 'all' },
 ]
 
-export const Decks = () => {
+
+export const Decks: React.FC = () => {
   const navigate = useNavigate() //для перехода в карточки
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
@@ -43,11 +44,13 @@ export const Decks = () => {
   const dispatch = useAppDispatch()
   const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
   const { data: user } = useGetMeQuery()
-
+  const [cardsCount, setCardsCount] = useState<number[]>([0, 25])
   const updateItemsPerPage = (items: string) =>
     dispatch(decksSlice.actions.updateItemsPerPage(items))
   const { currentData: decks } = useGetDecksQuery({
     currentPage,
+    minCardsCount: cardsCount[0],
+    maxCardsCount: cardsCount[1],
     itemsPerPage: itemsPerPage,
     name: search,
     orderBy: sortString,
@@ -60,8 +63,12 @@ export const Decks = () => {
   const [deleteDeck] = useDeleteDeckMutation()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
   const [selectedDeck, setSelectedDeck] = useState<Deck>({} as Deck) //для удаления нужной колоды
+
   const tabHandler = (value: string) => {
     setTabValue(value)
+  }
+  const setCardsHandler = (n: number, b: number) => {
+    setCardsCount([n, b])
   }
 
   return (
@@ -82,7 +89,7 @@ export const Decks = () => {
         </div>
         <div>
           <Typography variant={'caption'}>Number of cards</Typography>
-          <SliderForCards disabled={false} />
+          <SliderForCards onValueChange={setCardsHandler} disabled={false} />
         </div>
         <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoading}>
           {'Add New Deck'}
