@@ -1,9 +1,9 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import s from './cards.module.scss'
 
 import { ArrowLeft } from '@/assets/icons/arrow-left.tsx'
-import { Button, Input, Table, Typography } from '@/components/ui'
+import { Button, Input, Rating, Table, Typography } from '@/components/ui'
 import { useGetACardsDeckQuery } from '@/services/decks'
 import { Card } from '@/services/decks/decks.types.ts'
 import { Column } from '@/services/types'
@@ -17,16 +17,15 @@ const columns: Column[] = [
 ]
 
 export const Cards = () => {
+  const navigate = useNavigate()
   const { id } = useParams<{ id: string }>() //вытаскиваем айди из строки
-  const { data: items } = useGetACardsDeckQuery({ id: id ?? '' })
+  const { data: cards } = useGetACardsDeckQuery({ id: id ?? '' })
 
   // id все равно придет, но чтобы не было ошибки о типах, если нет id то будет пустая
   //что надо сделать:
   //сделать логику на своя или чужая колода
   //на свою колоду на имя добавить дропдаун
-  //если карточек в колоде нет, отобразить текст и кнопку
   //сделать поиск по карточкам
-  //добавить рейтинг
   //
   //тут может быть сложно: если своя колода добавть колонку c иконками редактирования и удаления,
   // если чужая то то такой колонки нет, котолнки верху в массиве columns
@@ -37,7 +36,11 @@ export const Cards = () => {
 
   return (
     <div className={s.container}>
-      <Typography variant="body2" className={'flex justify-start'}>
+      <Typography
+        variant="body2"
+        className={'flex justify-start cursor-pointer'}
+        onClick={() => navigate(-1)}
+      >
         {' '}
         <ArrowLeft />
         Back to Decks List
@@ -47,22 +50,33 @@ export const Cards = () => {
         <Button>Learn to Deck</Button>
       </div>
       <Input variant="search" fullWidth={true} />
-      <Table.Root>
-        <Table.SortedHeader columns={columns} />
-        <Table.Body>
-          {items?.items.map((card: Card) => {
-            return (
-              <Table.Row key={card.id}>
-                <Table.Data>{card.question}</Table.Data>
-                <Table.Data>{card.answer}</Table.Data>
-                <Table.Data>{card.updated}</Table.Data>
-                <Table.Data>{card.grade}</Table.Data>
-                <Table.Data>Icons for action</Table.Data>
-              </Table.Row>
-            )
-          })}
-        </Table.Body>
-      </Table.Root>
+      {cards?.items.length ? (
+        <Table.Root>
+          <Table.SortedHeader columns={columns} />
+          <Table.Body>
+            {cards?.items.map((card: Card) => {
+              return (
+                <Table.Row key={card.id}>
+                  <Table.Data>{card.question}</Table.Data>
+                  <Table.Data>{card.answer}</Table.Data>
+                  <Table.Data>{new Date(card.updated).toLocaleDateString('ru-Ru')}</Table.Data>
+                  <Table.Data>
+                    <Rating rating={card.grade} />
+                  </Table.Data>
+                  <Table.Data>Icons for action</Table.Data>
+                </Table.Row>
+              )
+            })}
+          </Table.Body>
+        </Table.Root>
+      ) : (
+        <div className={s.empty}>
+          <Typography variant="body2">
+            This pack is empty. Click add new card to fill this pack
+          </Typography>
+          <Button variant="primary">Add New Card</Button>
+        </div>
+      )}
     </div>
   )
 }
