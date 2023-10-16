@@ -35,16 +35,6 @@ export const Header: FC<HeaderProps> = ({
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  // const handleLogOut = async () => {
-  //   try {
-  //     await logOut()
-  //     navigate('/login')
-  //   } catch (error) {
-  //     // @ts-ignore
-  //     alert(error.data)
-  //   }
-  // }
-
   const handleLogOut = () => {
     logOut()
       .unwrap()
