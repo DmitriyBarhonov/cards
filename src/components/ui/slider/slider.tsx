@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 
 import * as Slider from '@radix-ui/react-slider'
 import clsx from 'clsx'
