@@ -79,3 +79,12 @@ export type CardsResponse = {
   pagination: Pagination
   items: Card[]
 }
+
+export type CreateCardParams = {
+  question: string
+  answer: string
+  questionImg?: string
+  answerImg?: string
+  questionVideo?: string
+  answerVideo?: string
+}

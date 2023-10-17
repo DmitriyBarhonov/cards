@@ -13,6 +13,7 @@ import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
 import { useGetMeQuery } from '@/services/auth'
 import {
+  // useCreateCardMutation,
   useCreateDeckMutation,
   useDeleteDeckMutation,
   useGetDecksQuery,
@@ -67,6 +68,7 @@ export const Decks = () => {
   const [updateDeck] = useUpdateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
+  //const [createCard] = useCreateCardMutation()
   const [selectedDeck, setSelectedDeck] = useState<Deck>({} as Deck) //для удаления нужной колоды
 
   const tabHandler = (value: string) => {
@@ -110,7 +112,6 @@ export const Decks = () => {
         {/*</Table.Row> если без сортировки*/}
         <Table.Body>
           {decks?.items?.map((deck: Deck) => {
-            // console.log('table', deck)
             return (
               <Table.Row key={deck.id}>
                 <Table.Data onClick={() => navigate(`/cards/${deck.id}`)}>{deck.name}</Table.Data>

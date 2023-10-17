@@ -40,6 +40,8 @@ export const Cards = () => {
   // если чужая то то такой колонки нет, котолнки верху в массиве columns
   //сделать модалки на создание, редактирования и удаление карточки
   //с learn cards я думаю потом разберемся, поэтапно
+  // console.log(cards)
+  // console.log(deck)
 
   return (
     <div className={s.container}>

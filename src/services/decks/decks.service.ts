@@ -6,6 +6,8 @@ import {
   DecksParams,
   DeckRequestParams,
   GetCardsDeckParams,
+  CreateCardParams,
+  Card,
 } from '@/services/decks/decks.types.ts'
 import { RootState } from '@/services/store.ts'
 
@@ -52,6 +54,40 @@ const deskApi = baseApi.injectEndpoints({
         //и так сдулается обновление
         invalidatesTags: ['Decks'],
       }),
+      getDeckById: builder.query<Deck, { id: string }>({
+        query: ({ id }) => `/v1/decks/${id}`,
+      }),
+      updateDeck: builder.mutation<Deck, DeckRequestParams>({
+        query: updateData => ({
+          url: `/v1/decks/${updateData.id}`,
+          method: 'PATCH',
+          body: {
+            cover: updateData.cover,
+            name: updateData.name,
+            isPrivate: updateData.isPrivate,
+          },
+        }),
+        async onQueryStarted({ id }, { dispatch, queryFulfilled, getState }) {
+          const state = getState() as RootState
+
+          try {
+            const response = await queryFulfilled
+
+            dispatch(
+              deskApi.util.updateQueryData(
+                'getDecks',
+                { currentPage: state.decks.currentPage },
+                draft => {
+                  draft.items = draft.items.map(item => (item.id === id ? item : response.data))
+                }
+              )
+            )
+          } catch {
+            // patchResult.undo()
+          }
+        },
+        invalidatesTags: ['Decks'],
+      }),
       deleteDeck: builder.mutation<void, { id: string }>({
         query: data => ({
           url: `v1/decks/${data.id}`,
@@ -92,40 +128,6 @@ const deskApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
-      updateDeck: builder.mutation<Deck, DeckRequestParams>({
-        query: updateData => ({
-          url: `/v1/decks/${updateData.id}`,
-          method: 'PATCH',
-          body: {
-            cover: updateData.cover,
-            name: updateData.name,
-            isPrivate: updateData.isPrivate,
-          },
-        }),
-        async onQueryStarted({ id }, { dispatch, queryFulfilled, getState }) {
-          const state = getState() as RootState
-
-          try {
-            const response = await queryFulfilled
-
-            dispatch(
-              deskApi.util.updateQueryData(
-                'getDecks',
-                { currentPage: state.decks.currentPage },
-                draft => {
-                  draft.items = draft.items.map(item => (item.id === id ? item : response.data))
-                }
-              )
-            )
-          } catch {
-            // patchResult.undo()
-          }
-        },
-        invalidatesTags: ['Decks'],
-      }),
-      getDeckById: builder.query<Deck, { id: string }>({
-        query: ({ id }) => `/v1/decks/${id}`,
-      }),
       getACardsDeck: builder.query<CardsResponse, GetCardsDeckParams>({
         query: params => ({
           url: `/v1/decks/${params.id}/cards`,
@@ -137,8 +139,27 @@ const deskApi = baseApi.injectEndpoints({
             currentPage: params.currentPage,
             itemsPerPage: params.itemsPerPage,
           },
+          providesTag: ['Cards'],
         }),
       }),
+      createCard: builder.mutation<Card, { id: string; data: CreateCardParams }>({
+        query: ({ id, data }) => ({
+          url: `/v1/decks/${id}/cards`,
+          method: 'POST',
+          body: {
+            question: data.question,
+            answer: data.answer,
+            questionImg: data.questionImg,
+            answerImg: data.answerImg,
+            questionVideo: data.questionVideo,
+            answerVideo: data.answerVideo,
+          },
+          invalidatesTags: ['Decks', 'Cards'],
+        }),
+      }),
+      //create a card
+      //retrieve a random card
+      //save the grade of card
     }
   },
 })
@@ -150,4 +171,5 @@ export const {
   useUpdateDeckMutation,
   useGetDeckByIdQuery,
   useGetACardsDeckQuery,
+  useCreateCardMutation,
 } = deskApi
