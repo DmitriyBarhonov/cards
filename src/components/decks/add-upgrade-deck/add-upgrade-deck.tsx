@@ -1,6 +1,5 @@
 import { FC } from 'react'
 
-//import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -21,30 +20,41 @@ const schema = z.object({
 //deck будет не пустой строкой от 3 до 30 символов
 //private будет опциональным булевым
 
-export type AddNewPackType = z.infer<typeof schema> //вытаскивает типизацию для данных формы из схемы выше
-export type AddNewPackProps = {
-  isOpen: boolean
-  toggleModal: (isOpen: boolean) => void
-  addDeck: (data: AddNewPackType) => void //при сабмите отправляем данные типа название колоды и приватная ли
+export type AddUpgradeType = z.infer<typeof schema> //вытаскивает типизацию для данных формы из схемы выше
+export type AddUpgradeDeckProps = {
+  defaultValues?: AddUpgradeType //используем при вызове для upgrade
+  title: string //заголовок
+  buttonText: string //текст на кнопке
+  isOpen: boolean //открыта или закрыта
+  toggleModal: (isOpen: boolean) => void //переключалка открытия или закрытия
+  deckHandler: (data: AddUpgradeType) => void //при сабмите отправляем данные типа название колоды и приватная ли
+  //если createDeck, то передаем просто функцию,
+  //если upgrade, то на месте вызова компоненты передаем еще и id колоды
 }
-export const AddNewPack: FC<AddNewPackProps> = ({ addDeck, isOpen, toggleModal }) => {
-  const { handleSubmit, control, reset, resetField } = useForm<AddNewPackType>({
+export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
+  defaultValues = { name: '', isPrivate: false },
+  title,
+  buttonText,
+  deckHandler,
+  isOpen,
+  toggleModal,
+}) => {
+  const { handleSubmit, control, reset, resetField } = useForm<AddUpgradeType>({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
-    defaultValues: {
-      name: '',
-      isPrivate: false,
-    },
+    defaultValues, //берем из пропсов, по умолчанию пустые
   })
   ///
-  const onSubmit = (data: AddNewPackType) => {
-    addDeck(data)
+  const onSubmit = (data: AddUpgradeType) => {
+    deckHandler(data)
     resetField('name')
     toggleModal(false)
   }
 
   const handleFormSubmitted = handleSubmit(onSubmit)
-
+  const onOpenHandler = (isOpen: boolean) => {
+    toggleModal(isOpen)
+  }
   const onCloseHandler = () => {
     reset()
     toggleModal(false)
@@ -54,16 +64,14 @@ export const AddNewPack: FC<AddNewPackProps> = ({ addDeck, isOpen, toggleModal }
     <Modal
       onClose={onCloseHandler}
       open={isOpen}
-      onOpenChange={() => resetField('name')}
-      modalMainTitle={'Add New Pack'}
+      onOpenChange={onOpenHandler}
+      modalMainTitle={title}
     >
       <form onSubmit={handleFormSubmitted}>
-        {/*<DevTool control={control} />*/}
         <ControlledInput
-          // className={'fWidth'}
           name="name"
           variant={'standard'}
-          placeholder={'Name'}
+          placeholder={defaultValues.name}
           label={'New pack name'}
           control={control}
           autoComplete="false"
@@ -76,7 +84,7 @@ export const AddNewPack: FC<AddNewPackProps> = ({ addDeck, isOpen, toggleModal }
           <Button onClick={onCloseHandler} variant={'secondary'}>
             Cancel
           </Button>
-          <Button type="submit">Add Deck</Button>
+          <Button type="submit">{buttonText}</Button>
         </div>
       </form>
     </Modal>
