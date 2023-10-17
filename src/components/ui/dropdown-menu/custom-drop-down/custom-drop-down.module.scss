@@ -8,6 +8,7 @@
 .wrapperBorder {
   @include wrapper-styling();
   border-top: var(--color-dark-100) 1px solid;
+  width: 100%;
 }
 
 .wrapper {
