@@ -36,6 +36,7 @@ export const Header: FC<HeaderProps> = ({
   const dispatch = useAppDispatch()
 
   const handleLogOut = () => {
+    //TODO избавиться от повтора в personal-info
     logOut()
       .unwrap()
       .then(() => {
