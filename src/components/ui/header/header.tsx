@@ -19,8 +19,6 @@ type HeaderProps = {
   email?: string
   avatar?: string
   onSignIn: () => void
-  // onSignOut: () => void
-  // onProfileClick: () => void //передаем на аватурку чтобы открылся дропдаун
 }
 export const Header: FC<HeaderProps> = ({
   isAuth = false,
