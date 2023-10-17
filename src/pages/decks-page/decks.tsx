@@ -7,12 +7,17 @@ import s from './decks.module.scss'
 import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
 import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
 import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
-import { AddNewPack, DeleteDeck } from '@/components/decks'
+import { AddUpgradeDeck, DeleteDeck } from '@/components/decks'
 import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/components/ui'
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
 import { useGetMeQuery } from '@/services/auth'
-import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks'
+import {
+  useCreateDeckMutation,
+  useDeleteDeckMutation,
+  useGetDecksQuery,
+  useUpdateDeckMutation,
+} from '@/services/decks'
 import { decksSlice } from '@/services/decks/decks.slice.ts'
 import { Deck } from '@/services/decks/decks.types.ts'
 import { Column, Sort } from '@/services/types'
@@ -30,14 +35,14 @@ const tabOptions = [
 ]
 
 export const Decks = () => {
-
   const navigate = useNavigate() //для перехода в карточки
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
   const [tabValue, setTabValue] = useState('all')
   const [addNewDeckModal, setAddNewDeckModal] = useState(false)
-  const [search, setSearch] = useState('')
+  const [updateDeckModal, setUpdateDeckModal] = useState(false)
   const [deleteDeckModal, setDeleteDeckModal] = useState(false)
+  const [search, setSearch] = useState('')
   const currentPage = useAppSelector(state => state.decks.currentPage)
   const perPage = useAppSelector(state => state.decks.itemsPerPage)
   const itemsPerPage = Number(perPage)
@@ -59,7 +64,7 @@ export const Decks = () => {
     //то есть пользователя из useGetMeQuery
     //если на табе будет Все колоды, то запрос пойдет с undefined, и покажутся все колоды
   })
-
+  const [updateDeck] = useUpdateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
   const [selectedDeck, setSelectedDeck] = useState<Deck>({} as Deck) //для удаления нужной колоды
@@ -94,11 +99,6 @@ export const Decks = () => {
         <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoading}>
           {'Add New Deck'}
         </Button>
-        <AddNewPack
-          addDeck={createDeck}
-          isOpen={addNewDeckModal}
-          toggleModal={setAddNewDeckModal}
-        />
       </div>
       <Table.Root>
         <Table.SortedHeader columns={columns} sort={sort} onSort={setSort} />
@@ -121,8 +121,17 @@ export const Decks = () => {
                 <Table.Data className={s.iconsRow}>
                   <PlayCircle size={24} />
                   {/*если это моя колода, то покажи все иконки, иначе только learn */}
-                  {user.id === deck.author.id ? <EdittextIcon /> : null}
-
+                  {user.id === deck.author.id ? (
+                    <Button
+                      variant={'icon'}
+                      onClick={() => {
+                        setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
+                        setUpdateDeckModal(true) //открываем модалку для удаления
+                      }}
+                    >
+                      <EdittextIcon />
+                    </Button>
+                  ) : null}
                   <Button
                     variant={'icon'}
                     onClick={() => {
@@ -150,6 +159,28 @@ export const Decks = () => {
           onSelectChange={itemsPerPage => updateItemsPerPage(itemsPerPage)}
         />
       )}
+      <AddUpgradeDeck
+        title={'Add New Deck'}
+        buttonText={'Add New Deck'}
+        deckHandler={createDeck}
+        isOpen={addNewDeckModal}
+        toggleModal={setAddNewDeckModal}
+      />
+      {/*для создания новой колоды титул в модалку, имя кнопки, функция для создания колоды, значение открыта ли, функция для открытия или закрытия*/}
+      <AddUpgradeDeck
+        title={'Edit Deck'}
+        buttonText={'Save changes'}
+        defaultValues={{ name: selectedDeck.name, isPrivate: selectedDeck.isPrivate }}
+        deckHandler={data => {
+          // if (!selectedDeck) {
+          //   return
+          // }
+
+          updateDeck({ id: selectedDeck.id, ...data })
+        }}
+        isOpen={updateDeckModal}
+        toggleModal={setUpdateDeckModal}
+      />
       <DeleteDeck
         isOpen={deleteDeckModal} //открыта или нет конкретная модалка
         toggleModal={setDeleteDeckModal} //переключатель для открытия и закрытия модалки
