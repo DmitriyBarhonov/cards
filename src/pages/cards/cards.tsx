@@ -12,7 +12,11 @@ import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
 import { Button, Dropdown, Input, Rating, Table, Typography } from '@/components/ui'
 import { DropdownItem } from '@/components/ui/dropdown-menu/custom-drop-down'
 import { useGetMeQuery } from '@/services/auth'
-import { useGetACardsDeckQuery, useGetDeckByIdQuery } from '@/services/decks'
+import {
+  useGetACardsDeckQuery,
+  //useGetARandomCardQuery,
+  useGetDeckByIdQuery,
+} from '@/services/decks'
 import { Card } from '@/services/decks/decks.types.ts'
 import { Column } from '@/services/types'
 
@@ -24,6 +28,7 @@ const columns: Column[] = [
   { key: 'action', title: 'Action' },
 ]
 
+// const someId = 'clnt3wx3310izvo2q152aqesa'
 export const Cards = () => {
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>() //вытаскиваем айди из строки
@@ -33,7 +38,8 @@ export const Cards = () => {
   const { data: deck } = useGetDeckByIdQuery({ id: id ?? '' })
   // id все равно придет, но чтобы не было ошибки о типах, если нет id то будет пустая
   const myDeck = deck?.userId === user?.id // в переменную моя колода или нет
-
+  //const { data: learn } = useGetARandomCardQuery({ id: id })
+  //не нужно здесь, нужна другая компонента
   //что надо сделать:
   //
   //тут может быть сложно: если своя колода добавть колонку c иконками редактирования и удаления,
@@ -78,6 +84,7 @@ export const Cards = () => {
         </div>
 
         <Button>Learn to Deck</Button>
+        {/*!!!! зпрос работает. Нужна модалка  */}
       </div>
       <Input
         variant="search"

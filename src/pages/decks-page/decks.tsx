@@ -13,6 +13,7 @@ import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
 import { useGetMeQuery } from '@/services/auth'
 import {
+  // useCreateCardMutation,
   useCreateDeckMutation,
   useDeleteDeckMutation,
   useGetDecksQuery,
@@ -67,6 +68,7 @@ export const Decks = () => {
   const [updateDeck] = useUpdateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
+  //const [createCard] = useCreateCardMutation()
   const [selectedDeck, setSelectedDeck] = useState<Deck>({} as Deck) //для удаления нужной колоды
 
   const tabHandler = (value: string) => {
@@ -75,6 +77,8 @@ export const Decks = () => {
   const setCardsHandler = (n: number, b: number) => {
     setCardsCount([n, b])
   }
+
+  // console.log(decks)
 
   return (
     <div className={s.container}>
@@ -102,15 +106,8 @@ export const Decks = () => {
       </div>
       <Table.Root>
         <Table.SortedHeader columns={columns} sort={sort} onSort={setSort} />
-        {/*<Table.Row>*/}
-        {/*  <Table.HeadData>Name</Table.HeadData>*/}
-        {/*  <Table.HeadData>Cards</Table.HeadData>*/}
-        {/*  <Table.HeadData>Last Updated</Table.HeadData>*/}
-        {/*  <Table.HeadData>Created by</Table.HeadData>*/}
-        {/*</Table.Row> если без сортировки*/}
         <Table.Body>
           {decks?.items?.map((deck: Deck) => {
-            // console.log('table', deck)
             return (
               <Table.Row key={deck.id}>
                 <Table.Data onClick={() => navigate(`/cards/${deck.id}`)}>{deck.name}</Table.Data>
@@ -122,25 +119,27 @@ export const Decks = () => {
                   <PlayCircle size={24} />
                   {/*если это моя колода, то покажи все иконки, иначе только learn */}
                   {user.id === deck.author.id ? (
-                    <Button
-                      variant={'icon'}
-                      onClick={() => {
-                        setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
-                        setUpdateDeckModal(true) //открываем модалку для удаления
-                      }}
-                    >
-                      <EdittextIcon />
-                    </Button>
+                    <div className={'flex'}>
+                      <Button
+                        variant={'icon'}
+                        onClick={() => {
+                          setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
+                          setUpdateDeckModal(true) //открываем модалку для удаления
+                        }}
+                      >
+                        <EdittextIcon />
+                      </Button>
+                      <Button
+                        variant={'icon'}
+                        onClick={() => {
+                          setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
+                          setDeleteDeckModal(true) //открываем модалку для удаления
+                        }}
+                      >
+                        <TrashOutline size={24} />
+                      </Button>
+                    </div>
                   ) : null}
-                  <Button
-                    variant={'icon'}
-                    onClick={() => {
-                      setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
-                      setDeleteDeckModal(true) //открываем модалку для удаления
-                    }}
-                  >
-                    <TrashOutline size={24} />
-                  </Button>
                 </Table.Data>
               </Table.Row>
             )
@@ -172,11 +171,8 @@ export const Decks = () => {
         buttonText={'Save changes'}
         defaultValues={{ name: selectedDeck.name, isPrivate: selectedDeck.isPrivate }}
         deckHandler={data => {
-          // if (!selectedDeck) {
-          //   return
-          // }
-
           updateDeck({ id: selectedDeck.id, ...data })
+          //id выбранной колоды, data берем из модалки
         }}
         isOpen={updateDeckModal}
         toggleModal={setUpdateDeckModal}
