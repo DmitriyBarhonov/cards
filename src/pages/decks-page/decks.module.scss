@@ -7,12 +7,14 @@
 
 .menu {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
 }
 
 .search {
   max-width: 300px;
+  margin: inherit;
+  height: inherit;
 }
 .pagination {
   margin: 20px auto;
@@ -23,4 +25,18 @@
   display: flex;
   justify-content: flex-end;
   // Прижимаем текст к правому краю в последнем ряду, так нужно для иконок
+}
+
+.wrapperButton {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+}
+.clearFilter {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+.clearFilter > div{
+  margin-left: 10px;
 }

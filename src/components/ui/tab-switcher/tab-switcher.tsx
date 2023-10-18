@@ -16,7 +16,7 @@ type TabSwitcherProps = {
   defaultValue?: string
   onValueChange?: (value: string) => void
   className?: string
-  value?: any
+  value?: string
 }
 export const TabSwitcher: FC<TabSwitcherProps> = ({ options, disabled, ...restProps }) => {
   const [value, setValue] = useState(restProps.defaultValue || restProps.value || options[1].value)
