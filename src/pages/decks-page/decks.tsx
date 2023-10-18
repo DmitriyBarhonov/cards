@@ -13,13 +13,6 @@ import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/com
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
 import { useGetMeQuery } from '@/services/auth'
-import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks'
-import {
-  decksSlice,
-  setMinMaxcardsCount,
-  setTabValue,
-  updateItemsPerPage,
-} from '@/services/decks/decks.slice.ts'
 import {
   // useCreateCardMutation,
   useCreateDeckMutation,
@@ -27,7 +20,13 @@ import {
   useGetDecksQuery,
   useUpdateDeckMutation,
 } from '@/services/decks'
-import { Deck } from '@/services/decks/decks.types.ts'
+import {
+  decksSlice,
+  setMinMaxcardsCount,
+  setTabValue,
+  updateItemsPerPage,
+} from '@/services/decks/decks.slice.ts'
+import { Deck } from '@/services/decks/decks.types'
 import { Column } from '@/services/types'
 
 const columns: Column[] = [
@@ -59,6 +58,8 @@ export const Decks = () => {
     setDeleteDeckModal,
     cardsCount,
     setCardsCount,
+    updateDeckModal,
+    setUpdateDeckModal,
   } = useStateDecks()
   // selector
   const tabValue = useAppSelector(state => state.decks.tabValue)
@@ -72,9 +73,8 @@ export const Decks = () => {
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
   // query
   const [deleteDeck] = useDeleteDeckMutation()
+  const [updateDeck] = useUpdateDeckMutation()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
-  const currentPage = useAppSelector(state => state.decks.currentPage)
-  const perPage = useAppSelector(state => state.decks.itemsPerPage)
   const { data: user } = useGetMeQuery()
   const { currentData: decks } = useGetDecksQuery({
     currentPage,
@@ -88,9 +88,7 @@ export const Decks = () => {
     //то есть пользователя из useGetMeQuery
     //если на табе будет Все колоды, то запрос пойдет с undefined, и покажутся все колоды
   })
-  const [updateDeck] = useUpdateDeckMutation()
-  const [deleteDeck] = useDeleteDeckMutation()
-  const [createDeck, { isLoading }] = useCreateDeckMutation()
+
   //const [createCard] = useCreateCardMutation()
 
   useEffect(() => {
@@ -101,14 +99,13 @@ export const Decks = () => {
 
     setTimerId(newTimerId)
   }, [cardsCount])
-        
+
   // function
 
   const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
   const updateItemsPerPageHandler = (items: string) => {
     dispatch(updateItemsPerPage(items))
   }
-
 
   const tabHandler = (value: string) => {
     dispatch(setTabValue(value))
@@ -161,14 +158,6 @@ export const Decks = () => {
             {'Add New Deck'}
           </Button>
         </div>
-        <AddNewPack
-          addDeck={createDeck}
-          isOpen={addNewDeckModal}
-          toggleModal={setAddNewDeckModal}
-        />
-        <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoading}>
-          {'Add New Deck'}
-        </Button>
       </div>
       <Table.Root>
         <Table.SortedHeader columns={columns} sort={sort} onSort={setSort} />

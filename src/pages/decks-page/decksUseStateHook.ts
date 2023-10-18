@@ -11,6 +11,7 @@ export const useStateDecks = () => {
   const [search, setSearch] = useState('')
   const [deleteDeckModal, setDeleteDeckModal] = useState(false)
   const [cardsCount, setCardsCount] = useState<number[]>([0, 25])
+  const [updateDeckModal, setUpdateDeckModal] = useState(false)
 
   return {
     selectedDeck,
@@ -27,5 +28,7 @@ export const useStateDecks = () => {
     setDeleteDeckModal,
     cardsCount,
     setCardsCount,
+    updateDeckModal,
+    setUpdateDeckModal,
   }
 }
