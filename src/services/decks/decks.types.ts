@@ -88,3 +88,8 @@ export type CreateCardParams = {
   questionVideo?: string
   answerVideo?: string
 }
+
+export type GetRandomCard = {
+  id: string
+  previousCardId?: string
+}

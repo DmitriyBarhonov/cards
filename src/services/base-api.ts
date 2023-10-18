@@ -11,7 +11,7 @@ export const baseApi = createApi({
   //название и путь где будет храниться наш редюсер
   reducerPath: 'baseApi',
   //
-  tagTypes: ['Decks', 'Me', 'Cards'],
+  tagTypes: ['Decks', 'Me', 'Cards', 'Learn'],
 
   //позволяет нам создать некий базовый инстанс
   //тоесть для каждого запроса будет создаваться некая основа

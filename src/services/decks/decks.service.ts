@@ -8,6 +8,7 @@ import {
   GetCardsDeckParams,
   CreateCardParams,
   Card,
+  GetRandomCard,
 } from '@/services/decks/decks.types.ts'
 import { RootState } from '@/services/store.ts'
 
@@ -157,7 +158,14 @@ const deskApi = baseApi.injectEndpoints({
           invalidatesTags: ['Decks', 'Cards'],
         }),
       }),
-      //create a card
+      getARandomCard: builder.query<Card, GetRandomCard>({
+        query: ({ id, ...args }) => ({
+          url: `/v1/decks/${id}/learn`,
+          method: 'GET',
+          params: { ...args },
+        }),
+        // providesTags: ['Learn'],
+      }),
       //retrieve a random card
       //save the grade of card
     }
@@ -171,5 +179,6 @@ export const {
   useUpdateDeckMutation,
   useGetDeckByIdQuery,
   useGetACardsDeckQuery,
+  useGetARandomCardQuery,
   useCreateCardMutation,
 } = deskApi
