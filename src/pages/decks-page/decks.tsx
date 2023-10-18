@@ -8,7 +8,7 @@ import { useStateDecks } from './decksUseStateHook'
 import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
 import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
 import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
-import { AddNewPack, DeleteDeck } from '@/components/decks'
+import { AddUpgradeDeck, DeleteDeck } from '@/components/decks'
 import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/components/ui'
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
@@ -20,6 +20,13 @@ import {
   setTabValue,
   updateItemsPerPage,
 } from '@/services/decks/decks.slice.ts'
+import {
+  // useCreateCardMutation,
+  useCreateDeckMutation,
+  useDeleteDeckMutation,
+  useGetDecksQuery,
+  useUpdateDeckMutation,
+} from '@/services/decks'
 import { Deck } from '@/services/decks/decks.types.ts'
 import { Column } from '@/services/types'
 
@@ -66,6 +73,8 @@ export const Decks = () => {
   // query
   const [deleteDeck] = useDeleteDeckMutation()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
+  const currentPage = useAppSelector(state => state.decks.currentPage)
+  const perPage = useAppSelector(state => state.decks.itemsPerPage)
   const { data: user } = useGetMeQuery()
   const { currentData: decks } = useGetDecksQuery({
     currentPage,
@@ -79,6 +88,10 @@ export const Decks = () => {
     //то есть пользователя из useGetMeQuery
     //если на табе будет Все колоды, то запрос пойдет с undefined, и покажутся все колоды
   })
+  const [updateDeck] = useUpdateDeckMutation()
+  const [deleteDeck] = useDeleteDeckMutation()
+  const [createDeck, { isLoading }] = useCreateDeckMutation()
+  //const [createCard] = useCreateCardMutation()
 
   useEffect(() => {
     if (timerId) clearTimeout(timerId)
@@ -88,12 +101,14 @@ export const Decks = () => {
 
     setTimerId(newTimerId)
   }, [cardsCount])
+        
   // function
 
   const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
   const updateItemsPerPageHandler = (items: string) => {
     dispatch(updateItemsPerPage(items))
   }
+
 
   const tabHandler = (value: string) => {
     dispatch(setTabValue(value))
@@ -151,18 +166,14 @@ export const Decks = () => {
           isOpen={addNewDeckModal}
           toggleModal={setAddNewDeckModal}
         />
+        <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoading}>
+          {'Add New Deck'}
+        </Button>
       </div>
       <Table.Root>
         <Table.SortedHeader columns={columns} sort={sort} onSort={setSort} />
-        {/*<Table.Row>*/}
-        {/*  <Table.HeadData>Name</Table.HeadData>*/}
-        {/*  <Table.HeadData>Cards</Table.HeadData>*/}
-        {/*  <Table.HeadData>Last Updated</Table.HeadData>*/}
-        {/*  <Table.HeadData>Created by</Table.HeadData>*/}
-        {/*</Table.Row> если без сортировки*/}
         <Table.Body>
           {decks?.items?.map((deck: Deck) => {
-            // console.log('table', deck)
             return (
               <Table.Row key={deck.id}>
                 <Table.Data onClick={() => navigate(`/cards/${deck.id}`)}>{deck.name}</Table.Data>
@@ -173,17 +184,28 @@ export const Decks = () => {
                 <Table.Data className={s.iconsRow}>
                   <PlayCircle size={24} />
                   {/*если это моя колода, то покажи все иконки, иначе только learn */}
-                  {user.id === deck.author.id ? <EdittextIcon /> : null}
-
-                  <Button
-                    variant={'icon'}
-                    onClick={() => {
-                      setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
-                      setDeleteDeckModal(true) //открываем модалку для удаления
-                    }}
-                  >
-                    <TrashOutline size={24} />
-                  </Button>
+                  {user.id === deck.author.id ? (
+                    <div className={'flex'}>
+                      <Button
+                        variant={'icon'}
+                        onClick={() => {
+                          setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
+                          setUpdateDeckModal(true) //открываем модалку для удаления
+                        }}
+                      >
+                        <EdittextIcon />
+                      </Button>
+                      <Button
+                        variant={'icon'}
+                        onClick={() => {
+                          setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
+                          setDeleteDeckModal(true) //открываем модалку для удаления
+                        }}
+                      >
+                        <TrashOutline size={24} />
+                      </Button>
+                    </div>
+                  ) : null}
                 </Table.Data>
               </Table.Row>
             )
@@ -202,6 +224,25 @@ export const Decks = () => {
           onSelectChange={itemsPerPage => updateItemsPerPageHandler(itemsPerPage)}
         />
       )}
+      <AddUpgradeDeck
+        title={'Add New Deck'}
+        buttonText={'Add New Deck'}
+        deckHandler={createDeck}
+        isOpen={addNewDeckModal}
+        toggleModal={setAddNewDeckModal}
+      />
+      {/*для создания новой колоды титул в модалку, имя кнопки, функция для создания колоды, значение открыта ли, функция для открытия или закрытия*/}
+      <AddUpgradeDeck
+        title={'Edit Deck'}
+        buttonText={'Save changes'}
+        defaultValues={{ name: selectedDeck.name, isPrivate: selectedDeck.isPrivate }}
+        deckHandler={data => {
+          updateDeck({ id: selectedDeck.id, ...data })
+          //id выбранной колоды, data берем из модалки
+        }}
+        isOpen={updateDeckModal}
+        toggleModal={setUpdateDeckModal}
+      />
       <DeleteDeck
         isOpen={deleteDeckModal} //открыта или нет конкретная модалка
         toggleModal={setDeleteDeckModal} //переключатель для открытия и закрытия модалки

@@ -19,8 +19,6 @@ type HeaderProps = {
   email?: string
   avatar?: string
   onSignIn: () => void
-  // onSignOut: () => void
-  // onProfileClick: () => void //передаем на аватурку чтобы открылся дропдаун
 }
 export const Header: FC<HeaderProps> = ({
   isAuth = false,
@@ -35,17 +33,8 @@ export const Header: FC<HeaderProps> = ({
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  // const handleLogOut = async () => {
-  //   try {
-  //     await logOut()
-  //     navigate('/login')
-  //   } catch (error) {
-  //     // @ts-ignore
-  //     alert(error.data)
-  //   }
-  // }
-
   const handleLogOut = () => {
+    //TODO избавиться от повтора в personal-info
     logOut()
       .unwrap()
       .then(() => {

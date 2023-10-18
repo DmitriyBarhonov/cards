@@ -8,16 +8,12 @@
 .wrapperBorder {
   @include wrapper-styling();
   border-top: var(--color-dark-100) 1px solid;
+  width: 100%;
 }
 
 .wrapper {
   @include wrapper-styling();
 }
-
-//.elmentDropDown > * {
-//  background-color: rgba(255, 255, 255, 0);
-//  margin: 8px 0 0 4px;
-//}
 
 .elementDropdown {
   background-color: rgba(255, 255, 255, 0);

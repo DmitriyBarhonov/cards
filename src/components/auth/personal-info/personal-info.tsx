@@ -9,22 +9,20 @@ import { EdittextIcon } from '@/assets/icons/edit-text'
 import { ProfileDisplayMode } from '@/components/auth/personal-info/display-mode'
 import { ProfileEditMode } from '@/components/auth/personal-info/edit-mode'
 import { Avatar, Button, Card, Typography } from '@/components/ui'
-import { useGetMeQuery, useLogOutMutation } from '@/services/auth'
+import { useAppDispatch } from '@/hooks/hooks.ts'
+import { useGetMeQuery, useLogOutMutation, util } from '@/services/auth'
 
-export type PersonalInfoProps = {
-  name?: string
-  avatar?: string
-  email?: string
-}
+export type PersonalInfoProps = {}
 
-export const PersonalInfo: FC<PersonalInfoProps> = ({ avatar, email }) => {
+export const PersonalInfo: FC<PersonalInfoProps> = ({}) => {
   const [editMode, setEditMode] = useState(false)
   const { data: me } = useGetMeQuery()
   const [logOut] = useLogOutMutation()
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
-  const imgForPersonalInfo = avatar
-    ? avatar
+  const imgForPersonalInfo = me.avatar
+    ? me.avatar
     : 'https://kartinkof.club/uploads/posts/2022-03/1648314602_1-kartinkof-club-p-negr-dumaet-mem-1.jpg'
 
   const classNames = {
@@ -48,15 +46,13 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({ avatar, email }) => {
     setEditMode(false)
   }
 
-  const handleLogOut = async () => {
-    try {
-      await logOut()
-      alert('DONE LOGOUT, BABY!')
-      navigate('/')
-    } catch (error) {
-      // @ts-ignore
-      alert(`AH SHIT, HERE WE GO AGAIN .-. ${error.data}`)
-    }
+  const handleLogOut = () => {
+    logOut()
+      .unwrap()
+      .then(() => {
+        dispatch(util?.resetApiState())
+        navigate('/login')
+      })
   }
 
   return (
@@ -84,7 +80,7 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({ avatar, email }) => {
             <ProfileEditMode onInputBlurHandler={onInputBlurHandler} />
           ) : (
             <ProfileDisplayMode
-              email={email}
+              email={me.email}
               name={me.name}
               onEditTextClickHandler={onEditTextClickHandler}
               onLogoutClickHandler={handleLogOut}
