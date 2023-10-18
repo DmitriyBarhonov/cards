@@ -16,49 +16,20 @@ type TabSwitcherProps = {
   options?: ToggleOptionsType[]
   disabled?: boolean
   defaultValue?: string
-  maxCardsAmount?: number
-  onValueChange?: (min: number, max: number) => void
+  min?: number
+  max?: number
+  onChange: (min: number, max: number) => void
   className?: string
-  value?: any
+  value: number[]
 }
-export const SliderForCards: FC<TabSwitcherProps> = ({ options, disabled, ...restProps }) => {
-  const [rangeValue, setRangeValue] = useState<number[]>([0, 25])
-  const [timerId, setTimerId] = useState<NodeJS.Timeout | undefined>(undefined)
-
-  //  на случай если захочется сделать инпуты
-  // по бокам от слайдера
-  //  const [editMode, setEditMode] = useState(false)
-  // const activateEditMode = () => {
-  //   setEditMode(true)
-  // }
-  // const turnOffEditMode = () => {
-  //   setEditMode(false)
-  // }
-  // const oValueChangeHandler = (value: number | number[]) => {
-  //   //проверяем еслим массив, если да до отправляем оба значения
-  //   if (Array.isArray(value)) {
-  //     setRangeValue(value)
-  //     restProps.onValueChange && restProps.onValueChange(value[0], value[1])
-  //   }
-  //   // если пришел не массив а одно число
-  //   //решаем каким оно будет, минимальным или максимальным
-  //   else {
-  //     console.log(value)
-  //     if (value > rangeValue[0]) {
-  //       setRangeValue([rangeValue[1], value])
-  //       restProps.onValueChange && restProps.onValueChange(rangeValue[1], value)
-  //     } else if (value < rangeValue[1]) {
-  //       setRangeValue([value, rangeValue[1]])
-  //       restProps.onValueChange && restProps.onValueChange(value, rangeValue[1])
-  //     }
-  //   }
-  //   if (rangeValue[1] < rangeValue[0]) {
-  //     let biggerDigit = rangeValue[0]
-  //
-  //     setRangeValue([rangeValue[1], biggerDigit])
-  //   }
-  // }
-
+export const SliderForCards: FC<TabSwitcherProps> = ({
+  options,
+  disabled,
+  onChange,
+  min,
+  max,
+  ...restProps
+}) => {
   const classNames = {
     container: clsx(s.rangeContainer),
     num: clsx(s.rangeDigit),
@@ -70,29 +41,23 @@ export const SliderForCards: FC<TabSwitcherProps> = ({ options, disabled, ...res
   }
 
   const onRangeValueChange = (value: number[]) => {
-    setRangeValue(value)
-
-    if (timerId) clearTimeout(timerId)
-    const newTimerId = setTimeout(() => {
-      restProps.onValueChange && restProps.onValueChange(value[0], value[1])
-    }, 1500)
-
-    setTimerId(newTimerId)
+    onChange(value[0], value[1])
   }
 
   return (
     <div className={classNames.container}>
       <Typography className={classNames.num} variant={'h3'}>
-        {rangeValue[0]}
+        {restProps.value[0]}
       </Typography>
 
       <Slider.Root
         className={classNames.slider}
         onValueChange={onRangeValueChange}
-        defaultValue={[0, 25]}
-        max={(restProps.maxCardsAmount && restProps.maxCardsAmount) || 50}
+        max={max}
+        min={min}
         step={1}
         minStepsBetweenThumbs={2}
+        value={restProps.value}
       >
         <Slider.Track className={classNames.track}>
           <Slider.Range className={classNames.range} />
@@ -101,8 +66,42 @@ export const SliderForCards: FC<TabSwitcherProps> = ({ options, disabled, ...res
         <Slider.Thumb className={classNames.thumb} aria-label="max-amount" />
       </Slider.Root>
       <Typography className={classNames.num} variant={'h3'}>
-        {rangeValue[1]}
+        {restProps.value[1]}
       </Typography>
     </div>
   )
 }
+
+//  на случай если захочется сделать инпуты
+// по бокам от слайдера
+//  const [editMode, setEditMode] = useState(false)
+// const activateEditMode = () => {
+//   setEditMode(true)
+// }
+// const turnOffEditMode = () => {
+//   setEditMode(false)
+// }
+// const oValueChangeHandler = (value: number | number[]) => {
+//   //проверяем еслим массив, если да до отправляем оба значения
+//   if (Array.isArray(value)) {
+//     setRangeValue(value)
+//     restProps.onValueChange && restProps.onValueChange(value[0], value[1])
+//   }
+//   // если пришел не массив а одно число
+//   //решаем каким оно будет, минимальным или максимальным
+//   else {
+//     console.log(value)
+//     if (value > rangeValue[0]) {
+//       setRangeValue([rangeValue[1], value])
+//       restProps.onValueChange && restProps.onValueChange(rangeValue[1], value)
+//     } else if (value < rangeValue[1]) {
+//       setRangeValue([value, rangeValue[1]])
+//       restProps.onValueChange && restProps.onValueChange(value, rangeValue[1])
+//     }
+//   }
+//   if (rangeValue[1] < rangeValue[0]) {
+//     let biggerDigit = rangeValue[0]
+//
+//     setRangeValue([rangeValue[1], biggerDigit])
+//   }
+// }

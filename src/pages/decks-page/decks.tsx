@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
 import s from './decks.module.scss'
+import { useStateDecks } from './decksUseStateHook'
 
 import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
 import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
@@ -12,6 +13,13 @@ import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/com
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
 import { useGetMeQuery } from '@/services/auth'
+import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks'
+import {
+  decksSlice,
+  setMinMaxcardsCount,
+  setTabValue,
+  updateItemsPerPage,
+} from '@/services/decks/decks.slice.ts'
 import {
   // useCreateCardMutation,
   useCreateDeckMutation,
@@ -19,9 +27,8 @@ import {
   useGetDecksQuery,
   useUpdateDeckMutation,
 } from '@/services/decks'
-import { decksSlice } from '@/services/decks/decks.slice.ts'
 import { Deck } from '@/services/decks/decks.types.ts'
-import { Column, Sort } from '@/services/types'
+import { Column } from '@/services/types'
 
 const columns: Column[] = [
   { key: 'name', title: 'Name', sortable: true },
@@ -36,28 +43,44 @@ const tabOptions = [
 ]
 
 export const Decks = () => {
+  // useState
+  const {
+    selectedDeck,
+    setSelectedDeck,
+    sort,
+    setSort,
+    timerId,
+    setTimerId,
+    addNewDeckModal,
+    setAddNewDeckModal,
+    search,
+    setSearch,
+    deleteDeckModal,
+    setDeleteDeckModal,
+    cardsCount,
+    setCardsCount,
+  } = useStateDecks()
+  // selector
+  const tabValue = useAppSelector(state => state.decks.tabValue)
+  const currentPage = useAppSelector(state => state.decks.currentPage)
+  const perPage = useAppSelector(state => +state.decks.itemsPerPage)
+  const { maxCardsCount, minCardsCount } = useAppSelector(state => state.decks.cardsCount)
+
+  // outher
+  const dispatch = useAppDispatch()
   const navigate = useNavigate() //для перехода в карточки
-  const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
-  const [tabValue, setTabValue] = useState('all')
-  const [addNewDeckModal, setAddNewDeckModal] = useState(false)
-  const [updateDeckModal, setUpdateDeckModal] = useState(false)
-  const [deleteDeckModal, setDeleteDeckModal] = useState(false)
-  const [search, setSearch] = useState('')
+  // query
+  const [deleteDeck] = useDeleteDeckMutation()
+  const [createDeck, { isLoading }] = useCreateDeckMutation()
   const currentPage = useAppSelector(state => state.decks.currentPage)
   const perPage = useAppSelector(state => state.decks.itemsPerPage)
-  const itemsPerPage = Number(perPage)
-  const dispatch = useAppDispatch()
-  const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
   const { data: user } = useGetMeQuery()
-  const [cardsCount, setCardsCount] = useState<number[]>([0, 25])
-  const updateItemsPerPage = (items: string) =>
-    dispatch(decksSlice.actions.updateItemsPerPage(items))
   const { currentData: decks } = useGetDecksQuery({
     currentPage,
     minCardsCount: cardsCount[0],
     maxCardsCount: cardsCount[1],
-    itemsPerPage: itemsPerPage,
+    itemsPerPage: perPage,
     name: search,
     orderBy: sortString,
     authorId: tabValue === 'my' ? user?.id : undefined,
@@ -69,16 +92,36 @@ export const Decks = () => {
   const [deleteDeck] = useDeleteDeckMutation()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
   //const [createCard] = useCreateCardMutation()
-  const [selectedDeck, setSelectedDeck] = useState<Deck>({} as Deck) //для удаления нужной колоды
+
+  useEffect(() => {
+    if (timerId) clearTimeout(timerId)
+    const newTimerId = setTimeout(() => {
+      setCardsCount([minCardsCount, maxCardsCount])
+    }, 1000)
+
+    setTimerId(newTimerId)
+  }, [cardsCount])
+        
+  // function
+
+  const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
+  const updateItemsPerPageHandler = (items: string) => {
+    dispatch(updateItemsPerPage(items))
+  }
+
 
   const tabHandler = (value: string) => {
-    setTabValue(value)
+    dispatch(setTabValue(value))
   }
-  const setCardsHandler = (n: number, b: number) => {
-    setCardsCount([n, b])
+  const setCardsHandler = (min: number, max: number) => {
+    dispatch(setMinMaxcardsCount([min, max]))
   }
 
-  // console.log(decks)
+  const clearFilterHandler = () => {
+    dispatch(setMinMaxcardsCount([0, 50]))
+    setSearch('')
+    tabHandler('all')
+  }
 
   return (
     <div className={s.container}>
@@ -98,8 +141,31 @@ export const Decks = () => {
         </div>
         <div>
           <Typography variant={'caption'}>Number of cards</Typography>
-          <SliderForCards onValueChange={setCardsHandler} disabled={false} />
+          <SliderForCards
+            value={[minCardsCount, maxCardsCount]}
+            onChange={setCardsHandler}
+            disabled={false}
+          />
         </div>
+        <div className={s.wrapperButton}>
+          <Button
+            onClick={clearFilterHandler}
+            className={s.clearFilter}
+            variant="secondary"
+            disabled={isLoading}
+          >
+            <TrashOutline />
+            <div> {'Clear filter'}</div>
+          </Button>
+          <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoading}>
+            {'Add New Deck'}
+          </Button>
+        </div>
+        <AddNewPack
+          addDeck={createDeck}
+          isOpen={addNewDeckModal}
+          toggleModal={setAddNewDeckModal}
+        />
         <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoading}>
           {'Add New Deck'}
         </Button>
@@ -155,7 +221,7 @@ export const Decks = () => {
           onPageChange={updateCurrentPage}
           selectValue={decks?.pagination.itemsPerPage}
           selectOptions={[5, 10, 15, 20]}
-          onSelectChange={itemsPerPage => updateItemsPerPage(itemsPerPage)}
+          onSelectChange={itemsPerPage => updateItemsPerPageHandler(itemsPerPage)}
         />
       )}
       <AddUpgradeDeck
