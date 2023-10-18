@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import clsx from 'clsx'
