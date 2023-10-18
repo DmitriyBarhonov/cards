@@ -14,12 +14,17 @@ type TabSwitcherProps = {
   options: ToggleOptionsType[]
   disabled?: boolean
   defaultValue?: string
-  onValueChange?: (value: string) => void
+  onValueChange: (value: string) => void
   className?: string
   value?: string
 }
-export const TabSwitcher: FC<TabSwitcherProps> = ({ options, disabled, ...restProps }) => {
-  const [value, setValue] = useState(restProps.defaultValue || restProps.value || options[1].value)
+export const TabSwitcher: FC<TabSwitcherProps> = ({
+  onValueChange,
+  options,
+  disabled,
+  ...restProps
+}) => {
+  // const [value, setValue] = useState(restProps.defaultValue || restProps.value || options[1].value)
   //не хардкодим на второй элемент из options, если есть в пропсах value или defaultValue то берем их
   const classNames = {
     toggleGroup: clsx(disabled ? s.toggleDisabled : s.toggleGroup),
@@ -27,10 +32,10 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({ options, disabled, ...restPr
   }
 
   const oValueChangeHandler = (value: string) => {
-    if (value) setValue(value)
+    if (value) onValueChange(value)
     //здесь будет отправляться запрос на показ
     //всех или только моих карточек
-    restProps.onValueChange && restProps.onValueChange(value)
+    // restProps.onValueChange && restProps.onValueChange(value)
   }
 
   return (
@@ -42,7 +47,7 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({ options, disabled, ...restPr
       aria-label="Text alignment"
       loop={false}
       onValueChange={oValueChangeHandler}
-      value={value}
+      value={restProps.value}
     >
       {/*сколько options получим в пропсах*/}
       {/*столько кнопок в переключалке и отрисуется*/}

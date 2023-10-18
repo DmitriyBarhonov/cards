@@ -30,8 +30,6 @@ export const SliderForCards: FC<TabSwitcherProps> = ({
   max,
   ...restProps
 }) => {
-  const [rangeValue, setRangeValue] = useState<number[]>(restProps.value)
-  const [timerId, setTimerId] = useState<NodeJS.Timeout | undefined>(undefined)
   const classNames = {
     container: clsx(s.rangeContainer),
     num: clsx(s.rangeDigit),
@@ -42,18 +40,8 @@ export const SliderForCards: FC<TabSwitcherProps> = ({
     thumb: clsx(s.range),
   }
 
-  // const a = (value: any) => {
-  //   if (timerId) clearTimeout(timerId)
-  //   const newTimerId = setTimeout(() => {
-  //     onChange(value[0], value[1])
-  //   }, 1500)
-
-  //   setTimerId(newTimerId)
-  // }
-
   const onRangeValueChange = (value: number[]) => {
     onChange(value[0], value[1])
-    setRangeValue(restProps.value)
   }
 
   return (
@@ -65,7 +53,6 @@ export const SliderForCards: FC<TabSwitcherProps> = ({
       <Slider.Root
         className={classNames.slider}
         onValueChange={onRangeValueChange}
-        // defaultValue={rangeValue}
         max={max}
         min={min}
         step={1}

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import s from './decks.module.scss'
+import { useStateDecks } from './decksUseStateHook'
 
 import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
 import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
@@ -16,10 +17,11 @@ import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '
 import {
   decksSlice,
   setMinMaxcardsCount,
+  setTabValue,
   updateItemsPerPage,
 } from '@/services/decks/decks.slice.ts'
 import { Deck } from '@/services/decks/decks.types.ts'
-import { Column, Sort } from '@/services/types'
+import { Column } from '@/services/types'
 
 const columns: Column[] = [
   { key: 'name', title: 'Name', sortable: true },
@@ -34,19 +36,29 @@ const tabOptions = [
 ]
 
 export const Decks = () => {
+  // useState
+  const {
+    selectedDeck,
+    setSelectedDeck,
+    sort,
+    setSort,
+    timerId,
+    setTimerId,
+    addNewDeckModal,
+    setAddNewDeckModal,
+    search,
+    setSearch,
+    deleteDeckModal,
+    setDeleteDeckModal,
+    cardsCount,
+    setCardsCount,
+  } = useStateDecks()
   // selector
+  const tabValue = useAppSelector(state => state.decks.tabValue)
   const currentPage = useAppSelector(state => state.decks.currentPage)
   const perPage = useAppSelector(state => +state.decks.itemsPerPage)
   const { maxCardsCount, minCardsCount } = useAppSelector(state => state.decks.cardsCount)
-  // useState
-  const [selectedDeck, setSelectedDeck] = useState<Deck>({} as Deck) //для удаления нужной колоды
-  const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
-  const [timerId, setTimerId] = useState<NodeJS.Timeout | undefined>(undefined)
-  const [tabValue, setTabValue] = useState('all')
-  const [addNewDeckModal, setAddNewDeckModal] = useState(false)
-  const [search, setSearch] = useState('')
-  const [deleteDeckModal, setDeleteDeckModal] = useState(false)
-  const [cardsCount, setCardsCount] = useState<number[]>([0, 25])
+
   // outher
   const dispatch = useAppDispatch()
   const navigate = useNavigate() //для перехода в карточки
@@ -84,7 +96,7 @@ export const Decks = () => {
   }
 
   const tabHandler = (value: string) => {
-    setTabValue(value)
+    dispatch(setTabValue(value))
   }
   const setCardsHandler = (min: number, max: number) => {
     dispatch(setMinMaxcardsCount([min, max]))
@@ -93,6 +105,7 @@ export const Decks = () => {
   const clearFilterHandler = () => {
     dispatch(setMinMaxcardsCount([0, 50]))
     setSearch('')
+    tabHandler('all')
   }
 
   return (

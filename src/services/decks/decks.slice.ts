@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 const initialState = {
   currentPage: 1,
   itemsPerPage: '10',
+  tabValue: 'all',
   cardsCount: {
     minCardsCount: 0,
     maxCardsCount: 50,
@@ -24,7 +25,11 @@ export const decksSlice = createSlice({
       state.cardsCount.minCardsCount = action.payload[0]
       state.cardsCount.maxCardsCount = action.payload[1]
     },
+    setTabValue: (state, action: PayloadAction<string>) => {
+      state.tabValue = action.payload
+    },
   },
 })
 
-export const { setMinMaxcardsCount, updateCurrentPage, updateItemsPerPage } = decksSlice.actions
+export const { setMinMaxcardsCount, updateCurrentPage, updateItemsPerPage, setTabValue } =
+  decksSlice.actions
