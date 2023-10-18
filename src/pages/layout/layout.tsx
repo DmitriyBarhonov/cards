@@ -13,7 +13,7 @@ export const Layout = () => {
         name={user?.name}
         avatar={user?.avatar}
         email={user?.email}
-        isAuth={true}
+        isAuth={!!user.id}
         onSignIn={() => {}}
       />
       <Outlet />
