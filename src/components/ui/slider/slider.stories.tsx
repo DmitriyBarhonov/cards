@@ -17,6 +17,7 @@ export const Default: Story = {
       { label: 'My Cards', value: 'my-cards' },
       { label: 'All Cards', value: 'all-cards' },
     ],
+    value: [1, 50],
     disabled: true,
     defaultValue: 'all-cards',
   },
