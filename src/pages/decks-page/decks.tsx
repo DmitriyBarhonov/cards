@@ -124,7 +124,7 @@ export const Decks = () => {
                         variant={'icon'}
                         onClick={() => {
                           setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
-                          setUpdateDeckModal(true) //открываем модалку для удаления
+                          setUpdateDeckModal(true) //открываем модалку для редактирования
                         }}
                       >
                         <EdittextIcon />

@@ -58,6 +58,7 @@ const deskApi = baseApi.injectEndpoints({
       }),
       getDeckById: builder.query<Deck, { id: string }>({
         query: ({ id }) => `/v1/decks/${id}`,
+        providesTags: ['Cards'],
       }),
       updateDeck: builder.mutation<Deck, DeckRequestParams>({
         query: updateData => ({
