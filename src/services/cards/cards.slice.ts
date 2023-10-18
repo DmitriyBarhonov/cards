@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export const decksSlice = createSlice({
-  name: 'decks',
+export const cardsSlice = createSlice({
+  name: 'cards',
   initialState: {
     currentPage: 1,
     itemsPerPage: '10',
