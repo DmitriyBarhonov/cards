@@ -79,3 +79,13 @@ export type CardsResponse = {
   pagination: Pagination
   items: Card[]
 }
+
+export type InitialStateType = {
+  currentPage: number
+  itemsPerPage: string
+  tabValue: string
+  cardsCount: {
+    minCardsCount: number
+    maxCardsCount: number
+  }
+}

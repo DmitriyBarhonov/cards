@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-const initialState = {
+import { InitialStateType } from './decks.types'
+
+const initialState: InitialStateType = {
   currentPage: 1,
   itemsPerPage: '10',
   tabValue: 'all',
