@@ -93,3 +93,7 @@ export type GetRandomCard = {
   id: string
   previousCardId?: string
 }
+export type SaveTheGrade = {
+  cardId: string
+  grade: number
+}

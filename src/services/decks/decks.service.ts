@@ -9,6 +9,7 @@ import {
   CreateCardParams,
   Card,
   GetRandomCard,
+  SaveTheGrade,
 } from '@/services/decks/decks.types.ts'
 import { RootState } from '@/services/store.ts'
 
@@ -164,10 +165,20 @@ const deskApi = baseApi.injectEndpoints({
           method: 'GET',
           params: { ...args },
         }),
-        // providesTags: ['Learn'],
+        providesTags: ['Learn'],
       }),
-      //retrieve a random card
-      //save the grade of card
+      saveTheGrade: builder.mutation<Deck, { id: string; data: SaveTheGrade }>({
+        query: ({ id, data }) => ({
+          url: `v1/decks/${id}/learn`,
+          method: 'POST',
+          body: {
+            cardId: data.cardId,
+            grade: data.grade,
+          },
+        }),
+        invalidatesTags: ['Learn'],
+        //не проверяла работу, надо делать компоненты. При применении не забыть сделать валидацию от 1 до 5
+      }),
     }
   },
 })
