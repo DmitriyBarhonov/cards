@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-
 import { LinearProgress } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
@@ -13,6 +11,7 @@ import { AddUpgradeDeck, DeleteDeck } from '@/components/decks'
 import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/components/ui'
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
+import { useDebounce } from '@/hooks/useDebounce'
 import { useGetMeQuery } from '@/services/auth'
 import {
   // useCreateCardMutation,
@@ -49,24 +48,28 @@ export const Decks = () => {
     setSelectedDeck,
     sort,
     setSort,
-    timerId,
-    setTimerId,
     addNewDeckModal,
     setAddNewDeckModal,
     search,
     setSearch,
     deleteDeckModal,
     setDeleteDeckModal,
-    cardsCount,
-    setCardsCount,
     updateDeckModal,
     setUpdateDeckModal,
   } = useStateDecks()
+
+  // useDebounce
+
+  const {
+    cardsCount,
+    cardsCountSettings, //cardsCountDebounce
+    resetSlider,
+    setCardsCount,
+  } = useDebounce()
   // selector
   const tabValue = useAppSelector(state => state.decks.tabValue)
   const currentPage = useAppSelector(state => state.decks.currentPage)
   const perPage = useAppSelector(state => +state.decks.itemsPerPage)
-  const { maxCardsCount, minCardsCount } = useAppSelector(state => state.decks.cardsCount)
 
   // outher
   const dispatch = useAppDispatch()
@@ -79,8 +82,8 @@ export const Decks = () => {
   const { data: user } = useGetMeQuery()
   const { currentData: decks, isLoading: isLoadingGetDecks } = useGetDecksQuery({
     currentPage,
-    minCardsCount: cardsCount[0],
-    maxCardsCount: cardsCount[1],
+    minCardsCount: cardsCountSettings[0],
+    maxCardsCount: cardsCountSettings[1],
     itemsPerPage: perPage,
     name: search,
     orderBy: sortString,
@@ -91,15 +94,6 @@ export const Decks = () => {
   })
 
   //const [createCard] = useCreateCardMutation()
-
-  useEffect(() => {
-    if (timerId) clearTimeout(timerId)
-    const newTimerId = setTimeout(() => {
-      setCardsCount([minCardsCount, maxCardsCount])
-    }, 1500)
-
-    setTimerId(newTimerId)
-  }, [minCardsCount, maxCardsCount])
 
   // function
 
@@ -112,16 +106,14 @@ export const Decks = () => {
     dispatch(setTabValue(value))
   }
   const setCardsHandler = (min: number, max: number) => {
-    dispatch(setMinMaxcardsCount([min, max]))
+    setCardsCount([min, max])
   }
 
   const clearFilterHandler = () => {
-    dispatch(setMinMaxcardsCount([0, 50]))
+    resetSlider()
     setSearch('')
     tabHandler('all')
   }
-
-  console.log('dw')
 
   return (
     <>
@@ -146,7 +138,7 @@ export const Decks = () => {
           <div>
             <Typography variant={'caption'}>Number of cards</Typography>
             <SliderForCards
-              value={[minCardsCount, maxCardsCount]}
+              value={[cardsCount[0], cardsCount[1]]}
               onChange={setCardsHandler}
               disabled={false}
             />
