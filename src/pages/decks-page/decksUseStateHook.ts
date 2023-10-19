@@ -10,7 +10,6 @@ export const useStateDecks = () => {
   const [addNewDeckModal, setAddNewDeckModal] = useState(false)
   const [search, setSearch] = useState('')
   const [deleteDeckModal, setDeleteDeckModal] = useState(false)
-  const [cardsCount, setCardsCount] = useState<number[]>([0, 25])
   const [updateDeckModal, setUpdateDeckModal] = useState(false)
 
   return {
@@ -26,8 +25,6 @@ export const useStateDecks = () => {
     setSearch,
     deleteDeckModal,
     setDeleteDeckModal,
-    cardsCount,
-    setCardsCount,
     updateDeckModal,
     setUpdateDeckModal,
   }

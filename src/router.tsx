@@ -1,3 +1,4 @@
+import LinearProgress from '@mui/material/LinearProgress'
 import {
   createBrowserRouter,
   Outlet,
@@ -85,7 +86,7 @@ const router = createBrowserRouter([
 export const Router = () => {
   const { isLoading: isMeLoading } = useGetMeQuery()
 
-  if (isMeLoading) return <Typography variant={'h1'}>Loading</Typography>
+  if (isMeLoading) return <LinearProgress color="secondary" />
 
   return <RouterProvider router={router} />
 }
@@ -94,7 +95,7 @@ function PrivateRoutes() {
   const { data: me, isLoading: isMeLoading } = useGetMeQuery()
   const isAuthenticated = me && me?.success !== false
 
-  if (isMeLoading) return <Typography variant={'h1'}>Loading</Typography>
+  if (isMeLoading) return <LinearProgress color="secondary" />
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }
