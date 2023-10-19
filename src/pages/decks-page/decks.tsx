@@ -74,7 +74,7 @@ export const Decks = () => {
   const [updateDeck, { isLoading: isLoadingUpdateDeck }] = useUpdateDeckMutation()
   const [createDeck, { isLoading: isLoadingCreateDec }] = useCreateDeckMutation()
   const { data: user } = useGetMeQuery()
-  const { currentData: decks, isLoading } = useGetDecksQuery({
+  const { currentData: decks } = useGetDecksQuery({
     currentPage,
     minCardsCount: cardsCountSettings[0],
     maxCardsCount: cardsCountSettings[1],
