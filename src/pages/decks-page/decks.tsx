@@ -20,12 +20,7 @@ import {
   useGetDecksQuery,
   useUpdateDeckMutation,
 } from '@/services/decks'
-import {
-  decksSlice,
-  setMinMaxcardsCount,
-  setTabValue,
-  updateItemsPerPage,
-} from '@/services/decks/decks.slice.ts'
+import { decksSlice, setTabValue, updateItemsPerPage } from '@/services/decks/decks.slice.ts'
 import { Deck } from '@/services/decks/decks.types'
 import { Column } from '@/services/types'
 
@@ -59,7 +54,6 @@ export const Decks = () => {
   } = useStateDecks()
 
   // useDebounce
-
   const {
     cardsCount,
     cardsCountSettings, //cardsCountDebounce
@@ -80,7 +74,7 @@ export const Decks = () => {
   const [updateDeck, { isLoading: isLoadingUpdateDeck }] = useUpdateDeckMutation()
   const [createDeck, { isLoading: isLoadingCreateDec }] = useCreateDeckMutation()
   const { data: user } = useGetMeQuery()
-  const { currentData: decks, isLoading: isLoadingGetDecks } = useGetDecksQuery({
+  const { currentData: decks, isLoading } = useGetDecksQuery({
     currentPage,
     minCardsCount: cardsCountSettings[0],
     maxCardsCount: cardsCountSettings[1],
@@ -92,8 +86,6 @@ export const Decks = () => {
     //то есть пользователя из useGetMeQuery
     //если на табе будет Все колоды, то запрос пойдет с undefined, и покажутся все колоды
   })
-
-  //const [createCard] = useCreateCardMutation()
 
   // function
 
@@ -117,7 +109,7 @@ export const Decks = () => {
 
   return (
     <>
-      {isLoadingCreateDec || isLoadingDeleteDec || isLoadingUpdateDeck || isLoadingGetDecks ? (
+      {isLoadingCreateDec || isLoadingDeleteDec || isLoadingUpdateDeck || !decks ? (
         <LinearProgress color="secondary" />
       ) : null}
       <div className={s.container}>

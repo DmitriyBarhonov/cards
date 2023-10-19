@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import { Deck } from '@/services/decks/decks.types'
 import { Sort } from '@/services/types'
