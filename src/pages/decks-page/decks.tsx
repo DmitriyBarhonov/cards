@@ -7,7 +7,7 @@ import { useStateDecks } from './decksUseStateHook'
 import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
 import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
 import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
-import { AddUpgradeDeck, DeleteDeck } from '@/components/decks'
+import { AddUpgradeDeck, DeleteItem } from '@/components/decks'
 import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/components/ui'
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
@@ -223,13 +223,24 @@ export const Decks = () => {
           isOpen={updateDeckModal}
           toggleModal={setUpdateDeckModal}
         />
-        <DeleteDeck
+        {/*<DeleteDeck*/}
+        {/*  isOpen={deleteDeckModal} //открыта или нет конкретная модалка*/}
+        {/*  toggleModal={setDeleteDeckModal} //переключатель для открытия и закрытия модалки*/}
+        {/*  //отдаем нужную колоду для удаления, ее имя и id*/}
+        {/*  name={selectedDeck.name}*/}
+        {/*  id={selectedDeck.id}*/}
+        {/*  deleteDeck={deleteDeck} //функция по удалению*/}
+        {/*/>*/}
+        <DeleteItem
           isOpen={deleteDeckModal} //открыта или нет конкретная модалка
           toggleModal={setDeleteDeckModal} //переключатель для открытия и закрытия модалки
           //отдаем нужную колоду для удаления, ее имя и id
-          name={selectedDeck.name}
-          id={selectedDeck.id}
-          deleteDeck={deleteDeck} //функция по удалению
+          title={'Delete Deck'} //заголовок в модалке
+          text={'All cards will be deleted'} //текст
+          buttonText={'Delete Deck'} //текст для кнопки
+          name={selectedDeck.name} //название того что удаляем
+          id={selectedDeck.id} //id того что удаляем
+          deleteItem={deleteDeck} //функция по удалению
         />
       </div>
     </>

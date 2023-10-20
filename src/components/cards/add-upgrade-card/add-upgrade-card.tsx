@@ -5,50 +5,54 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Button, Modal } from '@/components/ui'
-import { ControlledCheckbox } from '@/components/ui/controlled'
 import { ControlledInput } from '@/components/ui/controlled-input'
 
 const schema = z.object({
-  name: z
+  question: z
     .string()
     .trim()
-    .nonempty('Enter deck name')
-    .min(3, 'Deck name must be at least 4 symbols')
-    .max(30, 'Deck name must be less than 30 symbols'),
-  isPrivate: z.boolean().optional(), //если не будет optional, то всегда надо нажимать галочку, а это не надо
+    .nonempty('Enter card question')
+    .min(3, 'Card question must be at least 4 symbols')
+    .max(500, 'Card question must be less than 500 symbols'),
+  answer: z
+    .string()
+    .trim()
+    .nonempty('Enter card question')
+    .min(3, 'Card question must be at least 4 symbols')
+    .max(500, 'Card question must be less than 500 symbols'),
 })
-//колода будет не пустой строкой от 3 до 30 символов
-//private будет опциональным булевым
+//card будет не пустой строкой от 3 до 500 символов
 
-export type AddUpgradeType = z.infer<typeof schema> //вытаскивает типизацию для данных формы из схемы выше
-export type AddUpgradeDeckProps = {
-  defaultValues?: AddUpgradeType //используем при вызове для upgrade
+export type FormValuesType = z.infer<typeof schema> //вытаскивает типизацию для данных формы из схемы выше
+export type AddUpgradeCardProps = {
+  defaultValues?: FormValuesType //используем при вызове для upgrade
   title: string //заголовок
   buttonText: string //текст на кнопке
   isOpen: boolean //открыта или закрыта
   toggleModal: (isOpen: boolean) => void //переключалка открытия или закрытия
-  deckHandler: (data: AddUpgradeType) => void //при сабмите отправляем данные типа название колоды и приватная ли
+  cardHandler: (data: FormValuesType) => void //при сабмите отправляем данные типа вопрос и ответ
   //если createDeck, то передаем просто функцию,
   //если upgrade, то на месте вызова компоненты передаем еще и id колоды
 }
-export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
-  defaultValues = { name: '', isPrivate: false },
+export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
+  defaultValues = { question: '', answer: '' },
   title,
   buttonText,
-  deckHandler,
+  cardHandler,
   isOpen,
   toggleModal,
 }) => {
-  const { handleSubmit, control, reset, resetField } = useForm<AddUpgradeType>({
+  const { handleSubmit, control, reset } = useForm<FormValuesType>({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
     defaultValues, //берем из пропсов, по умолчанию пустые
   })
   ///
-  const onSubmit = (data: AddUpgradeType) => {
-    deckHandler(data)
-    resetField('name')
+  const onSubmit = (data: FormValuesType) => {
+    cardHandler(data)
+    reset()
     toggleModal(false)
+    //при сабмите фызвать функцию, сбросить значения и закрыться
   }
 
   const handleFormSubmitted = handleSubmit(onSubmit)
@@ -69,17 +73,21 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
     >
       <form onSubmit={handleFormSubmitted}>
         <ControlledInput
-          name="name"
+          name="question"
           variant={'standard'}
-          placeholder={defaultValues.name}
-          label={'New pack name'}
+          placeholder={defaultValues.question}
+          label={'Question'}
           control={control}
           autoComplete="false"
         />
-        <div className={'my-8'}>
-          <ControlledCheckbox name="isPrivate" label={'Private pack'} control={control} />
-        </div>
-
+        <ControlledInput
+          name="answer"
+          variant={'standard'}
+          placeholder={defaultValues.answer}
+          label={'Answer'}
+          control={control}
+          autoComplete="false"
+        />
         <div className={'flex justify-between'}>
           <Button onClick={onCloseHandler} variant={'secondary'}>
             Cancel
