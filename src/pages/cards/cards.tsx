@@ -35,7 +35,6 @@ const columns: Column[] = [
   { key: 'action', title: ' ' },
 ]
 
-// const someId = 'clnt3wx3310izvo2q152aqesa'
 export const CardsPage = () => {
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>() //вытаскиваем айди из строки
