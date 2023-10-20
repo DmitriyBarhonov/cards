@@ -14,10 +14,13 @@ import { DeleteItem } from '@/components/decks'
 import { Button, Dropdown, Input, Rating, Table, Typography } from '@/components/ui'
 import { DropdownItem } from '@/components/ui/dropdown-menu/custom-drop-down'
 import { useGetMeQuery } from '@/services/auth'
-import { useDeleteCardMutation, useUpdateCardMutation } from '@/services/cards'
+import {
+  useDeleteCardMutation,
+  useGetACardsDeckQuery,
+  useUpdateCardMutation,
+} from '@/services/cards'
 import {
   useCreateCardMutation,
-  useGetACardsDeckQuery,
   //useGetARandomCardQuery,
   useGetDeckByIdQuery,
 } from '@/services/decks'
@@ -33,7 +36,7 @@ const columns: Column[] = [
 ]
 
 // const someId = 'clnt3wx3310izvo2q152aqesa'
-export const Cards = () => {
+export const CardsPage = () => {
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>() //вытаскиваем айди из строки
   const [search, setSearch] = useState('') //для поиска по карточкамив колоде
@@ -53,14 +56,6 @@ export const Cards = () => {
       createCard({ id: deck.id, data })
     }
   }
-  // const updateCardHandler = (id: string) => {
-  //   const card: Card | undefined = cards.find(item => item.id === id)
-  //
-  //   if (card) {
-  //     setCurrentEditedCard(card)
-  //   }
-  //   setEditModalOpen(true)
-  // }
   const myDeck = deck?.userId === user?.id // в переменную моя колода или нет
   //const { data: learn } = useGetARandomCardQuery({ id: id })
   //не нужно здесь, нужна другая компонента
@@ -169,12 +164,12 @@ export const Cards = () => {
         </Table.Root>
       ) : (
         <div className={s.empty}>
-          <Typography variant="body2">
-            This pack is empty. Click add new card to fill this pack
-          </Typography>
-          <Button variant="primary" onClick={() => setAddNewCardModal(true)}>
-            Add New Card
-          </Button>
+          <Typography variant="body2">This pack is empty.</Typography>
+          {myDeck && (
+            <Button variant="primary" onClick={() => setAddNewCardModal(true)}>
+              Add New Card
+            </Button>
+          )}
           {/*навесить логику создания новой карточки*/}
         </div>
       )}

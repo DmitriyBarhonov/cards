@@ -17,7 +17,7 @@ const schema = z.object({
     .max(30, 'Deck name must be less than 30 symbols'),
   isPrivate: z.boolean().optional(), //если не будет optional, то всегда надо нажимать галочку, а это не надо
 })
-//deck будет не пустой строкой от 3 до 30 символов
+//колода будет не пустой строкой от 3 до 30 символов
 //private будет опциональным булевым
 
 export type AddUpgradeType = z.infer<typeof schema> //вытаскивает типизацию для данных формы из схемы выше

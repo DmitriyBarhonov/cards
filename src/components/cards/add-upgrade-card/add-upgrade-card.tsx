@@ -50,7 +50,7 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
   ///
   const onSubmit = (data: FormValuesType) => {
     cardHandler(data)
-    reset({ question: '', answer: '' })
+    reset()
     toggleModal(false)
     //при сабмите фызвать функцию, сбросить значения и закрыться
   }

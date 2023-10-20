@@ -1,10 +1,24 @@
 import { baseApi } from '@/services/base-api.ts'
 import { UpdateCardParams } from '@/services/cards/cards.types.ts'
-import { Card } from '@/services/decks/decks.types.ts'
+import { Card, CardsResponse, GetCardsDeckParams } from '@/services/decks/decks.types.ts'
 
 const cardsApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
+      getACardsDeck: builder.query<CardsResponse, GetCardsDeckParams>({
+        query: params => ({
+          url: `/v1/decks/${params.id}/cards`,
+          method: 'GET',
+          params: {
+            question: params.question,
+            answer: params.answer,
+            orderBy: params.orderBy,
+            currentPage: params.currentPage,
+            itemsPerPage: params.itemsPerPage,
+          },
+          providesTag: ['Cards'],
+        }),
+      }),
       getCardById: builder.query<Card, { id: string }>({
         query: ({ id }) => `/v1/cards/${id}`,
       }),
@@ -34,4 +48,9 @@ const cardsApi = baseApi.injectEndpoints({
   },
 })
 
-export const { useDeleteCardMutation, useUpdateCardMutation, useGetCardByIdQuery } = cardsApi
+export const {
+  useDeleteCardMutation,
+  useGetACardsDeckQuery,
+  useUpdateCardMutation,
+  useGetCardByIdQuery,
+} = cardsApi
