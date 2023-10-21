@@ -61,6 +61,7 @@ export const SignUp = (props: SignUpProps) => {
     defaultValues: {
       email: '',
       password: '',
+      confirm: '',
     },
   })
 
@@ -71,8 +72,10 @@ export const SignUp = (props: SignUpProps) => {
   //убрала confirm по другому
   const handleFormSubmitted = handleSubmit(data => {
     //     const formData = omit(data, ['confirm']) // Исключаем поле 'confirm' из данных формы
-    // console.log(formData)
-    props.onSubmit(data)
+    const { confirm, ...rest } = data
+
+    // console.log(rest)
+    props.onSubmit(rest)
   })
 
   return (
