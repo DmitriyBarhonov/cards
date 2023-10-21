@@ -89,7 +89,9 @@ export const Decks = () => {
 
   // function
 
-  const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
+  const updateCurrentPage = (page: number) => {
+    dispatch(decksSlice.actions.updateCurrentPage(page))
+  }
   const updateItemsPerPageHandler = (items: string) => {
     dispatch(updateItemsPerPage(items))
   }

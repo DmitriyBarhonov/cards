@@ -27,11 +27,19 @@ export const decksSlice = createSlice({
       state.cardsCount.minCardsCount = action.payload[0]
       state.cardsCount.maxCardsCount = action.payload[1]
     },
+    setMaxCardsCount: (state, action: PayloadAction<number>) => {
+      state.cardsCount.maxCardsCount = action.payload
+    },
     setTabValue: (state, action: PayloadAction<string>) => {
       state.tabValue = action.payload
     },
   },
 })
 
-export const { setMinMaxcardsCount, updateCurrentPage, updateItemsPerPage, setTabValue } =
-  decksSlice.actions
+export const {
+  setMinMaxcardsCount,
+  updateCurrentPage,
+  updateItemsPerPage,
+  setTabValue,
+  setMaxCardsCount,
+} = decksSlice.actions
