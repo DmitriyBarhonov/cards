@@ -169,7 +169,6 @@ export const CardsPage = () => {
               Add New Card
             </Button>
           )}
-          {/*навесить логику создания новой карточки*/}
         </div>
       )}
       <AddUpgradeCard
