@@ -8,7 +8,6 @@ import { z } from 'zod'
 import s from './sign-up.module.scss'
 
 import { Button, Card, Typography } from '@/components/ui'
-// import { CardsInput } from '@/components/ui/input'
 import { ControlledInput } from '@/components/ui/controlled-input'
 
 const classNames = {
