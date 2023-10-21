@@ -133,6 +133,7 @@ export const Decks = () => {
               value={[cardsCount[0], cardsCount[1]]}
               onChange={setCardsHandler}
               disabled={false}
+              max={decks ? decks.maxCardsCount : 50}
             />
           </div>
           <div className={s.wrapperButton}>
