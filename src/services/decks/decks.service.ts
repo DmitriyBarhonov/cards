@@ -4,7 +4,6 @@ import {
   DeckResponseType,
   DecksParams,
   DeckRequestParams,
-  CreateCardParams,
   Card,
   GetRandomCard,
   SaveTheGrade,
@@ -129,21 +128,7 @@ const deskApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
-      createCard: builder.mutation<Card, { id: string; data: CreateCardParams }>({
-        query: ({ id, data }) => ({
-          url: `/v1/decks/${id}/cards`,
-          method: 'POST',
-          body: {
-            question: data.question,
-            answer: data.answer,
-            questionImg: data.questionImg,
-            answerImg: data.answerImg,
-            questionVideo: data.questionVideo,
-            answerVideo: data.answerVideo,
-          },
-          invalidatesTags: ['Decks', 'Cards'],
-        }),
-      }),
+
       getARandomCard: builder.query<Card, GetRandomCard>({
         query: ({ id, ...args }) => ({
           url: `/v1/decks/${id}/learn`,
@@ -175,5 +160,4 @@ export const {
   useUpdateDeckMutation,
   useGetDeckByIdQuery,
   useGetARandomCardQuery,
-  useCreateCardMutation,
 } = deskApi
