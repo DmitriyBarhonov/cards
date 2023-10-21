@@ -16,11 +16,11 @@ import { DropdownItem } from '@/components/ui/dropdown-menu/custom-drop-down'
 import { useGetMeQuery } from '@/services/auth'
 import {
   useDeleteCardMutation,
-  useGetACardsDeckQuery,
+  useGetCardsDeckQuery,
   useUpdateCardMutation,
+  useCreateCardMutation,
 } from '@/services/cards'
 import {
-  useCreateCardMutation,
   //useGetARandomCardQuery,
   useGetDeckByIdQuery,
 } from '@/services/decks'
@@ -40,7 +40,7 @@ export const CardsPage = () => {
   const { id } = useParams<{ id: string }>() //вытаскиваем айди из строки
   const [search, setSearch] = useState('') //для поиска по карточкамив колоде
   const { data: user } = useGetMeQuery() //вытаскиеваем даные пользователя
-  const { data: cards, isLoading } = useGetACardsDeckQuery({ id: id ?? '', question: search })
+  const { data: cards, isLoading } = useGetCardsDeckQuery({ id: id ?? '', question: search })
   const { data: deck } = useGetDeckByIdQuery({ id: id ?? '' })
   const [deleteCard] = useDeleteCardMutation()
   const [createCard] = useCreateCardMutation()
