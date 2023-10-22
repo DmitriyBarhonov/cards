@@ -6,7 +6,7 @@ import { Sort } from '@/services/types'
 export const useStateDecks = () => {
   const [selectedDeck, setSelectedDeck] = useState<Deck>({} as Deck) //для удаления нужной колоды
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
-  const [timerId, setTimerId] = useState<NodeJS.Timeout | undefined>(undefined)
+  // const [timerId, setTimerId] = useState<NodeJS.Timeout | undefined>(undefined)
   const [addNewDeckModal, setAddNewDeckModal] = useState(false)
   const [search, setSearch] = useState('')
   const [deleteDeckModal, setDeleteDeckModal] = useState(false)
@@ -17,8 +17,8 @@ export const useStateDecks = () => {
     setSelectedDeck,
     sort,
     setSort,
-    timerId,
-    setTimerId,
+    // timerId,
+    // setTimerId,
     addNewDeckModal,
     setAddNewDeckModal,
     search,
