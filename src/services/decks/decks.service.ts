@@ -1,12 +1,9 @@
 import { baseApi } from '@/services/base-api.ts'
 import {
-  CardsResponse,
   Deck,
   DeckResponseType,
   DecksParams,
   DeckRequestParams,
-  GetCardsDeckParams,
-  CreateCardParams,
   Card,
   GetRandomCard,
   SaveTheGrade,
@@ -58,6 +55,7 @@ const deskApi = baseApi.injectEndpoints({
       }),
       getDeckById: builder.query<Deck, { id: string }>({
         query: ({ id }) => `/v1/decks/${id}`,
+        // providesTags: ['Cards'],
       }),
       updateDeck: builder.mutation<Deck, DeckRequestParams>({
         query: updateData => ({
@@ -130,35 +128,7 @@ const deskApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
-      getACardsDeck: builder.query<CardsResponse, GetCardsDeckParams>({
-        query: params => ({
-          url: `/v1/decks/${params.id}/cards`,
-          method: 'GET',
-          params: {
-            question: params.question,
-            answer: params.answer,
-            orderBy: params.orderBy,
-            currentPage: params.currentPage,
-            itemsPerPage: params.itemsPerPage,
-          },
-          providesTag: ['Cards'],
-        }),
-      }),
-      createCard: builder.mutation<Card, { id: string; data: CreateCardParams }>({
-        query: ({ id, data }) => ({
-          url: `/v1/decks/${id}/cards`,
-          method: 'POST',
-          body: {
-            question: data.question,
-            answer: data.answer,
-            questionImg: data.questionImg,
-            answerImg: data.answerImg,
-            questionVideo: data.questionVideo,
-            answerVideo: data.answerVideo,
-          },
-          invalidatesTags: ['Decks', 'Cards'],
-        }),
-      }),
+
       getARandomCard: builder.query<Card, GetRandomCard>({
         query: ({ id, ...args }) => ({
           url: `/v1/decks/${id}/learn`,
@@ -189,7 +159,5 @@ export const {
   useCreateDeckMutation,
   useUpdateDeckMutation,
   useGetDeckByIdQuery,
-  useGetACardsDeckQuery,
   useGetARandomCardQuery,
-  useCreateCardMutation,
 } = deskApi

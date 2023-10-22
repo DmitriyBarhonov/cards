@@ -7,7 +7,7 @@ import { useStateDecks } from './decksUseStateHook'
 import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
 import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
 import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
-import { AddUpgradeDeck, DeleteDeck } from '@/components/decks'
+import { AddUpgradeDeck, DeleteItem } from '@/components/decks'
 import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/components/ui'
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
@@ -65,10 +65,10 @@ export const Decks = () => {
   const currentPage = useAppSelector(state => state.decks.currentPage)
   const perPage = useAppSelector(state => +state.decks.itemsPerPage)
 
-  // outher
+  // other
   const dispatch = useAppDispatch()
   const navigate = useNavigate() //для перехода в карточки
-  const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
+  const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда для сортировки
   // query
   const [deleteDeck, { isLoading: isLoadingDeleteDec }] = useDeleteDeckMutation()
   const [updateDeck, { isLoading: isLoadingUpdateDeck }] = useUpdateDeckMutation()
@@ -82,9 +82,6 @@ export const Decks = () => {
     name: search,
     orderBy: sortString,
     authorId: tabValue === 'my' ? user?.id : undefined,
-    //если на табе Моя колода, то в useGetDecksQuery передаст в параметр имя автора,
-    //то есть пользователя из useGetMeQuery
-    //если на табе будет Все колоды, то запрос пойдет с undefined, и покажутся все колоды
   })
 
   // function
@@ -114,7 +111,6 @@ export const Decks = () => {
       ) : null}
       <div className={s.container}>
         <Typography variant={'h2'}>Packs list</Typography>
-        {/* времено размещен для испытаний*/}
         <div className={s.menu}>
           <Input
             className={s.search}
@@ -150,60 +146,65 @@ export const Decks = () => {
             </Button>
           </div>
         </div>
-        <Table.Root>
-          <Table.SortedHeader columns={columns} sort={sort} onSort={setSort} />
-          <Table.Body>
-            {decks?.items?.map((deck: Deck) => {
-              return (
-                <Table.Row key={deck.id}>
-                  <Table.Data onClick={() => navigate(`/cards/${deck.id}`)}>{deck.name}</Table.Data>
-                  {/*переходим в карточки и дальше айди колоды*/}
-                  <Table.Data>{deck.cardsCount}</Table.Data>
-                  <Table.Data>{new Date(deck.updated).toLocaleDateString('ru-Ru')}</Table.Data>
-                  <Table.Data>{deck.author.name}</Table.Data>
-                  <Table.Data className={s.iconsRow}>
-                    <PlayCircle size={24} />
-                    {/*если это моя колода, то покажи все иконки, иначе только learn */}
-                    {user.id === deck.author.id ? (
-                      <div className={'flex'}>
-                        <Button
-                          variant={'icon'}
-                          onClick={() => {
-                            setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
-                            setUpdateDeckModal(true) //открываем модалку для удаления
-                          }}
-                        >
-                          <EdittextIcon />
-                        </Button>
-                        <Button
-                          variant={'icon'}
-                          onClick={() => {
-                            setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
-                            setDeleteDeckModal(true) //открываем модалку для удаления
-                          }}
-                        >
-                          <TrashOutline size={24} />
-                        </Button>
-                      </div>
-                    ) : null}
-                  </Table.Data>
-                </Table.Row>
-              )
-            })}
-          </Table.Body>
-        </Table.Root>
-        {decks?.pagination.totalItems && (
-          <Pagination
-            className={s.pagination}
-            totalCount={decks?.pagination.totalItems ?? 10}
-            currentPage={currentPage}
-            pageSize={decks?.pagination.itemsPerPage}
-            onPageChange={updateCurrentPage}
-            selectValue={decks?.pagination.itemsPerPage}
-            selectOptions={[5, 10, 15, 20]}
-            onSelectChange={itemsPerPage => updateItemsPerPageHandler(itemsPerPage)}
-          />
+        {decks?.items.length == 0 ? (
+          <Table.Empty />
+        ) : (
+          <Table.Root>
+            <Table.SortedHeader columns={columns} sort={sort} onSort={setSort} />
+            <Table.Body>
+              {decks?.items?.map((deck: Deck) => {
+                return (
+                  <Table.Row key={deck.id}>
+                    <Table.Data onClick={() => navigate(`/cards/${deck.id}`)}>
+                      {deck.name}
+                    </Table.Data>
+                    {/*переходим в карточки и дальше айди колоды*/}
+                    <Table.Data>{deck.cardsCount}</Table.Data>
+                    <Table.Data>{new Date(deck.updated).toLocaleDateString('ru-Ru')}</Table.Data>
+                    <Table.Data>{deck.author.name}</Table.Data>
+                    <Table.Data className={s.iconsRow}>
+                      <PlayCircle size={24} />
+                      {/*если это моя колода, то покажи все иконки, иначе только learn */}
+                      {user.id === deck.author.id ? (
+                        <div className={'flex'}>
+                          <Button
+                            variant={'icon'}
+                            onClick={() => {
+                              setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
+                              setUpdateDeckModal(true) //открываем модалку для удаления
+                            }}
+                          >
+                            <EdittextIcon />
+                          </Button>
+                          <Button
+                            variant={'icon'}
+                            onClick={() => {
+                              setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
+                              setDeleteDeckModal(true) //открываем модалку для удаления
+                            }}
+                          >
+                            <TrashOutline size={24} />
+                          </Button>
+                        </div>
+                      ) : null}
+                    </Table.Data>
+                  </Table.Row>
+                )
+              })}
+            </Table.Body>
+          </Table.Root>
         )}
+        {/*рефакторинг чтобы не было 0 если таблица пустая*/}
+        <Pagination
+          className={s.pagination}
+          totalCount={decks?.pagination.totalItems ?? 10}
+          currentPage={currentPage}
+          pageSize={decks?.pagination?.itemsPerPage ?? 10}
+          onPageChange={updateCurrentPage}
+          selectValue={decks?.pagination.itemsPerPage}
+          selectOptions={[5, 10, 15, 20]}
+          onSelectChange={itemsPerPage => updateItemsPerPageHandler(itemsPerPage)}
+        />
         <AddUpgradeDeck
           title={'Add New Deck'}
           buttonText={'Add New Deck'}
@@ -223,13 +224,16 @@ export const Decks = () => {
           isOpen={updateDeckModal}
           toggleModal={setUpdateDeckModal}
         />
-        <DeleteDeck
+        <DeleteItem
           isOpen={deleteDeckModal} //открыта или нет конкретная модалка
           toggleModal={setDeleteDeckModal} //переключатель для открытия и закрытия модалки
           //отдаем нужную колоду для удаления, ее имя и id
-          name={selectedDeck.name}
-          id={selectedDeck.id}
-          deleteDeck={deleteDeck} //функция по удалению
+          title={'Delete Deck'} //заголовок в модалке
+          text={'All cards will be deleted'} //текст
+          buttonText={'Delete Deck'} //текст для кнопки
+          name={selectedDeck.name} //название того что удаляем
+          id={selectedDeck.id} //id того что удаляем
+          deleteItem={deleteDeck} //функция по удалению
         />
       </div>
     </>

@@ -13,8 +13,8 @@ import { CheckEmail } from '@/components/auth/check-email'
 import { ForgotPass } from '@/components/auth/forgot-pass'
 import { PersonalInfo } from '@/components/auth/personal-info'
 import { SetNewPass } from '@/components/auth/set-new-pass'
-import { PageNotFound, Layout, Cards } from '@/pages'
-import { Decks } from '@/pages/decks-page/decks.tsx'
+import { PageNotFound, Layout, CardsPage } from '@/pages'
+import { Decks } from '@/pages/decks-page/decks'
 import { SignInPage } from '@/pages/sign-in-page/sign-in-page.tsx'
 import { SignUpPage } from '@/pages/sign-up-page/sign-up-page.tsx'
 import { useGetMeQuery } from '@/services/auth'
@@ -53,7 +53,7 @@ const privateRoutes: RouteObject[] = [
   },
   {
     path: '/cards/:id', //в компонент карточки зайдем только по айди колоды
-    element: <Cards />,
+    element: <CardsPage />,
   },
   {
     path: '/personal-info', //todo не забыть повесить логику на id пользователя
