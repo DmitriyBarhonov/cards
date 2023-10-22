@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -51,7 +51,7 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
     toggleModal(false)
   }
 
-  const handleFormSubmitted = handleSubmit(onSubmit)
+  let handleFormSubmitted = handleSubmit(onSubmit)
   const onOpenHandler = (isOpen: boolean) => {
     toggleModal(isOpen)
   }
@@ -81,7 +81,7 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
         </div>
 
         <div className={'flex justify-between'}>
-          <Button onClick={onCloseHandler} variant={'secondary'}>
+          <Button type="button" onClick={onCloseHandler} variant={'secondary'}>
             Cancel
           </Button>
           <Button type="submit">{buttonText}</Button>
