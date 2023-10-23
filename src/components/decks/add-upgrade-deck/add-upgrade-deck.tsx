@@ -13,7 +13,7 @@ const schema = z.object({
     .string()
     .trim()
     .nonempty('Enter deck name')
-    .min(3, 'Deck name must be at least 4 symbols')
+    .min(4, 'Deck name must be at least 4 symbols')
     .max(30, 'Deck name must be less than 30 symbols'),
   isPrivate: z.boolean().optional(), //если не будет optional, то всегда надо нажимать галочку, а это не надо
 })
@@ -68,14 +68,17 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
       modalMainTitle={title}
     >
       <form onSubmit={handleFormSubmitted}>
-        <ControlledInput
-          name="name"
-          variant={'standard'}
-          placeholder={defaultValues.name}
-          label={'New pack name'}
-          control={control}
-          autoComplete="false"
-        />
+        <div style={{ marginBottom: '40px' }}>
+          <ControlledInput
+            name="name"
+            variant={'standard'}
+            placeholder={defaultValues.name}
+            label={'New pack name'}
+            control={control}
+            autoComplete="false"
+          />
+        </div>
+
         <div className={'my-8'}>
           <ControlledCheckbox name="isPrivate" label={'Private pack'} control={control} />
         </div>
