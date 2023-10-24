@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-
 import LinearProgress from '@mui/material/LinearProgress'
 import {
   createBrowserRouter,
@@ -15,14 +13,11 @@ import { CheckEmail } from '@/components/auth/check-email'
 import { ForgotPass } from '@/components/auth/forgot-pass'
 import { PersonalInfo } from '@/components/auth/personal-info'
 import { SetNewPass } from '@/components/auth/set-new-pass'
-import { useAppDispatch } from '@/hooks/hooks.ts'
 import { PageNotFound, Layout, CardsPage } from '@/pages'
 import { Decks } from '@/pages/decks-page/decks'
 import { SignInPage } from '@/pages/sign-in-page/sign-in-page.tsx'
 import { SignUpPage } from '@/pages/sign-up-page/sign-up-page.tsx'
 import { useGetMeQuery } from '@/services/auth'
-import { useGetDecksQuery } from '@/services/decks'
-import { decksSlice } from '@/services/decks/decks.slice.ts'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -88,13 +83,7 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
-  const dispatch = useAppDispatch()
   const { isLoading: isMeLoading } = useGetMeQuery()
-  const { currentData: decks } = useGetDecksQuery()
-
-  useEffect(() => {
-    dispatch(decksSlice.actions.setMaxCardsCount(decks ? decks.maxCardsCount : 50))
-  }, [decks])
 
   if (isMeLoading) return <LinearProgress color="secondary" />
 

@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { LinearProgress } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
@@ -88,6 +90,10 @@ export const Decks = () => {
   })
 
   // functions
+
+  useEffect(() => {
+    dispatch(decksSlice.actions.setMaxCardsCount(decks ? decks.maxCardsCount : 50))
+  }, [decks])
 
   const updateCurrentPage = (page: number) => {
     dispatch(decksSlice.actions.updateCurrentPage(page))
