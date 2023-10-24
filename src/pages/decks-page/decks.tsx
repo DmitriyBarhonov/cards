@@ -67,7 +67,7 @@ export const Decks = () => {
   const currentPage = useAppSelector(state => state.decks.currentPage)
   const perPage = useAppSelector(state => +state.decks.itemsPerPage)
 
-  // outher
+  // other
   const dispatch = useAppDispatch()
   const navigate = useNavigate() //для перехода в карточки
   const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда
