@@ -93,7 +93,7 @@ export const Router = () => {
   const { currentData: decks } = useGetDecksQuery()
 
   useEffect(() => {
-    dispatch(decksSlice.actions.setMaxCardsCount(decks ? decks.maxCardsCount : 43))
+    dispatch(decksSlice.actions.setMaxCardsCount(decks ? decks.maxCardsCount : 50))
   }, [decks])
 
   if (isMeLoading) return <LinearProgress color="secondary" />
