@@ -26,7 +26,6 @@ export const useDebounce = () => {
   const cardsCountSettings = useDebounceFunction(cardsCount)
 
   useEffect(() => {
-    debugger
     setCardsCount([cardsCount[0], decks?.maxCardsCount ? decks?.maxCardsCount : cardsCount[1]])
   }, [])
 
