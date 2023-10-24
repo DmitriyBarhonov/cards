@@ -87,7 +87,7 @@ export const Decks = () => {
     //если на табе будет Все колоды, то запрос пойдет с undefined, и покажутся все колоды
   })
 
-  // function
+  // functions
 
   const updateCurrentPage = (page: number) => {
     dispatch(decksSlice.actions.updateCurrentPage(page))
@@ -116,7 +116,6 @@ export const Decks = () => {
       ) : null}
       <div className={s.container}>
         <Typography variant={'h2'}>Packs list</Typography>
-        {/* времено размещен для испытаний*/}
         <div className={s.menu}>
           <Input
             className={s.search}
