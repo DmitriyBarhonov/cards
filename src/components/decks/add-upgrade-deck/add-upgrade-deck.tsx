@@ -18,11 +18,17 @@ const schema = z.object({
     .min(3, 'Deck name must be at least 4 symbols')
     .max(30, 'Deck name must be less than 30 symbols'),
   isPrivate: z.boolean().optional(), //если не будет optional, то всегда надо нажимать галочку, а это не надо
+  cover: z.instanceof(FileList).optional(),
 })
 //колода будет не пустой строкой от 3 до 30 символов
 //private будет опциональным булевым
 
-export type AddUpgradeType = z.infer<typeof schema> //вытаскивает типизацию для данных формы из схемы выше
+export type AddUpgradeType = {
+  name: string
+  isPrivate?: boolean
+  cover?: File | undefined
+}
+
 export type AddUpgradeDeckProps = {
   defaultValues?: AddUpgradeType //используем при вызове для upgrade
   title: string //заголовок
@@ -34,7 +40,7 @@ export type AddUpgradeDeckProps = {
   //если upgrade, то на месте вызова компоненты передаем еще и id колоды
 }
 export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
-  defaultValues = { name: '', isPrivate: false },
+  defaultValues = { name: '', isPrivate: false, cover: File },
   title,
   buttonText,
   deckHandler,
@@ -74,9 +80,12 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
   }
   const onDropFileHandler = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
-    let file = e.dataTransfer.files
+    let file = [...e.dataTransfer.files]
 
     setDrag(false)
+    const formData = new FormData()
+
+    formData.append('file', file[0])
   }
 
   return (
@@ -106,7 +115,7 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
             >
               Drag file here for upload, or
               <div>
-                <input type="file" />
+                <input type="file" accept="image/*" />
               </div>
               <ControlledInput
                 name="name"
