@@ -165,7 +165,16 @@ export const Decks = () => {
                 return (
                   <Table.Row key={deck.id}>
                     <Table.Data onClick={() => navigate(`/cards/${deck.id}`)}>
-                      {deck.name}
+                      <div>
+                        {deck.cover ? (
+                          <div className={s.coverContainer}>
+                            <img className={s.coverImage} src={deck.cover} alt="deck cover" />
+                            <Typography>{deck.name}</Typography>
+                          </div>
+                        ) : (
+                          <Typography>{deck.name}</Typography>
+                        )}
+                      </div>
                     </Table.Data>
                     {/*переходим в карточки и дальше айди колоды*/}
                     <Table.Data>{deck.cardsCount}</Table.Data>

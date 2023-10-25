@@ -75,9 +75,10 @@ export const CardsPage = () => {
         {/* верни на страницу назад */} <ArrowLeft />
         Back to Decks List
       </Typography>
-      <div className={' mt-6 flex justify-between '}>
+      <div className={'mt-6 flex justify-between '}>
         <div className={'flex justify-start'}>
           <Typography variant="large">{deck?.name}</Typography>
+
           {myDeck && (
             <Dropdown trigger={<DotsInCircle className={'ml-2'} />} width={100}>
               <div>
@@ -105,12 +106,18 @@ export const CardsPage = () => {
             Add New Card
           </Button>
         ) : (
-          <Button>Learn to Deck</Button>
+          <Button>Learn this Deck</Button>
         )}
 
         {/*<Button>Learn to Deck</Button>*/}
         {/*!!!! запрос работает. Нужна страничка  */}
       </div>
+      {/*Есть обложка коллоды? отрисует!*/}
+      {deck?.cover && (
+        <div className={s.deckCoverContainer}>
+          <img className={s.deckCoverImage} src={deck.cover} alt="deck cover" />
+        </div>
+      )}
       <Input
         variant="search"
         fullWidth={true}
@@ -128,8 +135,35 @@ export const CardsPage = () => {
             {cards?.items.map((card: Card) => {
               return (
                 <Table.Row key={card.id}>
-                  <Table.Data>{card.question}</Table.Data>
-                  <Table.Data>{card.answer}</Table.Data>
+                  {/*<Table.Data>{card.question}</Table.Data>*/}
+                  <Table.Data>
+                    <div>
+                      {card.questionImg ? (
+                        <div className={s.coverContainer}>
+                          <img
+                            className={s.coverImage}
+                            src={card.questionImg}
+                            alt="card question"
+                          />
+                          <Typography>{card.question}</Typography>
+                        </div>
+                      ) : (
+                        <Typography>{card.question}</Typography>
+                      )}
+                    </div>
+                  </Table.Data>
+                  <Table.Data>
+                    <div>
+                      {card.answerImg ? (
+                        <div className={s.coverContainer}>
+                          <img className={s.coverImage} src={card.answerImg} alt="card question" />
+                          <Typography>{card.answer}</Typography>
+                        </div>
+                      ) : (
+                        <Typography>{card.answer}</Typography>
+                      )}
+                    </div>
+                  </Table.Data>
                   <Table.Data>{new Date(card.updated).toLocaleDateString('ru-Ru')}</Table.Data>
                   <Table.Data>
                     <Rating rating={card.grade} />

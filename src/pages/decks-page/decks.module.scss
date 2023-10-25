@@ -40,3 +40,14 @@
 .clearFilter > div{
   margin-left: 10px;
 }
+
+.coverContainer{
+  display: flex;
+  align-items: center;
+
+  .coverImage{
+    height: 54px;
+    width: auto;
+    margin-right: 10px;
+  }
+}
