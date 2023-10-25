@@ -112,9 +112,12 @@ export const CardsPage = () => {
         {/*<Button>Learn to Deck</Button>*/}
         {/*!!!! запрос работает. Нужна страничка  */}
       </div>
-      <div className={s.deckCoverContainer}>
-        <img className={s.deckCoverImage} src={deck?.cover} alt="" />
-      </div>
+      {/*Есть обложка коллоды? отрисует!*/}
+      {deck?.cover && (
+        <div className={s.deckCoverContainer}>
+          <img className={s.deckCoverImage} src={deck.cover} alt="deck cover" />
+        </div>
+      )}
       <Input
         variant="search"
         fullWidth={true}
