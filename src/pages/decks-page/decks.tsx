@@ -158,8 +158,8 @@ export const Decks = () => {
                     <Table.Data onClick={() => navigate(`/cards/${deck.id}`)}>
                       <div>
                         {deck.cover ? (
-                          <div className={'flex'}>
-                            <img src={deck.cover} alt="deck cover" />
+                          <div className={s.coverContainer}>
+                            <img className={s.coverImage} src={deck.cover} alt="deck cover" />
                             <Typography>{deck.name}</Typography>
                           </div>
                         ) : (
