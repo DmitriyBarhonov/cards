@@ -72,6 +72,12 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
     e.preventDefault()
     setDrag(false)
   }
+  const onDropFileHandler = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    let file = e.dataTransfer.files
+
+    setDrag(false)
+  }
 
   return (
     <Modal
@@ -85,13 +91,19 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
           {drag ? (
             <div
               className={s.dropArea}
+              onDragStart={e => dragStartHandler(e)}
               onDragLeave={e => dragLeaveHandler(e)}
               onDragOver={e => dragStartHandler(e)}
+              onDrop={e => onDropFileHandler(e)}
             >
               <Typography variant={'h2'}>Release the new file here</Typography>
             </div>
           ) : (
-            <div onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)}>
+            <div
+              onDragStart={e => dragStartHandler(e)}
+              onDragLeave={e => dragLeaveHandler(e)}
+              onDragOver={e => dragStartHandler(e)}
+            >
               Drag file here for upload, or
               <div>
                 <input type="file" />
