@@ -1,7 +1,7 @@
-import { FC, useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { FieldValues, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import s from './add-upgrade-deck.module.scss'
@@ -18,16 +18,12 @@ const schema = z.object({
     .min(3, 'Deck name must be at least 4 symbols')
     .max(30, 'Deck name must be less than 30 symbols'),
   isPrivate: z.boolean().optional(), //если не будет optional, то всегда надо нажимать галочку, а это не надо
-  cover: z.instanceof(FileList).optional(),
+  cover: z.instanceof(File).optional(),
 })
 //колода будет не пустой строкой от 3 до 30 символов
 //private будет опциональным булевым
 
-export type AddUpgradeType = {
-  name: string
-  isPrivate?: boolean
-  cover?: File | undefined
-}
+export type AddUpgradeType = z.infer<typeof schema>
 
 export type AddUpgradeDeckProps = {
   defaultValues?: AddUpgradeType //используем при вызове для upgrade
@@ -54,11 +50,21 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
   })
   ///
 
+  const [file, setFile] = useState<File | null>(null) // Создайте состояние для хранения выбранного файла
+  const [file64, setFile64] = useState(null) // Создайте состояние для хранения выбранного файла
   const [drag, setDrag] = useState<boolean>(false)
 
   const onSubmit = (data: AddUpgradeType) => {
+    if (file) {
+      data.cover = file // Добавление выбранного файла в объект data
+    }
+    if (file64) {
+      data.cover = file // Добавление выбранного файла в объект data
+    }
     deckHandler(data)
+    console.log(data)
     resetField('name')
+    setFile(null) // Сброс выбранного файла после его добавления в data
     toggleModal(false)
   }
 
@@ -83,9 +89,34 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
     let file = [...e.dataTransfer.files]
 
     setDrag(false)
+
+    if (file.length > 0) {
+      setFile(file[0])
+    }
+
     const formData = new FormData()
 
     formData.append('file', file[0])
+  }
+
+  const defaultUploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      const selectedFile = e.target.files[0]
+
+      if (selectedFile.size < 4000000) {
+        setFile(selectedFile)
+        const reader = new FileReader()
+
+        reader.onloadend = () => {
+          const file64 = reader.result as string
+
+          console.log('file64:', file64)
+        }
+        reader.readAsDataURL(selectedFile)
+      } else {
+        console.log('Photo Upload Error')
+      }
+    }
   }
 
   return (
@@ -115,7 +146,7 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
             >
               Drag file here for upload, or
               <div>
-                <input type="file" accept="image/*" />
+                <input onChange={e => defaultUploadHandler(e)} type="file" accept="image/*" />
               </div>
               <ControlledInput
                 name="name"
