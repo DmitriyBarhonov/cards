@@ -5,6 +5,8 @@ import {
   ResendVerificationEmailArgs,
   SignUpArgs,
   SignUpResponse,
+  UserDataResponse,
+  UserDataUpdate,
 } from './auth.types.ts'
 
 import { baseApi } from '@/services/base-api.ts'
@@ -32,7 +34,7 @@ const authService = baseApi.injectEndpoints({
 
           //ну а если нету ошибки, присваиваем данные result.data
           // главное чтобы не было success:false
-          return { data: result.data }
+          return { data: result.data as UserDataResponse }
         },
         //чтобы при поулчении ошибки опять не отправлялся запрос
         //так избегются бесконечные запросы
@@ -40,6 +42,14 @@ const authService = baseApi.injectEndpoints({
           maxRetries: 0,
         },
         providesTags: ['Me'],
+      }),
+      updateMe: builder.mutation<UserDataResponse, UserDataUpdate>({
+        query: data => ({
+          url: `/v1/auth/me`,
+          method: 'PATCH',
+          body: data,
+        }),
+        invalidatesTags: ['Me'],
       }),
       login: builder.mutation<LoginResponse, LoginArgs>({
         query: data => ({
@@ -111,4 +121,5 @@ export const {
   useGetMeQuery,
   useSignUpMutation,
   useVerifyEmailMutation,
+  useUpdateMeMutation,
 } = authService

@@ -77,7 +77,7 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({}) => {
           </div>
 
           {editMode ? (
-            <ProfileEditMode onInputBlurHandler={onInputBlurHandler} />
+            <ProfileEditMode name={me.name} onInputBlurHandler={onInputBlurHandler} />
           ) : (
             <ProfileDisplayMode
               email={me.email}
