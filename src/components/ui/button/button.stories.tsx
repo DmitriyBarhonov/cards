@@ -2,13 +2,16 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Button } from './'
 
+import { DotsInCircle } from '@/assets/icons/dots-in-circle.tsx'
+import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
+
 const meta = {
   title: 'Components/Button',
   component: Button,
   tags: ['autodocs'],
   argTypes: {
     variant: {
-      options: ['primary', 'secondary', 'tertiary', 'link'],
+      options: ['primary', 'secondary', 'tertiary', 'link', 'icon'],
       control: { type: 'radio' },
     },
   },
@@ -58,7 +61,24 @@ export const FullWidth: Story = {
 export const AsLink: Story = {
   args: {
     variant: 'primary',
-    children: 'Lidwwwwwwwnk that looks like a button',
+    children: 'Link that looks like a button',
     as: 'a',
+  },
+}
+export const Icon: Story = {
+  args: {
+    variant: 'icon',
+    children: <DotsInCircle />,
+  },
+}
+export const TextWithIconIcon: Story = {
+  args: {
+    variant: 'primary',
+    children: (
+      <>
+        <EdittextIcon />
+        Button with icon
+      </>
+    ),
   },
 }
