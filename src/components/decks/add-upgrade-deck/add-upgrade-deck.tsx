@@ -51,14 +51,10 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
   ///
 
   const [file, setFile] = useState<File | null>(null) // Создайте состояние для хранения выбранного файла
-  const [file64, setFile64] = useState(null) // Создайте состояние для хранения выбранного файла
   const [drag, setDrag] = useState<boolean>(false)
 
   const onSubmit = (data: AddUpgradeType) => {
     if (file) {
-      data.cover = file // Добавление выбранного файла в объект data
-    }
-    if (file64) {
       data.cover = file // Добавление выбранного файла в объект data
     }
     deckHandler(data)
