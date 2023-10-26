@@ -74,7 +74,6 @@ export const SignUp = (props: SignUpProps) => {
     //     const formData = omit(data, ['confirm']) // Исключаем поле 'confirm' из данных формы
     const { confirm, ...rest } = data
 
-    // console.log(rest)
     props.onSubmit(rest)
   })
 
