@@ -9,6 +9,7 @@ import s from './sign-in.module.scss'
 import { Button, Card, Typography } from '@/components/ui'
 import { ControlledCheckbox } from '@/components/ui/controlled'
 import { ControlledInput } from '@/components/ui/controlled-input'
+import { useLoginMutation } from '@/services/auth'
 
 const classNames = {
   formContainer: clsx(s.formContainer),
@@ -33,19 +34,10 @@ const schema = z.object({
 })
 
 export type SignInFormType = z.infer<typeof schema> //вытаскивает типизацию для данных формы из схемы выше
-export type SignInProps = {
-  // value?: string
-  // onInputValueChange?: (value: string) => void
-  onSubmit: (data: SignInFormType) => void //при сабмите отправляем данные типа мыло, пароль, запомниМеня
-}
 
-// type FormValues = {
-//   email: string
-//   password: string
-//   rememberMe: boolean
-// }не нужно, берем из схемы
-export const SignIn = (props: SignInProps) => {
-  const { handleSubmit, control } = useForm<SignInFormType>({
+export const SignIn = () => {
+  const [login, { error }] = useLoginMutation()
+  const { handleSubmit, control, setError } = useForm<SignInFormType>({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
     defaultValues: {
@@ -55,21 +47,20 @@ export const SignIn = (props: SignInProps) => {
     },
   })
 
-  // const onSubmit = (data: SignInFormType) => {
-  //   console.log(data)
-  //   console.log(props)
-  // } //оставила для проверки что приходит, сабмит получаем из пропсов
-
-  const handleFormSubmitted = handleSubmit(props.onSubmit)
-
-  // const methods = useForm()
-  //
-  // // register который мы передаем в формы
-  // // name: "email"
-  // // onBlur: async (event) => {…}
-  // // onChange: async (event) => {…}
-  // // ref: (ref) => {…}
-  // console.log(methods)
+  if (error) {
+    if (
+      'status' in error &&
+      typeof error.data == 'object' &&
+      error.data &&
+      'message' in error.data
+    ) {
+      setError('password', {
+        type: 'custom',
+        message: error.data.message as string,
+      }) //
+    }
+  }
+  const handleFormSubmitted = handleSubmit(login)
 
   return (
     <div className={classNames.formContainer}>
