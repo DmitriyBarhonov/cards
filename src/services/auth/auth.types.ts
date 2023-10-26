@@ -30,3 +30,12 @@ export type RecoverPasswordArgs = {
   email: string
   subject: string
 }
+export type ResponseGetMe = {
+  avatar: string
+  id: string
+  email: string
+  isEmailVerified: boolean
+  name: string
+  created: string
+  updated: string
+}

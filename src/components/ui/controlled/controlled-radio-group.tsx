@@ -1,6 +1,6 @@
 import { UseControllerProps, useController } from 'react-hook-form'
 
-import { RadioGroupComponet, RadioGroupProps } from '../radio-group/radio-group'
+import { RadioGroupComponet, RadioGroupProps } from '@/components/ui'
 
 export type ControlledRadioProps = UseControllerProps<any> &
   Omit<RadioGroupProps, 'onChange' | 'value' | 'id'>

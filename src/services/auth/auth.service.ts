@@ -3,6 +3,7 @@ import {
   LoginResponse,
   RecoverPasswordArgs,
   ResendVerificationEmailArgs,
+  ResponseGetMe,
   SignUpArgs,
   SignUpResponse,
 } from './auth.types.ts'
@@ -12,10 +13,10 @@ import { baseApi } from '@/services/base-api.ts'
 const authService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      getMe: builder.query<any, void>({
+      getMe: builder.query<ResponseGetMe | null | { success: boolean }, void>({
         //тут часть кода чтобы предотвратить беспонечные
         //me запросы, взято откуда-то с гита
-        async queryFn(_name, _api, _extraOptions, baseQuery) {
+        async queryFn(_arg, _api, _extraOptions, baseQuery) {
           const result = await baseQuery({
             url: `v1/auth/me`,
             method: 'GET',
@@ -32,7 +33,8 @@ const authService = baseApi.injectEndpoints({
 
           //ну а если нету ошибки, присваиваем данные result.data
           // главное чтобы не было success:false
-          return { data: result.data }
+          return { data: result.data } as { data: ResponseGetMe }
+          //получим дату как unknown, говорим что это будет как нужная нам дата
         },
         //чтобы при поулчении ошибки опять не отправлялся запрос
         //так избегются бесконечные запросы
@@ -87,7 +89,7 @@ const authService = baseApi.injectEndpoints({
           url: `v1/auth/recover-password`,
           method: 'POST',
           body: {
-            html: '<h1>Hi, ##name##</h1><p>Click <a href="##token##">here</a> to recover your password</p>',
+            // html: '<h1>Hi, ##name##</h1><p>Click <a href="##token##">here</a> to recover your password</p>'
             email,
             subject,
           },
