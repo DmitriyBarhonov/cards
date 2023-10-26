@@ -17,9 +17,11 @@
 
   background-color: var(--color-dark-500);
 }
-
-.sort {
-  margin: 0 auto;
+.arrow {
+  user-select: none;
+  display: flex;
+  gap: 4px;
+  align-items: center;
 }
 .row {
   padding: 6px 24px;

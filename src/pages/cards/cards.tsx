@@ -25,13 +25,13 @@ import {
   useGetDeckByIdQuery,
 } from '@/services/decks'
 import { Card } from '@/services/decks/decks.types.ts'
-import { Column } from '@/services/types'
+import { Column, Sort } from '@/services/types'
 
 const columns: Column[] = [
-  { key: 'name', title: 'Question' },
-  { key: 'cardsCount', title: 'Answer' },
+  { key: 'question', title: 'Question', sortable: true },
+  { key: 'answer', title: 'Answer', sortable: true },
   { key: 'updated', title: 'Last Updated', sortable: true },
-  { key: 'created', title: 'Grade' },
+  { key: 'grade', title: 'Grade' },
   { key: 'action', title: ' ' },
 ]
 
@@ -39,8 +39,14 @@ export const CardsPage = () => {
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>() //вытаскиваем айди из строки
   const [search, setSearch] = useState('') //для поиска по карточкамив колоде
+  const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
+  const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда для сортировки
   const { data: user } = useGetMeQuery() //вытаскиеваем даные пользователя
-  const { data: cards, isLoading } = useGetCardsDeckQuery({ id: id ?? '', question: search })
+  const { data: cards, isLoading } = useGetCardsDeckQuery({
+    id: id ?? '',
+    question: search,
+    orderBy: sortString,
+  })
   const { data: deck } = useGetDeckByIdQuery({ id: id ?? '' })
   const [deleteCard] = useDeleteCardMutation()
   const [createCard] = useCreateCardMutation()
@@ -56,13 +62,12 @@ export const CardsPage = () => {
     }
   }
   const myDeck = deck?.userId === user?.id // в переменную моя колода или нет
-  //const { data: learn } = useGetARandomCardQuery({ id: id })
-  //не нужно здесь, нужна другая компонента
+
   //что надо сделать:
   //
   //тут может быть сложно: если своя колода добавть колонку c иконками редактирования и удаления,
   // если чужая то то такой колонки нет, котолнки верху в массиве columns
-  //сделать модалки на создание, редактирования и удаление карточки
+  //сортировка
   //с learn cards я думаю потом разберемся, поэтапно
 
   return (
@@ -108,9 +113,6 @@ export const CardsPage = () => {
         ) : (
           <Button>Learn this Deck</Button>
         )}
-
-        {/*<Button>Learn to Deck</Button>*/}
-        {/*!!!! запрос работает. Нужна страничка  */}
       </div>
       {/*Есть обложка коллоды? отрисует!*/}
       {deck?.cover && (
@@ -127,15 +129,14 @@ export const CardsPage = () => {
       />
       {isLoading && <Typography variant={'large'}>Loading...</Typography>}
       {/*если есть какие то карточки то верни таблицу, иначе предложи создать новую карточку*/}
-      {/*показывай пусту таблицу даже если грузится, иначе показывается дивс инфойчто ет таблиц*/}
+      {/*показывай пусту таблицу даже если грузится, иначе показывается див с инфой что нет таблиц*/}
       {cards?.items.length || isLoading ? (
         <Table.Root>
-          <Table.SortedHeader columns={columns} />
+          <Table.SortedHeader columns={columns} sort={sort} onSort={setSort} />
           <Table.Body>
             {cards?.items.map((card: Card) => {
               return (
                 <Table.Row key={card.id}>
-                  {/*<Table.Data>{card.question}</Table.Data>*/}
                   <Table.Data>
                     <div>
                       {card.questionImg ? (

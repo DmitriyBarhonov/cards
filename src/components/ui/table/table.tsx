@@ -79,10 +79,12 @@ export const SortedHeader: FC<
       <tr>
         {columns.map(({ title, key, sortable }) => (
           <th className={s.head} key={key} onClick={handleSort(key, sortable)}>
-            {title}
-            {sort && sort.key === key && (
-              <span className={s.sort}>{sort.direction === 'asc' ? <SortUp /> : <SortDown />}</span>
-            )}
+            <div className={s.arrow}>
+              {title}
+              {sort && sort.key === key && (
+                <span>{sort.direction === 'asc' ? <SortUp /> : <SortDown />}</span>
+              )}
+            </div>
           </th>
         ))}
       </tr>
