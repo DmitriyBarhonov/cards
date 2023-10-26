@@ -38,9 +38,6 @@ export const Data: FC<ComponentProps<'td'>> = ({ className, ...rest }) => {
   return <td className={classNames.data} {...rest} />
 }
 
-//кастомный заголовкок если используем сортировку
-
-//header для сортировки по столбцам
 export const SortedHeader: FC<
   Omit<
     ComponentPropsWithoutRef<'thead'> & {

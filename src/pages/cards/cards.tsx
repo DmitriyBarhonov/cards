@@ -22,10 +22,7 @@ import {
   useCreateCardMutation,
 } from '@/services/cards'
 import { cardsSlice } from '@/services/cards/cards.slice.ts'
-import {
-  //useGetARandomCardQuery,
-  useGetDeckByIdQuery,
-} from '@/services/decks'
+import { useGetDeckByIdQuery } from '@/services/decks'
 import { Card } from '@/services/decks/decks.types.ts'
 import { Column, Sort } from '@/services/types'
 
@@ -76,13 +73,6 @@ export const CardsPage = () => {
     }
   }
   const myDeck = deck?.userId === user?.id // в переменную моя колода или нет
-
-  //что надо сделать:
-  //
-  //тут может быть сложно: если своя колода добавть колонку c иконками редактирования и удаления,
-  // если чужая то то такой колонки нет, котолнки верху в массиве columns
-  //сортировка
-  //с learn cards я думаю потом разберемся, поэтапно
 
   return (
     <div className={s.container}>
@@ -146,7 +136,11 @@ export const CardsPage = () => {
       {/*показывай пусту таблицу даже если грузится, иначе показывается див с инфой что нет таблиц*/}
       {cards?.items.length || isLoading ? (
         <Table.Root>
-          <Table.SortedHeader columns={columns} sort={sort} onSort={setSort} />
+          <Table.SortedHeader
+            columns={columns.filter(column => (myDeck ? true : column.title !== ' '))}
+            sort={sort}
+            onSort={setSort}
+          />
           <Table.Body>
             {cards?.items.map((card: Card) => {
               return (
@@ -183,28 +177,30 @@ export const CardsPage = () => {
                   <Table.Data>
                     <Rating rating={card.grade} />
                   </Table.Data>
-                  <Table.Data>
-                    <div className={'flex'}>
-                      <Button
-                        variant={'icon'}
-                        onClick={() => {
-                          setSelectedCard(card) //в стейт заносим нужную модалку для удаления
-                          setUpdateCardModal(true) //открываем модалку для удаления
-                        }}
-                      >
-                        <EdittextIcon />
-                      </Button>
-                      <Button
-                        variant={'icon'}
-                        onClick={() => {
-                          setSelectedCard(card) //в стейт заносим нужную модалку для удаления
-                          setDeleteCardModal(true) //открываем модалку для удаления
-                        }}
-                      >
-                        <TrashOutline size={24} />
-                      </Button>
-                    </div>
-                  </Table.Data>
+                  {myDeck && (
+                    <Table.Data>
+                      <div className={'flex'}>
+                        <Button
+                          variant={'icon'}
+                          onClick={() => {
+                            setSelectedCard(card) //в стейт заносим нужную модалку для удаления
+                            setUpdateCardModal(true) //открываем модалку для удаления
+                          }}
+                        >
+                          <EdittextIcon />
+                        </Button>
+                        <Button
+                          variant={'icon'}
+                          onClick={() => {
+                            setSelectedCard(card) //в стейт заносим нужную модалку для удаления
+                            setDeleteCardModal(true) //открываем модалку для удаления
+                          }}
+                        >
+                          <TrashOutline size={24} />
+                        </Button>
+                      </div>
+                    </Table.Data>
+                  )}
                 </Table.Row>
               )
             })}
