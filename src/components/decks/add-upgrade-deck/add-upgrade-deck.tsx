@@ -54,6 +54,7 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
   const [drag, setDrag] = useState<boolean>(false)
 
   const onSubmit = (data: AddUpgradeType) => {
+    debugger
     if (file) {
       data.cover = file // Добавление выбранного файла в объект data
     }
