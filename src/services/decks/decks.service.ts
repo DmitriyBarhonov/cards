@@ -160,4 +160,5 @@ export const {
   useUpdateDeckMutation,
   useGetDeckByIdQuery,
   useGetARandomCardQuery,
+  useSaveTheGradeMutation,
 } = deskApi

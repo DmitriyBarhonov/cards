@@ -20,10 +20,7 @@ import {
   useUpdateCardMutation,
   useCreateCardMutation,
 } from '@/services/cards'
-import {
-  //useGetARandomCardQuery,
-  useGetDeckByIdQuery,
-} from '@/services/decks'
+import { useGetDeckByIdQuery } from '@/services/decks'
 import { Card } from '@/services/decks/decks.types.ts'
 import { Column, Sort } from '@/services/types'
 
@@ -70,6 +67,10 @@ export const CardsPage = () => {
   //сортировка
   //с learn cards я думаю потом разберемся, поэтапно
 
+  const a = () => {
+    navigate(`/learn/${id}`)
+  }
+
   return (
     <div className={s.container}>
       <Typography
@@ -111,7 +112,7 @@ export const CardsPage = () => {
             Add New Card
           </Button>
         ) : (
-          <Button>Learn this Deck</Button>
+          <Button onClick={a}>Learn this Deck</Button>
         )}
       </div>
       {/*Есть обложка коллоды? отрисует!*/}
