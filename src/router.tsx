@@ -7,7 +7,8 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
-import { LearnPack } from './pages/learn-pack/learn-pack'
+import { LearnPack } from './components/learn-pack/learn-pack'
+import { LearnPackPage } from './pages/learn-pack-page'
 import { ModalCard } from './pages/modalCard'
 
 import { CheckEmail } from '@/components/auth/check-email'
@@ -65,8 +66,8 @@ const privateRoutes: RouteObject[] = [
     element: <ModalCard />,
   },
   {
-    path: '/learn/:id',
-    element: <LearnPack />,
+    path: '/learn/:deckId',
+    element: <LearnPackPage />,
   },
 ]
 

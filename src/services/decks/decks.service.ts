@@ -137,9 +137,9 @@ const deskApi = baseApi.injectEndpoints({
         }),
         providesTags: ['Learn'],
       }),
-      saveTheGrade: builder.mutation<Deck, { id: string; data: SaveTheGrade }>({
-        query: ({ id, data }) => ({
-          url: `v1/decks/${id}/learn`,
+      saveTheGrade: builder.mutation<Deck, { deckId: string; data: SaveTheGrade }>({
+        query: ({ deckId, data }) => ({
+          url: `v1/decks/${deckId}/learn`,
           method: 'POST',
           body: {
             cardId: data.cardId,
