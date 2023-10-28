@@ -169,24 +169,27 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
               onDragOver={e => dragStartHandler(e)}
             >
               <div className={s.inputContainer}>
-                <Typography>Drag file here for upload, or</Typography>
-                <input
-                  className={s.defaultInput}
-                  onChange={e => defaultUploadHandler(e)}
-                  ref={inputRef}
-                  type="file"
-                  accept="image/*"
-                />
-                <Button onClick={selectFileHandler} variant={'tertiary'}>
-                  {loadFileText}
-                </Button>
                 {file && (
-                  <div className={s.previewWrappr}>
+                  <div className={s.previewWrapper}>
                     <img className={s.uploadedImgPreview} src={file64} alt="Uploaded file" />
                   </div>
                 )}
+                <div className={s.inputBtnAndtext}>
+                  <Typography>Drag file here for upload, or</Typography>
+                  <input
+                    className={s.defaultInput}
+                    onChange={e => defaultUploadHandler(e)}
+                    ref={inputRef}
+                    type="file"
+                    accept="image/*"
+                  />
+                  <Button type="button" onClick={selectFileHandler} variant={'tertiary'}>
+                    {loadFileText}
+                  </Button>
+                </div>
               </div>
               <ControlledInput
+                className={'fWidth'}
                 name="name"
                 variant={'standard'}
                 placeholder={defaultValues.name}
@@ -209,7 +212,7 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
           )}
         </div>
       </form>
-      <DevTool control={control} />
+      {/*<DevTool control={control} />*/}
     </Modal>
   )
 }
