@@ -9,7 +9,7 @@ import s from './add-upgrade-deck.module.scss'
 import { Button, Modal, Typography } from '@/components/ui'
 import { ControlledCheckbox } from '@/components/ui/controlled'
 import { ControlledInput } from '@/components/ui/controlled-input'
-import { useUpdateDeckMutation } from '@/services/decks'
+import { DeckRequestParams } from '@/services/decks/decks.types.ts'
 
 const schema = z.object({
   name: z
@@ -19,8 +19,8 @@ const schema = z.object({
     .min(3, 'Deck name must be at least 4 symbols')
     .max(30, 'Deck name must be less than 30 symbols'),
   isPrivate: z.boolean().optional(), //если не будет optional, то всегда надо нажимать галочку, а это не надо
-  // cover: z.instanceof(File).optional(),
-  cover: z.any(),
+  cover: z.instanceof(File).optional(),
+  //cover: z.any(),
 })
 //колода будет не пустой строкой от 3 до 30 символов
 //private будет опциональным булевым
@@ -31,6 +31,10 @@ type AddUpgradeType = {
   name: string
   isPrivate?: boolean | undefined
 }
+type UpdateDeckDataType = {
+  id: string
+  data: DeckRequestParams
+}
 export type AddUpgradeDeckProps = {
   deckId: any
   defaultValues?: AddUpgradeType //используем при вызове для upgrade
@@ -38,7 +42,7 @@ export type AddUpgradeDeckProps = {
   buttonText: string //текст на кнопке
   isOpen: boolean //открыта или закрыта
   toggleModal: (isOpen: boolean) => void //переключалка открытия или закрытия
-  deckHandler: (data: AddUpgradeType) => void //при сабмите отправляем данные типа название колоды и приватная ли
+  deckHandler: (data: UpdateDeckDataType) => void //при сабмите отправляем данные типа название колоды и приватная ли
   //если createDeck, то передаем просто функцию,
   //если upgrade, то на месте вызова компоненты передаем еще и id колоды
 }
@@ -56,7 +60,6 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
     resolver: zodResolver(schema),
     defaultValues, //берем из пропсов, по умолчанию пустые
   })
-  const [updateDeck] = useUpdateDeckMutation()
 
   ///
 
@@ -64,20 +67,18 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
   const [drag, setDrag] = useState<boolean>(false)
 
   const onSubmit = (data: AddUpgradeType) => {
+    const formData = new FormData()
+
+    formData.append('name', data.name)
+    formData.append('isPrivate', String(data.isPrivate || false))
+
     if (file) {
-      // data.cover = file // Добавление выбранного файла в объект data
-      const formData = new FormData()
-
-      formData.append('name', data.name)
       formData.append('cover', file)
-      formData.append('isPrivate', String(data.isPrivate || false))
-      debugger
-      updateDeck({ id: deckId, data: formData })
-      //deckHandler(formData)
-      deckHandler(formData)
-    }
 
-    console.log(data)
+      //updateDeck({ id: deckId, data: formData })
+      deckHandler({ id: deckId, data: formData })
+    }
+    deckHandler({ id: deckId, data: formData })
     resetField('name')
     setFile(null) // Сброс выбранного файла после его добавления в data
     toggleModal(false)
@@ -100,20 +101,29 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
     setDrag(false)
   }
   const onDropFileHandler = (e: React.DragEvent<HTMLDivElement>) => {
-    // e.preventDefault()
-    // let file = [...e.dataTransfer.files]
-    //
-    // setDrag(false)
-    //
-    // if (file.length > 0) {
-    //   setFile(file[0])
-    // }
-    //
-    // const formData = new FormData()
-    //
-    // formData.append('file', file[0])
-  }
+    e.preventDefault()
+    let selectedFiles = e.dataTransfer.files
 
+    setDrag(false)
+
+    if (selectedFiles.length > 0) {
+      const file = selectedFiles[0]
+
+      if (file.size < 4000000) {
+        setFile(file)
+        const reader = new FileReader()
+
+        reader.onloadend = () => {
+          const file64 = reader.result as string
+          // вы можете сделать что-то с file64
+        }
+
+        reader.readAsDataURL(file)
+      } else {
+        console.log('Photo Upload Error')
+      }
+    }
+  }
   const defaultUploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
       const selectedFile = e.target.files[0]
@@ -124,8 +134,6 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
 
         reader.onloadend = () => {
           const file64 = reader.result as string
-
-          formData.append('cover', selectedFile)
         }
         reader.readAsDataURL(selectedFile)
       } else {

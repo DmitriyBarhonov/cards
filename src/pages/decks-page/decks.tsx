@@ -218,10 +218,7 @@ export const Decks = () => {
           title={'Edit Deck'}
           buttonText={'Save changes'}
           defaultValues={{ name: selectedDeck.name, isPrivate: selectedDeck.isPrivate }}
-          deckHandler={data => {
-            updateDeck({ id: selectedDeck.id, ...data })
-            //id выбранной колоды, data берем из модалки
-          }}
+          deckHandler={updateDeck}
           isOpen={updateDeckModal}
           toggleModal={setUpdateDeckModal}
         />
