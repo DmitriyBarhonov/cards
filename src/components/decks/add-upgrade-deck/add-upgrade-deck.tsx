@@ -1,7 +1,8 @@
 import { ChangeEvent, FC, useState } from 'react'
 
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FieldValues, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import s from './add-upgrade-deck.module.scss'
@@ -26,32 +27,37 @@ const schema = z.object({
 //private будет опциональным булевым
 
 //export type AddUpgradeType = z.infer<typeof schema>
-type AddUpgradeType = {
-  cover: File
+export type AddUpgradeType = {
+  cover?: File
   name: string
   isPrivate?: boolean | undefined
 }
 type UpdateDeckDataType = {
-  id: string
+  id?: string
   data: DeckRequestParams
 }
+type DeckHandlerType = {
+  addDeckData: DeckRequestParams | UpdateDeckDataType
+}
+
 export type AddUpgradeDeckProps = {
-  deckId: any
+  deckId?: string
   defaultValues?: AddUpgradeType //используем при вызове для upgrade
   title: string //заголовок
   buttonText: string //текст на кнопке
   isOpen: boolean //открыта или закрыта
   toggleModal: (isOpen: boolean) => void //переключалка открытия или закрытия
-  deckHandler: (data: UpdateDeckDataType) => void //при сабмите отправляем данные типа название колоды и приватная ли
+
+  onSubmit: (formData: AddUpgradeType, file: File | null) => void
+  //при сабмите отправляем данные типа название колоды и приватная ли
   //если createDeck, то передаем просто функцию,
   //если upgrade, то на месте вызова компоненты передаем еще и id колоды
 }
 export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
-  defaultValues = { name: '', isPrivate: false, cover: File },
-  deckId,
+  defaultValues = { name: '', isPrivate: false, cover: undefined },
   title,
   buttonText,
-  deckHandler,
+  onSubmit,
   isOpen,
   toggleModal,
 }) => {
@@ -61,30 +67,17 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
     defaultValues, //берем из пропсов, по умолчанию пустые
   })
 
-  ///
-
   const [file, setFile] = useState<File | null>(null) // Создайте состояние для хранения выбранного файла
   const [drag, setDrag] = useState<boolean>(false)
 
-  const onSubmit = (data: AddUpgradeType) => {
-    const formData = new FormData()
-
-    formData.append('name', data.name)
-    formData.append('isPrivate', String(data.isPrivate || false))
-
-    if (file) {
-      formData.append('cover', file)
-
-      //updateDeck({ id: deckId, data: formData })
-      deckHandler({ id: deckId, data: formData })
-    }
-    deckHandler({ id: deckId, data: formData })
+  const onSubmitHandler = (formData: AddUpgradeType) => {
+    onSubmit(formData, file)
     resetField('name')
     setFile(null) // Сброс выбранного файла после его добавления в data
     toggleModal(false)
   }
 
-  let handleFormSubmitted = handleSubmit(onSubmit)
+  let handleFormSubmitted = handleSubmit(onSubmitHandler)
   const onOpenHandler = (isOpen: boolean) => {
     toggleModal(isOpen)
   }
@@ -186,12 +179,15 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
                 <Button type="button" onClick={onCloseHandler} variant={'secondary'}>
                   Cancel
                 </Button>
-                <Button type="submit">{buttonText}</Button>
+                <Button type="submit" onClick={handleFormSubmitted}>
+                  {buttonText}
+                </Button>
               </div>
             </div>
           )}
         </div>
       </form>
+      <DevTool control={control} />
     </Modal>
   )
 }
