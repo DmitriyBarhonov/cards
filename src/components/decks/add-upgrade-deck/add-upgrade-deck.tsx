@@ -36,10 +36,6 @@ type UpdateDeckDataType = {
   id?: string
   data: DeckRequestParams
 }
-type DeckHandlerType = {
-  addDeckData: DeckRequestParams | UpdateDeckDataType
-}
-
 export type AddUpgradeDeckProps = {
   deckId?: string
   defaultValues?: AddUpgradeType //используем при вызове для upgrade
@@ -67,7 +63,7 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
     defaultValues, //берем из пропсов, по умолчанию пустые
   })
 
-  const [file, setFile] = useState<File | null>(null) // Создайте состояние для хранения выбранного файла
+  const [file, setFile] = useState<File | null>(null)
   const [file64, setFile64] = useState<string>('')
   const [drag, setDrag] = useState<boolean>(false)
 
@@ -77,7 +73,7 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
     setFile(null) // Сброс выбранного файла после его добавления в data
     toggleModal(false)
   }
-  const loadFileText = title === 'Add New Deck' ? 'Chose a image' : 'Change deck cover'
+  const loadFileText = title === 'Add New Deck' ? 'Chose a image' : 'Pick another file'
   let handleFormSubmitted = handleSubmit(onSubmitHandler)
   const onOpenHandler = (isOpen: boolean) => {
     toggleModal(isOpen)
@@ -174,8 +170,8 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
                     <img className={s.uploadedImgPreview} src={file64} alt="Uploaded file" />
                   </div>
                 )}
-                <div className={s.inputBtnAndtext}>
-                  <Typography>Drag file here for upload, or</Typography>
+                <div className={s.inputBtnAndText}>
+                  <Typography className={s.dragText}>Drag files here for upload</Typography>
                   <input
                     className={s.defaultInput}
                     onChange={e => defaultUploadHandler(e)}
