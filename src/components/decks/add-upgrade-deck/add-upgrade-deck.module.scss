@@ -15,6 +15,21 @@
     &:hover {
       border: 4px dashed var(--color-accent-100);
     }
+  }
+.inputContainer{
+  margin-top: 16px;
+  width: 100%;
+  height: 50px;
+  border: 1px solid var(--color-dark-100);
 
+  .defaultInput{
+    display: none;
+  }
+  .uploadedImgPreview {
+    height: 80px;
+    width: auto;
   }
 }
+
+}
+

@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, FC, useRef, useState } from 'react'
 
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -68,6 +68,7 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
   })
 
   const [file, setFile] = useState<File | null>(null) // Создайте состояние для хранения выбранного файла
+  const [file64, setFile64] = useState<string>('')
   const [drag, setDrag] = useState<boolean>(false)
 
   const onSubmitHandler = (formData: AddUpgradeType) => {
@@ -76,7 +77,7 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
     setFile(null) // Сброс выбранного файла после его добавления в data
     toggleModal(false)
   }
-
+  const loadFileText = title === 'Add New Deck' ? 'Chose a image' : 'Change deck cover'
   let handleFormSubmitted = handleSubmit(onSubmitHandler)
   const onOpenHandler = (isOpen: boolean) => {
     toggleModal(isOpen)
@@ -108,7 +109,8 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
 
         reader.onloadend = () => {
           const file64 = reader.result as string
-          // вы можете сделать что-то с file64
+
+          setFile64(file64)
         }
 
         reader.readAsDataURL(file)
@@ -127,12 +129,18 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
 
         reader.onloadend = () => {
           const file64 = reader.result as string
+
+          setFile64(file64)
         }
         reader.readAsDataURL(selectedFile)
       } else {
         console.log('Photo Upload Error')
       }
     }
+  }
+  const inputRef = useRef<HTMLInputElement>(null)
+  const selectFileHandler = () => {
+    inputRef && inputRef.current?.click()
   }
 
   return (
@@ -160,9 +168,23 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
               onDragLeave={e => dragLeaveHandler(e)}
               onDragOver={e => dragStartHandler(e)}
             >
-              Drag file here for upload, or
-              <div>
-                <input onChange={e => defaultUploadHandler(e)} type="file" accept="image/*" />
+              <div className={s.inputContainer}>
+                <Typography>Drag file here for upload, or</Typography>
+                <input
+                  className={s.defaultInput}
+                  onChange={e => defaultUploadHandler(e)}
+                  ref={inputRef}
+                  type="file"
+                  accept="image/*"
+                />
+                <Button onClick={selectFileHandler} variant={'tertiary'}>
+                  {loadFileText}
+                </Button>
+                {file && (
+                  <div className={s.previewWrappr}>
+                    <img className={s.uploadedImgPreview} src={file64} alt="Uploaded file" />
+                  </div>
+                )}
               </div>
               <ControlledInput
                 name="name"
