@@ -1,6 +1,5 @@
 import { ChangeEvent, FC, useRef, useState } from 'react'
 
-import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -10,7 +9,6 @@ import s from './add-upgrade-deck.module.scss'
 import { Button, Modal, Typography } from '@/components/ui'
 import { ControlledCheckbox } from '@/components/ui/controlled'
 import { ControlledInput } from '@/components/ui/controlled-input'
-import { DeckRequestParams } from '@/services/decks/decks.types.ts'
 
 const schema = z.object({
   name: z
@@ -32,10 +30,7 @@ export type AddUpgradeType = {
   name: string
   isPrivate?: boolean | undefined
 }
-type UpdateDeckDataType = {
-  id?: string
-  data: DeckRequestParams
-}
+
 export type AddUpgradeDeckProps = {
   deckId?: string
   defaultValues?: AddUpgradeType //используем при вызове для upgrade
