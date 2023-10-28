@@ -214,6 +214,7 @@ export const Decks = () => {
         />
         {/*для создания новой колоды титул в модалку, имя кнопки, функция для создания колоды, значение открыта ли, функция для открытия или закрытия*/}
         <AddUpgradeDeck
+          deckId={selectedDeck.id}
           title={'Edit Deck'}
           buttonText={'Save changes'}
           defaultValues={{ name: selectedDeck.name, isPrivate: selectedDeck.isPrivate }}
