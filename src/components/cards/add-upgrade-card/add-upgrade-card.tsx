@@ -1,11 +1,11 @@
-import { ChangeEvent, FC, useRef, useState } from 'react'
+import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import s from '@/components/decks/add-upgrade-deck/add-upgrade-deck.module.scss'
-import { Button, Modal, Typography } from '@/components/ui'
+import { Button, Modal, Select, Typography } from '@/components/ui'
 import { ControlledInput } from '@/components/ui/controlled-input'
 
 const schema = z.object({
@@ -53,7 +53,25 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
   const [file64, setFile64] = useState<string>('')
   const [drag, setDrag] = useState<boolean>(false)
   const loadFileText = title === 'Add New Deck' ? 'Chose a image' : 'Pick another file'
-
+  const [selectValue, setSelectValue] = useState('')
+  const optionsPrimary = [
+    {
+      value: 'first',
+      label: 'first',
+    },
+    {
+      value: 'second',
+      label: 'second',
+    },
+    {
+      value: 'third',
+      label: 'third',
+    },
+    {
+      value: 'fourth',
+      label: 'fourth',
+    },
+  ]
   ///
   const onSubmit = (data: FormValuesType) => {
     cardHandler(data)
@@ -70,7 +88,6 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
     reset()
     toggleModal(false)
   }
-
   const dragStartHandler = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     setDrag(true)
@@ -79,7 +96,6 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
     e.preventDefault()
     setDrag(false)
   }
-
   const onDropFileHandler = (e: React.DragEvent<HTMLDivElement>) => {
     //TODO объеденить / зрефакторить с defaultUploadHandler
     //код почти одинаковый
@@ -133,6 +149,14 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
     inputRef && inputRef.current?.click()
   }
 
+  const onSelectChangeHandler = (newSelectValue: string) => {
+    if (newSelectValue) {
+      setSelectValue(newSelectValue)
+    }
+
+    return newSelectValue
+  }
+
   return (
     <Modal
       onClose={onCloseHandler}
@@ -158,6 +182,13 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
               onDragLeave={e => dragLeaveHandler(e)}
               onDragOver={e => dragStartHandler(e)}
             >
+              <Select
+                placeholder={'select...'}
+                options={optionsPrimary}
+                value={selectValue}
+                onChange={onSelectChangeHandler}
+              />
+
               <div className={s.inputContainer}>
                 {file && (
                   <div className={s.previewWrapper}>
