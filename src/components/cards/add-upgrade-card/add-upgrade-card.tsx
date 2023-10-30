@@ -4,7 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import s from '@/components/decks/add-upgrade-deck/add-upgrade-deck.module.scss'
+import s from './add-upgrade-card.module.scss'
+
 import { Button, Modal, Select, Typography } from '@/components/ui'
 import { ControlledInput } from '@/components/ui/controlled-input'
 
@@ -14,13 +15,15 @@ const schema = z.object({
     .trim()
     .nonempty('Enter card question')
     .min(4, 'Card question must be at least 4 symbols')
-    .max(500, 'Card question must be less than 500 symbols'),
+    .max(500, 'Card question must be less than 500 symbols')
+    .optional(),
   answer: z
     .string()
     .trim()
     .nonempty('Enter card question')
     .min(4, 'Card question must be at least 4 symbols')
-    .max(500, 'Card question must be less than 500 symbols'),
+    .max(500, 'Card question must be less than 500 symbols')
+    .optional(),
 })
 //card будет не пустой строкой от 3 до 500 символов
 
@@ -41,8 +44,8 @@ const optionsPrimary = [
     label: 'Text',
   },
   {
-    value: 'Image',
-    label: 'Image',
+    value: 'Text + Image',
+    label: 'Text + Image',
   },
   {
     value: 'Video (unavailable)',
@@ -84,10 +87,13 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
   }
   const onCloseHandler = () => {
     reset()
+    setFile(null)
+    setFile64('')
     toggleModal(false)
   }
   const dragStartHandler = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
+    setSelectValue('Text + Image')
     setDrag(true)
   }
   const dragLeaveHandler = (e: React.DragEvent<HTMLDivElement>) => {
@@ -189,40 +195,73 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
                 onChange={onSelectChangeHandler}
               />
 
-              <div className={s.inputContainer}>
-                {file && (
-                  <div className={s.previewWrapper}>
-                    <img className={s.uploadedImgPreview} src={file64} alt="Uploaded file" />
+              {selectValue === 'Text + Image' && (
+                <div className={s.textAndInputWrapper}>
+                  <Typography className={s.dragText}>Question cover:</Typography>
+                  <div className={s.inputContainer}>
+                    {file && (
+                      <div className={s.previewWrapper}>
+                        <img className={s.uploadedImgPreview} src={file64} alt="Uploaded file" />
+                      </div>
+                    )}
+                    <div className={s.inputBtnAndText}>
+                      <Typography className={s.dragText}>Drag files here for upload</Typography>
+                      <input
+                        className={s.defaultInput}
+                        onChange={e => defaultUploadHandler(e)}
+                        ref={inputRef}
+                        type="file"
+                        accept="image/*"
+                      />
+                      <Button type="button" onClick={selectFileHandler} variant={'tertiary'}>
+                        {loadFileText}
+                      </Button>
+                    </div>
                   </div>
-                )}
-                <div className={s.inputBtnAndText}>
-                  <Typography className={s.dragText}>Drag files here for upload</Typography>
-                  <input
-                    className={s.defaultInput}
-                    onChange={e => defaultUploadHandler(e)}
-                    ref={inputRef}
-                    type="file"
-                    accept="image/*"
-                  />
-                  <Button type="button" onClick={selectFileHandler} variant={'tertiary'}>
-                    {loadFileText}
-                  </Button>
                 </div>
-              </div>
+              )}
 
               <ControlledInput
+                className={s.cardInput}
                 name="question"
                 variant={'standard'}
                 placeholder={defaultValues.question}
-                label={'Question'}
+                label={'Question text'}
                 control={control}
                 autoComplete="false"
               />
+
+              {selectValue === 'Text + Image' && (
+                <div className={s.textAndInputWrapper}>
+                  <Typography className={s.dragText}>Question cover:</Typography>
+                  <div className={s.inputContainer}>
+                    {file && (
+                      <div className={s.previewWrapper}>
+                        <img className={s.uploadedImgPreview} src={file64} alt="Uploaded file" />
+                      </div>
+                    )}
+                    <div className={s.inputBtnAndText}>
+                      <Typography className={s.dragText}>Drag files here for upload</Typography>
+                      <input
+                        className={s.defaultInput}
+                        onChange={e => defaultUploadHandler(e)}
+                        ref={inputRef}
+                        type="file"
+                        accept="image/*"
+                      />
+                      <Button type="button" onClick={selectFileHandler} variant={'tertiary'}>
+                        {loadFileText}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
               <ControlledInput
+                className={s.answerInput}
                 name="answer"
                 variant={'standard'}
                 placeholder={defaultValues.answer}
-                label={'Answer'}
+                label={'Answer text'}
                 control={control}
                 autoComplete="false"
               />
