@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, FC, useRef, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -35,6 +35,21 @@ export type AddUpgradeCardProps = {
   //если createDeck, то передаем просто функцию,
   //если upgrade, то на месте вызова компоненты передаем еще и id колоды
 }
+const optionsPrimary = [
+  {
+    value: 'Text',
+    label: 'Text',
+  },
+  {
+    value: 'Image',
+    label: 'Image',
+  },
+  {
+    value: 'Video (unavailable)',
+    label: 'Video (unavailable)',
+  },
+]
+
 export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
   defaultValues = { question: '', answer: '' },
   title,
@@ -53,25 +68,8 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
   const [file64, setFile64] = useState<string>('')
   const [drag, setDrag] = useState<boolean>(false)
   const loadFileText = title === 'Add New Deck' ? 'Chose a image' : 'Pick another file'
-  const [selectValue, setSelectValue] = useState('')
-  const optionsPrimary = [
-    {
-      value: 'first',
-      label: 'first',
-    },
-    {
-      value: 'second',
-      label: 'second',
-    },
-    {
-      value: 'third',
-      label: 'third',
-    },
-    {
-      value: 'fourth',
-      label: 'fourth',
-    },
-  ]
+  const [selectValue, setSelectValue] = useState(optionsPrimary[0].value)
+
   ///
   const onSubmit = (data: FormValuesType) => {
     cardHandler(data)
@@ -183,7 +181,9 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
               onDragOver={e => dragStartHandler(e)}
             >
               <Select
-                placeholder={'select...'}
+                width={'100%'}
+                label={'Choose question & answer format'}
+                placeholder={'chose format...'}
                 options={optionsPrimary}
                 value={selectValue}
                 onChange={onSelectChangeHandler}
