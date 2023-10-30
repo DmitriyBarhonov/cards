@@ -9,7 +9,7 @@ import { useStateDecks } from './decksUseStateHook'
 import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
 import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
 import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
-import { AddUpgradeDeck, DeleteItem } from '@/components/decks'
+import { AddUpgradeDeck, AddUpgradeType, DeleteItem } from '@/components/decks'
 import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/components/ui'
 import { SliderForCards } from '@/components/ui/slider'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
@@ -111,6 +111,28 @@ export const Decks = () => {
     setSearch('')
     tabHandler('all')
   }
+  const createData = (data: AddUpgradeType, file?: File | null) => {
+    const formData = new FormData()
+
+    formData.append('name', data.name)
+    formData.append('isPrivate', String(data.isPrivate || false))
+
+    if (file) {
+      formData.append('cover', file)
+
+      //updateDeck({ id: deckId, data: formData })
+      //deckHandler({ id: deckId, data: formData })
+    }
+
+    return formData
+  }
+  const onSubmitlCreate = (data: AddUpgradeType, file?: File | null) => {
+    createDeck(createData(data, file))
+  }
+
+  const onSubmitlUpdate = (data: AddUpgradeType, file?: File | null) => {
+    updateDeck({ id: selectedDeck.id, data: createData(data, file) })
+  }
 
   return (
     <>
@@ -189,7 +211,7 @@ export const Decks = () => {
                             variant={'icon'}
                             onClick={() => {
                               setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
-                              setUpdateDeckModal(true) //открываем модалку для удаления
+                              setUpdateDeckModal(true) //открываем модалку для редактирования
                             }}
                           >
                             <EdittextIcon />
@@ -226,19 +248,17 @@ export const Decks = () => {
         <AddUpgradeDeck
           title={'Add New Deck'}
           buttonText={'Add New Deck'}
-          deckHandler={createDeck}
+          onSubmit={onSubmitlCreate}
           isOpen={addNewDeckModal}
           toggleModal={setAddNewDeckModal}
         />
         {/*для создания новой колоды титул в модалку, имя кнопки, функция для создания колоды, значение открыта ли, функция для открытия или закрытия*/}
         <AddUpgradeDeck
+          deckId={selectedDeck.id}
           title={'Edit Deck'}
           buttonText={'Save changes'}
           defaultValues={{ name: selectedDeck.name, isPrivate: selectedDeck.isPrivate }}
-          deckHandler={data => {
-            updateDeck({ id: selectedDeck.id, ...data })
-            //id выбранной колоды, data берем из модалки
-          }}
+          onSubmit={onSubmitlUpdate}
           isOpen={updateDeckModal}
           toggleModal={setUpdateDeckModal}
         />
