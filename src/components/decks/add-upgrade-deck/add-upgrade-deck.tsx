@@ -209,7 +209,6 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
           )}
         </div>
       </form>
-      {/*<DevTool control={control} />*/}
     </Modal>
   )
 }
