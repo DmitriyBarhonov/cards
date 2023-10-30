@@ -38,7 +38,7 @@ export const RadioGroupComponet: FC<RadioGroupProps> = props => {
   }
 
   return (
-    <div style={{ margin: '30px' }}>
+    <div>
       <RadioGroup.Root
         value={props.value}
         onValueChange={onValueChangeHandler}

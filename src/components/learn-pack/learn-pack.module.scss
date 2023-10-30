@@ -1,0 +1,45 @@
+.cards {
+  max-width: 420px;
+  margin: 0 auto;
+
+  img {
+    max-width: 350px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  span {
+    font-weight: 700;
+  }
+}
+.learnTitle {
+  text-align: center;
+  margin-bottom: 45px;
+  font-weight: 700;
+}
+
+.answersCount {
+  color: var(--dark-100, #808080);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.rate {
+  margin-top: 20px;
+}
+.radioGroup {
+  margin-top: 15px;
+}
+.questionTitle {
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+.answerList {
+  span {
+    margin-bottom: 15px;
+  }
+}
+.nextButton {
+  margin-top: 15px;
+}
