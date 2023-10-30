@@ -7,8 +7,7 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
-import { LearnPack } from './components/learn-pack/learn-pack'
-import { LearnPackPage } from './pages/learn-pack-page'
+import { LearnPackPage } from './pages/learn-pack-page/learn-pack-page'
 import { ModalCard } from './pages/modalCard'
 
 import { CheckEmail } from '@/components/auth/check-email'

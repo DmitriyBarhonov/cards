@@ -67,7 +67,7 @@ export const CardsPage = () => {
   //сортировка
   //с learn cards я думаю потом разберемся, поэтапно
 
-  const a = () => {
+  const redirectToLearn = () => {
     navigate(`/learn/${id}`)
   }
 
@@ -112,7 +112,7 @@ export const CardsPage = () => {
             Add New Card
           </Button>
         ) : (
-          <Button onClick={a}>Learn this Deck</Button>
+          <Button onClick={redirectToLearn}>Learn this Deck</Button>
         )}
       </div>
       {/*Есть обложка коллоды? отрисует!*/}
