@@ -11,8 +11,9 @@ import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
 import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
 import { AddUpgradeCard, FormValuesType } from '@/components/cards/add-upgrade-card'
 import { DeleteItem } from '@/components/decks'
-import { Button, Dropdown, Input, Rating, Table, Typography } from '@/components/ui'
+import { Button, Dropdown, Input, Pagination, Rating, Table, Typography } from '@/components/ui'
 import { DropdownItem } from '@/components/ui/dropdown-menu/custom-drop-down'
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
 import { useGetMeQuery } from '@/services/auth'
 import {
   useDeleteCardMutation,
@@ -20,27 +21,36 @@ import {
   useUpdateCardMutation,
   useCreateCardMutation,
 } from '@/services/cards'
-import {
-  //useGetARandomCardQuery,
-  useGetDeckByIdQuery,
-} from '@/services/decks'
+import { cardsSlice } from '@/services/cards/cards.slice.ts'
+import { useGetDeckByIdQuery } from '@/services/decks'
 import { Card } from '@/services/decks/decks.types.ts'
-import { Column } from '@/services/types'
+import { Column, Sort } from '@/services/types'
 
 const columns: Column[] = [
-  { key: 'name', title: 'Question' },
-  { key: 'cardsCount', title: 'Answer' },
+  { key: 'question', title: 'Question', sortable: true },
+  { key: 'answer', title: 'Answer', sortable: true },
   { key: 'updated', title: 'Last Updated', sortable: true },
-  { key: 'created', title: 'Grade' },
+  { key: 'grade', title: 'Grade' },
   { key: 'action', title: ' ' },
 ]
 
 export const CardsPage = () => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const currentPage = useAppSelector(state => state.cards.currentPage)
+  const perPage = useAppSelector(state => +state.cards.itemsPerPage)
   const { id } = useParams<{ id: string }>() //вытаскиваем айди из строки
   const [search, setSearch] = useState('') //для поиска по карточкамив колоде
+  const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
+  const sortString = sort ? `${sort.key}-${sort.direction}` : null //строка для бэкэнда для сортировки
   const { data: user } = useGetMeQuery() //вытаскиеваем даные пользователя
-  const { data: cards, isLoading } = useGetCardsDeckQuery({ id: id ?? '', question: search })
+  const { data: cards, isLoading } = useGetCardsDeckQuery({
+    id: id ?? '',
+    question: search,
+    orderBy: sortString,
+    itemsPerPage: perPage,
+    currentPage,
+  })
   const { data: deck } = useGetDeckByIdQuery({ id: id ?? '' })
   const [deleteCard] = useDeleteCardMutation()
   const [createCard] = useCreateCardMutation()
@@ -50,20 +60,19 @@ export const CardsPage = () => {
   const [addNewCardModal, setAddNewCardModal] = useState(false)
   const [updateCardModal, setUpdateCardModal] = useState(false)
   const [deleteCardModal, setDeleteCardModal] = useState(false)
+
+  const updateCurrentPage = (page: number) => {
+    dispatch(cardsSlice.actions.updateCurrentPage(page))
+  }
+  const updateItemsPerPageHandler = (items: string) => {
+    dispatch(cardsSlice.actions.updateItemsPerPage(items))
+  }
   const createCardHandler = (data: FormValuesType) => {
     if (deck?.id) {
       createCard({ id: deck.id, data })
     }
   }
   const myDeck = deck?.userId === user?.id // в переменную моя колода или нет
-  //const { data: learn } = useGetARandomCardQuery({ id: id })
-  //не нужно здесь, нужна другая компонента
-  //что надо сделать:
-  //
-  //тут может быть сложно: если своя колода добавть колонку c иконками редактирования и удаления,
-  // если чужая то то такой колонки нет, котолнки верху в массиве columns
-  //сделать модалки на создание, редактирования и удаление карточки
-  //с learn cards я думаю потом разберемся, поэтапно
 
   return (
     <div className={s.container}>
@@ -75,9 +84,10 @@ export const CardsPage = () => {
         {/* верни на страницу назад */} <ArrowLeft />
         Back to Decks List
       </Typography>
-      <div className={' mt-6 flex justify-between '}>
+      <div className={'mt-6 flex justify-between '}>
         <div className={'flex justify-start'}>
           <Typography variant="large">{deck?.name}</Typography>
+
           {myDeck && (
             <Dropdown trigger={<DotsInCircle className={'ml-2'} />} width={100}>
               <div>
@@ -105,12 +115,15 @@ export const CardsPage = () => {
             Add New Card
           </Button>
         ) : (
-          <Button>Learn to Deck</Button>
+          <Button>Learn this Deck</Button>
         )}
-
-        {/*<Button>Learn to Deck</Button>*/}
-        {/*!!!! запрос работает. Нужна страничка  */}
       </div>
+      {/*Есть обложка коллоды? отрисует!*/}
+      {deck?.cover && (
+        <div className={s.deckCoverContainer}>
+          <img className={s.deckCoverImage} src={deck.cover} alt="deck cover" />
+        </div>
+      )}
       <Input
         variant="search"
         fullWidth={true}
@@ -120,42 +133,74 @@ export const CardsPage = () => {
       />
       {isLoading && <Typography variant={'large'}>Loading...</Typography>}
       {/*если есть какие то карточки то верни таблицу, иначе предложи создать новую карточку*/}
-      {/*показывай пусту таблицу даже если грузится, иначе показывается дивс инфойчто ет таблиц*/}
+      {/*показывай пусту таблицу даже если грузится, иначе показывается див с инфой что нет таблиц*/}
       {cards?.items.length || isLoading ? (
         <Table.Root>
-          <Table.SortedHeader columns={columns} />
+          <Table.SortedHeader
+            columns={columns.filter(column => (myDeck ? true : column.title !== ' '))}
+            sort={sort}
+            onSort={setSort}
+          />
           <Table.Body>
             {cards?.items.map((card: Card) => {
               return (
                 <Table.Row key={card.id}>
-                  <Table.Data>{card.question}</Table.Data>
-                  <Table.Data>{card.answer}</Table.Data>
+                  <Table.Data>
+                    <div>
+                      {card.questionImg ? (
+                        <div className={s.coverContainer}>
+                          <img
+                            className={s.coverImage}
+                            src={card.questionImg}
+                            alt="card question"
+                          />
+                          <Typography>{card.question}</Typography>
+                        </div>
+                      ) : (
+                        <Typography>{card.question}</Typography>
+                      )}
+                    </div>
+                  </Table.Data>
+                  <Table.Data>
+                    <div>
+                      {card.answerImg ? (
+                        <div className={s.coverContainer}>
+                          <img className={s.coverImage} src={card.answerImg} alt="card question" />
+                          <Typography>{card.answer}</Typography>
+                        </div>
+                      ) : (
+                        <Typography>{card.answer}</Typography>
+                      )}
+                    </div>
+                  </Table.Data>
                   <Table.Data>{new Date(card.updated).toLocaleDateString('ru-Ru')}</Table.Data>
                   <Table.Data>
                     <Rating rating={card.grade} />
                   </Table.Data>
-                  <Table.Data>
-                    <div className={'flex'}>
-                      <Button
-                        variant={'icon'}
-                        onClick={() => {
-                          setSelectedCard(card) //в стейт заносим нужную модалку для удаления
-                          setUpdateCardModal(true) //открываем модалку для удаления
-                        }}
-                      >
-                        <EdittextIcon />
-                      </Button>
-                      <Button
-                        variant={'icon'}
-                        onClick={() => {
-                          setSelectedCard(card) //в стейт заносим нужную модалку для удаления
-                          setDeleteCardModal(true) //открываем модалку для удаления
-                        }}
-                      >
-                        <TrashOutline size={24} />
-                      </Button>
-                    </div>
-                  </Table.Data>
+                  {myDeck && (
+                    <Table.Data>
+                      <div className={'flex'}>
+                        <Button
+                          variant={'icon'}
+                          onClick={() => {
+                            setSelectedCard(card) //в стейт заносим нужную модалку для удаления
+                            setUpdateCardModal(true) //открываем модалку для удаления
+                          }}
+                        >
+                          <EdittextIcon />
+                        </Button>
+                        <Button
+                          variant={'icon'}
+                          onClick={() => {
+                            setSelectedCard(card) //в стейт заносим нужную модалку для удаления
+                            setDeleteCardModal(true) //открываем модалку для удаления
+                          }}
+                        >
+                          <TrashOutline size={24} />
+                        </Button>
+                      </div>
+                    </Table.Data>
+                  )}
                 </Table.Row>
               )
             })}
@@ -171,6 +216,16 @@ export const CardsPage = () => {
           )}
         </div>
       )}
+      <Pagination
+        className={s.pagination}
+        totalCount={cards?.pagination.totalItems ?? 10}
+        currentPage={currentPage}
+        pageSize={cards?.pagination.itemsPerPage ?? 5}
+        onPageChange={updateCurrentPage}
+        selectValue={cards?.pagination.itemsPerPage}
+        selectOptions={[5, 10, 15, 20]}
+        onSelectChange={itemsPerPage => updateItemsPerPageHandler(itemsPerPage)}
+      />
       <AddUpgradeCard
         title={'Add New Card'}
         buttonText={'Add New Card'}

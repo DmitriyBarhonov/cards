@@ -38,9 +38,6 @@ export const Data: FC<ComponentProps<'td'>> = ({ className, ...rest }) => {
   return <td className={classNames.data} {...rest} />
 }
 
-//кастомный заголовкок если используем сортировку
-
-//header для сортировки по столбцам
 export const SortedHeader: FC<
   Omit<
     ComponentPropsWithoutRef<'thead'> & {
@@ -79,10 +76,12 @@ export const SortedHeader: FC<
       <tr>
         {columns.map(({ title, key, sortable }) => (
           <th className={s.head} key={key} onClick={handleSort(key, sortable)}>
-            {title}
-            {sort && sort.key === key && (
-              <span className={s.sort}>{sort.direction === 'asc' ? <SortUp /> : <SortDown />}</span>
-            )}
+            <div className={s.arrow}>
+              {title}
+              {sort && sort.key === key && (
+                <span>{sort.direction === 'asc' ? <SortUp /> : <SortDown />}</span>
+              )}
+            </div>
           </th>
         ))}
       </tr>

@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { LinearProgress } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
@@ -84,9 +86,15 @@ export const Decks = () => {
     authorId: tabValue === 'my' ? user?.id : undefined,
   })
 
-  // function
+  // functions
 
-  const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
+  useEffect(() => {
+    dispatch(decksSlice.actions.setMaxCardsCount(decks ? decks.maxCardsCount : 50))
+  }, [decks])
+
+  const updateCurrentPage = (page: number) => {
+    dispatch(decksSlice.actions.updateCurrentPage(page))
+  }
   const updateItemsPerPageHandler = (items: string) => {
     dispatch(updateItemsPerPage(items))
   }
@@ -151,6 +159,7 @@ export const Decks = () => {
               value={[cardsCount[0], cardsCount[1]]}
               onChange={setCardsHandler}
               disabled={false}
+              max={decks ? decks.maxCardsCount : 50}
             />
           </div>
           <div className={s.wrapperButton}>
@@ -178,7 +187,16 @@ export const Decks = () => {
                 return (
                   <Table.Row key={deck.id}>
                     <Table.Data onClick={() => navigate(`/cards/${deck.id}`)}>
-                      {deck.name}
+                      <div>
+                        {deck.cover ? (
+                          <div className={s.coverContainer}>
+                            <img className={s.coverImage} src={deck.cover} alt="deck cover" />
+                            <Typography>{deck.name}</Typography>
+                          </div>
+                        ) : (
+                          <Typography>{deck.name}</Typography>
+                        )}
+                      </div>
                     </Table.Data>
                     {/*переходим в карточки и дальше айди колоды*/}
                     <Table.Data>{deck.cardsCount}</Table.Data>

@@ -12,13 +12,13 @@ const schema = z.object({
     .string()
     .trim()
     .nonempty('Enter card question')
-    .min(3, 'Card question must be at least 4 symbols')
+    .min(4, 'Card question must be at least 4 symbols')
     .max(500, 'Card question must be less than 500 symbols'),
   answer: z
     .string()
     .trim()
     .nonempty('Enter card question')
-    .min(3, 'Card question must be at least 4 symbols')
+    .min(4, 'Card question must be at least 4 symbols')
     .max(500, 'Card question must be less than 500 symbols'),
 })
 //card будет не пустой строкой от 3 до 500 символов
