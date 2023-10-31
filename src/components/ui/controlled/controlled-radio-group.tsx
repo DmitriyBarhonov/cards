@@ -27,6 +27,7 @@ export const ControlledRadioGroup = ({
         onValueChange: onChange,
         options: options,
         disabled: disabled,
+        defaultValue,
       }}
     />
   )

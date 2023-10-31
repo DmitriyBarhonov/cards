@@ -74,6 +74,18 @@ export const CardsPage = () => {
   }
   const myDeck = deck?.userId === user?.id // в переменную моя колода или нет
 
+
+  //что надо сделать:
+  //
+  //тут может быть сложно: если своя колода добавть колонку c иконками редактирования и удаления,
+  // если чужая то то такой колонки нет, котолнки верху в массиве columns
+  //сортировка
+  //с learn cards я думаю потом разберемся, поэтапно
+
+  const redirectToLearn = () => {
+    navigate(`/learn/${id}`)
+  }
+
   return (
     <div className={s.container}>
       <Typography
@@ -115,7 +127,7 @@ export const CardsPage = () => {
             Add New Card
           </Button>
         ) : (
-          <Button>Learn this Deck</Button>
+          <Button onClick={redirectToLearn}>Learn this Deck</Button>
         )}
       </div>
       {/*Есть обложка коллоды? отрисует!*/}
