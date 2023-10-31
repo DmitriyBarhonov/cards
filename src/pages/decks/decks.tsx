@@ -112,6 +112,9 @@ export const Decks = () => {
     tabHandler('all')
   }
   const createData = (data: AddUpgradeType, file?: File | null) => {
+    //сервер принимает файл только в формате форм даты, поэтому вноим
+    //в формдата уже все что имеется. Если есть файл и его тоже
+    //возвр. формдату для каждой add/edit по необходимости
     const formData = new FormData()
 
     formData.append('name', data.name)
@@ -119,18 +122,15 @@ export const Decks = () => {
 
     if (file) {
       formData.append('cover', file)
-
-      //updateDeck({ id: deckId, data: formData })
-      //deckHandler({ id: deckId, data: formData })
     }
 
     return formData
   }
-  const onSubmitlCreate = (data: AddUpgradeType, file?: File | null) => {
+  const onSubmitCreateDeck = (data: AddUpgradeType, file?: File | null) => {
     createDeck(createData(data, file))
   }
 
-  const onSubmitlUpdate = (data: AddUpgradeType, file?: File | null) => {
+  const onSubmitUpdateDeck = (data: AddUpgradeType, file?: File | null) => {
     updateDeck({ id: selectedDeck.id, data: createData(data, file) })
   }
 
@@ -248,17 +248,16 @@ export const Decks = () => {
         <AddUpgradeDeck
           title={'Add New Deck'}
           buttonText={'Add New Deck'}
-          onSubmit={onSubmitlCreate}
+          onSubmit={onSubmitCreateDeck}
           isOpen={addNewDeckModal}
           toggleModal={setAddNewDeckModal}
         />
         {/*для создания новой колоды титул в модалку, имя кнопки, функция для создания колоды, значение открыта ли, функция для открытия или закрытия*/}
         <AddUpgradeDeck
-          deckId={selectedDeck.id}
           title={'Edit Deck'}
           buttonText={'Save changes'}
           defaultValues={{ name: selectedDeck.name, isPrivate: selectedDeck.isPrivate }}
-          onSubmit={onSubmitlUpdate}
+          onSubmit={onSubmitUpdateDeck}
           isOpen={updateDeckModal}
           toggleModal={setUpdateDeckModal}
         />

@@ -9,7 +9,7 @@ import { DotsInCircle } from '@/assets/icons/dots-in-circle.tsx'
 import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
 import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
 import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
-import { AddUpgradeCard, FormValuesType } from '@/components/cards/add-upgrade-card'
+import { AddUpgradeCard, AddUpgradeCardType } from '@/components/cards/add-upgrade-card'
 import { DeleteItem } from '@/components/decks'
 import { Button, Dropdown, Input, Pagination, Rating, Table, Typography } from '@/components/ui'
 import { DropdownItem } from '@/components/ui/dropdown-menu/custom-drop-down'
@@ -22,8 +22,8 @@ import {
   useCreateCardMutation,
 } from '@/services/cards'
 import { cardsSlice } from '@/services/cards/cards.slice.ts'
+import { Card } from '@/services/cards/cards.types.ts'
 import { useGetDeckByIdQuery } from '@/services/decks'
-import { Card } from '@/services/decks/decks.types.ts'
 import { Column, Sort } from '@/services/types'
 
 const columns: Column[] = [
@@ -67,12 +67,59 @@ export const CardsPage = () => {
   const updateItemsPerPageHandler = (items: string) => {
     dispatch(cardsSlice.actions.updateItemsPerPage(items))
   }
-  const createCardHandler = (data: FormValuesType) => {
+
+  const isDeckMine = deck?.userId === user?.id // в переменную моя колода или нет
+
+  const createCardData = (
+    cardData: AddUpgradeCardType,
+    questionImg?: File | null,
+    answerImg?: File | null
+  ) => {
+    //сервер принимает файл только в формате FormData, поэтому берем data
+    // и превращаем ее в формдата + добавляем в форм дату файлы
+    //По итогу мы возвр формдату для add/edit по необходимости (с и без id)
+    const formData = new FormData()
+
+    // formData.append('question', data.question)
+    // formData.append('answer', data.answer)
+    formData.append('question', cardData.question)
+    formData.append('answer', cardData.answer)
+
+    if (questionImg) {
+      formData.append('questionImg', questionImg)
+    }
+    if (answerImg) {
+      formData.append('answerImg', answerImg)
+    }
+
+    return formData
+  }
+
+  const onSubmitCreateCard = (
+    cardData: AddUpgradeCardType,
+    questionImg?: File | null,
+    answerImg?: File | null
+  ) => {
+    const data = createCardData(cardData, questionImg, answerImg)
+    //в этой переменной будет результат выполнения функции createCardData
+    //тоесть в ней будут наши данные в формате FormData
+
     if (deck?.id) {
       createCard({ id: deck.id, data })
     }
   }
-  const myDeck = deck?.userId === user?.id // в переменную моя колода или нет
+
+  const onSubmitEditCard = (
+    cardData: AddUpgradeCardType,
+    questionImg?: File | null,
+    answerImg?: File | null
+  ) => {
+    const data = createCardData(cardData, questionImg, answerImg) // Assuming `createCardData` returns the desired `formData`
+
+    if (deck?.id) {
+      updateCard({ id: selectedCard.id, data })
+    }
+  }
 
 
   //что надо сделать:
@@ -100,7 +147,7 @@ export const CardsPage = () => {
         <div className={'flex justify-start'}>
           <Typography variant="large">{deck?.name}</Typography>
 
-          {myDeck && (
+          {isDeckMine && (
             <Dropdown trigger={<DotsInCircle className={'ml-2'} />} width={100}>
               <div>
                 <DropdownItem
@@ -122,7 +169,7 @@ export const CardsPage = () => {
             </Dropdown>
           )}
         </div>
-        {myDeck ? (
+        {isDeckMine ? (
           <Button variant="primary" onClick={() => setAddNewCardModal(true)}>
             Add New Card
           </Button>
@@ -149,7 +196,7 @@ export const CardsPage = () => {
       {cards?.items.length || isLoading ? (
         <Table.Root>
           <Table.SortedHeader
-            columns={columns.filter(column => (myDeck ? true : column.title !== ' '))}
+            columns={columns.filter(column => (isDeckMine ? true : column.title !== ' '))}
             sort={sort}
             onSort={setSort}
           />
@@ -189,7 +236,7 @@ export const CardsPage = () => {
                   <Table.Data>
                     <Rating rating={card.grade} />
                   </Table.Data>
-                  {myDeck && (
+                  {isDeckMine && (
                     <Table.Data>
                       <div className={'flex'}>
                         <Button
@@ -221,7 +268,7 @@ export const CardsPage = () => {
       ) : (
         <div className={s.empty}>
           <Typography variant="body2">This pack is empty.</Typography>
-          {myDeck && (
+          {isDeckMine && (
             <Button variant="primary" onClick={() => setAddNewCardModal(true)}>
               Add New Card
             </Button>
@@ -243,7 +290,7 @@ export const CardsPage = () => {
         buttonText={'Add New Card'}
         isOpen={addNewCardModal}
         toggleModal={setAddNewCardModal}
-        cardHandler={createCardHandler}
+        onSubmit={onSubmitCreateCard}
       />
       <AddUpgradeCard
         defaultValues={{ question: selectedCard.question, answer: selectedCard.answer }}
@@ -251,9 +298,7 @@ export const CardsPage = () => {
         buttonText={'Save Changes'}
         isOpen={updateCardModal}
         toggleModal={setUpdateCardModal}
-        cardHandler={data => {
-          updateCard({ id: selectedCard.id, data })
-        }}
+        onSubmit={onSubmitEditCard}
       />
       <DeleteItem
         isOpen={deleteCardModal} //открыта или нет конкретная модалка

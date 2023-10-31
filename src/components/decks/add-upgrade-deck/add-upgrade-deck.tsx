@@ -19,20 +19,18 @@ const schema = z.object({
     .max(30, 'Deck name must be less than 30 symbols'),
   isPrivate: z.boolean().optional(), //если не будет optional, то всегда надо нажимать галочку, а это не надо
   cover: z.instanceof(File).optional(),
-  //cover: z.any(),
 })
 //колода будет не пустой строкой от 3 до 30 символов
 //private будет опциональным булевым
 
 //export type AddUpgradeType = z.infer<typeof schema>
 export type AddUpgradeType = {
-  cover?: File
   name: string
   isPrivate?: boolean | undefined
+  cover?: File
 }
 
 export type AddUpgradeDeckProps = {
-  deckId?: string
   defaultValues?: AddUpgradeType //используем при вызове для upgrade
   title: string //заголовок
   buttonText: string //текст на кнопке
@@ -61,14 +59,18 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
   const [file, setFile] = useState<File | null>(null)
   const [file64, setFile64] = useState<string>('')
   const [drag, setDrag] = useState<boolean>(false)
+  const loadFileText = title === 'Add New Deck' ? 'Chose a image' : 'Pick another file'
 
   const onSubmitHandler = (formData: AddUpgradeType) => {
+    //onSubmit поулчаем из decks. Он принимает форм дату, тоесть
+    //данные из формы data, которые мы записали для спец.формата
+    //эта форм дата отправляется на серв вместе с id
+    //для добавления и обновления коллдоы ест разные сабмиты
     onSubmit(formData, file)
     resetField('name')
     setFile(null) // Сброс выбранного файла после его добавления в data
     toggleModal(false)
   }
-  const loadFileText = title === 'Add New Deck' ? 'Chose a image' : 'Pick another file'
   let handleFormSubmitted = handleSubmit(onSubmitHandler)
   const onOpenHandler = (isOpen: boolean) => {
     toggleModal(isOpen)
@@ -86,6 +88,8 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
     setDrag(false)
   }
   const onDropFileHandler = (e: React.DragEvent<HTMLDivElement>) => {
+    //TODO объеденить / зрефакторить с defaultUploadHandler
+    //код почти одинаковый
     e.preventDefault()
     let selectedFiles = e.dataTransfer.files
 
@@ -106,7 +110,8 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
 
         reader.readAsDataURL(file)
       } else {
-        console.log('Photo Upload Error')
+        //для будущего вывода ошибок
+        alert('Photo Upload Error')
       }
     }
   }
@@ -125,7 +130,8 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
         }
         reader.readAsDataURL(selectedFile)
       } else {
-        console.log('Photo Upload Error')
+        //для будущего вывода ошибок
+        alert('Photo Upload Error')
       }
     }
   }
@@ -203,7 +209,6 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
           )}
         </div>
       </form>
-      {/*<DevTool control={control} />*/}
     </Modal>
   )
 }
