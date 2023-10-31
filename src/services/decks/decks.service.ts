@@ -57,15 +57,16 @@ const deskApi = baseApi.injectEndpoints({
         query: ({ id }) => `/v1/decks/${id}`,
         // providesTags: ['Cards'],
       }),
-      updateDeck: builder.mutation<Deck, DeckRequestParams>({
+      updateDeck: builder.mutation<Deck, { id: string; data: DeckRequestParams }>({
         query: updateData => ({
           url: `/v1/decks/${updateData.id}`,
           method: 'PATCH',
-          body: {
-            cover: updateData.cover,
-            name: updateData.name,
-            isPrivate: updateData.isPrivate,
-          },
+          body: updateData.data,
+          //  body: {
+          //   cover: updateData.cover,
+          //   name: updateData.name,
+          //   isPrivate: updateData.isPrivate,
+          // },
         }),
         async onQueryStarted({ id }, { dispatch, queryFulfilled, getState }) {
           const state = getState() as RootState
@@ -128,7 +129,6 @@ const deskApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
-
       getARandomCard: builder.query<Card, GetRandomCard>({
         query: ({ id, ...args }) => ({
           url: `/v1/decks/${id}/learn`,

@@ -11,8 +11,9 @@ import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
 import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
 import { AddUpgradeCard, FormValuesType } from '@/components/cards/add-upgrade-card'
 import { DeleteItem } from '@/components/decks'
-import { Button, Dropdown, Input, Rating, Table, Typography } from '@/components/ui'
+import { Button, Dropdown, Input, Pagination, Rating, Table, Typography } from '@/components/ui'
 import { DropdownItem } from '@/components/ui/dropdown-menu/custom-drop-down'
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
 import { useGetMeQuery } from '@/services/auth'
 import {
   useDeleteCardMutation,
@@ -20,6 +21,7 @@ import {
   useUpdateCardMutation,
   useCreateCardMutation,
 } from '@/services/cards'
+import { cardsSlice } from '@/services/cards/cards.slice.ts'
 import { useGetDeckByIdQuery } from '@/services/decks'
 import { Card } from '@/services/decks/decks.types.ts'
 import { Column, Sort } from '@/services/types'
@@ -33,7 +35,10 @@ const columns: Column[] = [
 ]
 
 export const CardsPage = () => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const currentPage = useAppSelector(state => state.cards.currentPage)
+  const perPage = useAppSelector(state => +state.cards.itemsPerPage)
   const { id } = useParams<{ id: string }>() //вытаскиваем айди из строки
   const [search, setSearch] = useState('') //для поиска по карточкамив колоде
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
@@ -43,6 +48,8 @@ export const CardsPage = () => {
     id: id ?? '',
     question: search,
     orderBy: sortString,
+    itemsPerPage: perPage,
+    currentPage,
   })
   const { data: deck } = useGetDeckByIdQuery({ id: id ?? '' })
   const [deleteCard] = useDeleteCardMutation()
@@ -53,12 +60,20 @@ export const CardsPage = () => {
   const [addNewCardModal, setAddNewCardModal] = useState(false)
   const [updateCardModal, setUpdateCardModal] = useState(false)
   const [deleteCardModal, setDeleteCardModal] = useState(false)
+
+  const updateCurrentPage = (page: number) => {
+    dispatch(cardsSlice.actions.updateCurrentPage(page))
+  }
+  const updateItemsPerPageHandler = (items: string) => {
+    dispatch(cardsSlice.actions.updateItemsPerPage(items))
+  }
   const createCardHandler = (data: FormValuesType) => {
     if (deck?.id) {
       createCard({ id: deck.id, data })
     }
   }
   const myDeck = deck?.userId === user?.id // в переменную моя колода или нет
+
 
   //что надо сделать:
   //
@@ -133,7 +148,11 @@ export const CardsPage = () => {
       {/*показывай пусту таблицу даже если грузится, иначе показывается див с инфой что нет таблиц*/}
       {cards?.items.length || isLoading ? (
         <Table.Root>
-          <Table.SortedHeader columns={columns} sort={sort} onSort={setSort} />
+          <Table.SortedHeader
+            columns={columns.filter(column => (myDeck ? true : column.title !== ' '))}
+            sort={sort}
+            onSort={setSort}
+          />
           <Table.Body>
             {cards?.items.map((card: Card) => {
               return (
@@ -170,28 +189,30 @@ export const CardsPage = () => {
                   <Table.Data>
                     <Rating rating={card.grade} />
                   </Table.Data>
-                  <Table.Data>
-                    <div className={'flex'}>
-                      <Button
-                        variant={'icon'}
-                        onClick={() => {
-                          setSelectedCard(card) //в стейт заносим нужную модалку для удаления
-                          setUpdateCardModal(true) //открываем модалку для удаления
-                        }}
-                      >
-                        <EdittextIcon />
-                      </Button>
-                      <Button
-                        variant={'icon'}
-                        onClick={() => {
-                          setSelectedCard(card) //в стейт заносим нужную модалку для удаления
-                          setDeleteCardModal(true) //открываем модалку для удаления
-                        }}
-                      >
-                        <TrashOutline size={24} />
-                      </Button>
-                    </div>
-                  </Table.Data>
+                  {myDeck && (
+                    <Table.Data>
+                      <div className={'flex'}>
+                        <Button
+                          variant={'icon'}
+                          onClick={() => {
+                            setSelectedCard(card) //в стейт заносим нужную модалку для удаления
+                            setUpdateCardModal(true) //открываем модалку для удаления
+                          }}
+                        >
+                          <EdittextIcon />
+                        </Button>
+                        <Button
+                          variant={'icon'}
+                          onClick={() => {
+                            setSelectedCard(card) //в стейт заносим нужную модалку для удаления
+                            setDeleteCardModal(true) //открываем модалку для удаления
+                          }}
+                        >
+                          <TrashOutline size={24} />
+                        </Button>
+                      </div>
+                    </Table.Data>
+                  )}
                 </Table.Row>
               )
             })}
@@ -207,6 +228,16 @@ export const CardsPage = () => {
           )}
         </div>
       )}
+      <Pagination
+        className={s.pagination}
+        totalCount={cards?.pagination.totalItems ?? 10}
+        currentPage={currentPage}
+        pageSize={cards?.pagination.itemsPerPage ?? 5}
+        onPageChange={updateCurrentPage}
+        selectValue={cards?.pagination.itemsPerPage}
+        selectOptions={[5, 10, 15, 20]}
+        onSelectChange={itemsPerPage => updateItemsPerPageHandler(itemsPerPage)}
+      />
       <AddUpgradeCard
         title={'Add New Card'}
         buttonText={'Add New Card'}

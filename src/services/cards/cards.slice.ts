@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+const initialState = {
+  currentPage: 1,
+  itemsPerPage: '5',
+}
 
 export const cardsSlice = createSlice({
   name: 'cards',
-  initialState: {
-    currentPage: 1,
-    itemsPerPage: '10',
-  },
+  initialState,
   reducers: {
     //этот слайс нужен нам для того чтобы у ртк был доступ к данным о странице
     updateCurrentPage: (state, action: PayloadAction<number>) => {

@@ -42,12 +42,7 @@ export type DecksParams = {
   itemsPerPage?: number
 } | void
 
-export type DeckRequestParams = {
-  cover?: File // Поле cover ожидает файл (binary)
-  name?: string
-  isPrivate?: boolean
-  id?: string
-}
+export type DeckRequestParams = FormData
 
 export type GetCardsDeckParams = {
   id: string
