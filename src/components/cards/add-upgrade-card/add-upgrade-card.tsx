@@ -84,7 +84,7 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
   const [answerFile64, setAnswerFile64] = useState<string>('')
   const loadFileText = title === 'Add New Deck' ? 'Chose a image' : 'Pick another file'
   const [selectValue, setSelectValue] = useState(optionsPrimary[0].value)
-  const [drag, setDrag] = useState<boolean>(false)
+  const [drag, setDrag] = useState<boolean>(true)
 
   const onSubmitHandler = (data: AddUpgradeCardType) => {
     //onSubmit поулчаем из cards. Он принимает форм дату, тоесть
@@ -294,7 +294,12 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
                   <Typography variant={'h2'}>Release the new file here</Typography>
                 </div>
               ) : (
-                <div className={s.inputContainer}>
+                <div
+                  onDragStart={e => dragStartHandler(e)}
+                  onDragLeave={e => dragLeaveHandler(e)}
+                  onDragOver={e => dragStartHandler(e)}
+                  className={s.inputContainer}
+                >
                   {answerFile && (
                     <div className={s.previewWrapper}>
                       <img
