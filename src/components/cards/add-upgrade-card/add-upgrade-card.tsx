@@ -169,7 +169,7 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
       modalMainTitle={title}
     >
       <form onSubmit={handleFormSubmitted}>
-        <div className={s.dragAndDropArea}>
+        <div className={s.inputsAndSelectContainer}>
           {drag ? (
             <div
               className={s.dropArea}
@@ -182,6 +182,7 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
             </div>
           ) : (
             <div
+              className={s.dragAndDropArea}
               onDragStart={e => dragStartHandler(e)}
               onDragLeave={e => dragLeaveHandler(e)}
               onDragOver={e => dragStartHandler(e)}
@@ -196,7 +197,7 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
               />
 
               {selectValue === 'Text + Image' && (
-                <div className={s.textAndInputWrapper}>
+                <div className={s.questionInputWrapper}>
                   <Typography className={s.dragText}>Question cover:</Typography>
                   <div className={s.inputContainer}>
                     {file && (
@@ -222,7 +223,7 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
               )}
 
               <ControlledInput
-                className={s.cardInput}
+                className={s.questionInput}
                 name="question"
                 variant={'standard'}
                 placeholder={defaultValues.question}
@@ -232,7 +233,7 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
               />
 
               {selectValue === 'Text + Image' && (
-                <div className={s.textAndInputWrapper}>
+                <div className={s.answerInputsWrapper}>
                   <Typography className={s.dragText}>Question cover:</Typography>
                   <div className={s.inputContainer}>
                     {file && (
@@ -265,7 +266,7 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
                 control={control}
                 autoComplete="false"
               />
-              <div className={'flex justify-between'}>
+              <div className={'flex justify-between mb-2'}>
                 <Button onClick={onCloseHandler} variant={'secondary'}>
                   Cancel
                 </Button>
