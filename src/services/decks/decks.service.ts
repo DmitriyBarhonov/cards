@@ -1,12 +1,10 @@
 import { baseApi } from '@/services/base-api.ts'
+import { Card, GetRandomCard, SaveTheGrade } from '@/services/cards/cards.types.ts'
 import {
   Deck,
   DeckResponseType,
   DecksParams,
   DeckRequestParams,
-  Card,
-  GetRandomCard,
-  SaveTheGrade,
 } from '@/services/decks/decks.types.ts'
 import { RootState } from '@/services/store.ts'
 

@@ -1,3 +1,5 @@
+import { Pagination } from '@/services/decks/decks.types.ts'
+
 export type UpdateCardParams = FormData
 
 //old version

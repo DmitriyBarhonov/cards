@@ -30,15 +30,15 @@ const schema = z.object({
 
 //card будет не пустой строкой от 3 до 500 символов
 type FileCategory = 'question' | 'answer'
-type AddUpgradeCardType = {
-  question?: string
-  answer?: string
+export type AddUpgradeCardType = {
+  question: string
+  answer: string
   questionImg?: File
   answerImg?: File
 }
 //export type FormValuesType = z.infer<typeof schema> //вытаскивает типизацию для данных формы из схемы выше
 export type AddUpgradeCardProps = {
-  onSubmit: (data: AddUpgradeCardType, questionFile: File | null, answerFile: File | null) => void
+  onSubmit: (formData: AddUpgradeCardType, questionImg: File | null, answerImg: File | null) => void
   defaultValues?: AddUpgradeCardType
   title: string //заголовок
   buttonText: string //текст на кнопке
@@ -72,7 +72,7 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
   toggleModal,
   onSubmit,
 }) => {
-  const { handleSubmit, control, reset } = useForm<FormValuesType>({
+  const { handleSubmit, control, reset } = useForm<AddUpgradeCardType>({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
     defaultValues, //берем из пропсов, по умолчанию пустые
