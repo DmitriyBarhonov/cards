@@ -117,7 +117,7 @@ export const CardsPage = () => {
     const data = createCardData(cardData, questionImg, answerImg) // Assuming `createCardData` returns the desired `formData`
 
     if (deck?.id) {
-      updateCard({ id: deck.id, data })
+      updateCard({ id: selectedCard.id, data })
     }
   }
 
