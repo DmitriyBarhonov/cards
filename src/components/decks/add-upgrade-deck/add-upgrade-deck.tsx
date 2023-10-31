@@ -111,7 +111,7 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
         reader.readAsDataURL(file)
       } else {
         //для будущего вывода ошибок
-        console.log('Photo Upload Error')
+        alert('Photo Upload Error')
       }
     }
   }
@@ -131,7 +131,7 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
         reader.readAsDataURL(selectedFile)
       } else {
         //для будущего вывода ошибок
-        console.log('Photo Upload Error')
+        alert('Photo Upload Error')
       }
     }
   }

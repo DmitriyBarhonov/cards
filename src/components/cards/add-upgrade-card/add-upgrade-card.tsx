@@ -24,18 +24,27 @@ const schema = z.object({
     .min(4, 'Card question must be at least 4 symbols')
     .max(500, 'Card question must be less than 500 symbols')
     .optional(),
+  questionImg: z.instanceof(File).optional(),
+  answerImg: z.instanceof(File).optional(),
 })
 
 //card будет не пустой строкой от 3 до 500 символов
 type FileCategory = 'question' | 'answer'
-export type FormValuesType = z.infer<typeof schema> //вытаскивает типизацию для данных формы из схемы выше
+type AddUpgradeCardType = {
+  question?: string
+  answer?: string
+  questionImg?: File
+  answerImg?: File
+}
+//export type FormValuesType = z.infer<typeof schema> //вытаскивает типизацию для данных формы из схемы выше
 export type AddUpgradeCardProps = {
-  defaultValues?: FormValuesType //используем при вызове для upgrade
+  onSubmit: (data: AddUpgradeCardType, questionFile: File | null, answerFile: File | null) => void
+  defaultValues?: AddUpgradeCardType
   title: string //заголовок
   buttonText: string //текст на кнопке
   isOpen: boolean //открыта или закрыта
   toggleModal: (isOpen: boolean) => void //переключалка открытия или закрытия
-  cardHandler: (data: FormValuesType) => void //при сабмите отправляем данные типа вопрос и ответ
+  //cardHandler: (data: FormValuesType) => void //при сабмите отправляем данные типа вопрос и ответ
   //если createDeck, то передаем просто функцию,
   //если upgrade, то на месте вызова компоненты передаем еще и id колоды
 }
@@ -55,12 +64,13 @@ const optionsPrimary = [
 ]
 
 export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
-  defaultValues = { question: '', answer: '' },
+  defaultValues = { question: '', answer: '', questionImg: undefined, answerImg: undefined },
   title,
   buttonText,
-  cardHandler,
+  //cardHandler,
   isOpen,
   toggleModal,
+  onSubmit,
 }) => {
   const { handleSubmit, control, reset } = useForm<FormValuesType>({
     mode: 'onSubmit',
@@ -76,14 +86,30 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
   const [selectValue, setSelectValue] = useState(optionsPrimary[0].value)
 
   ///
-  const onSubmit = (data: FormValuesType) => {
-    cardHandler(data)
+  // const onSubmit = (data: AddUpgradeCardType) => {
+  //   //cardHandler(data)
+  //   reset()
+  //   toggleModal(false)
+  //   //при сабмите фызвать функцию, сбросить значения и закрыться
+  // }
+
+  const onSubmitHandler = (data: AddUpgradeCardType) => {
+    //onSubmit поулчаем из cards. Он принимает форм дату, тоесть
+    //данные из нашей формы. Проблема: 1. в data не попадают наши файлы!
+    // 2. сервер принимает файлы только в форм дате.
+    //Чтобы решить эти вопросы, мы выносим сабмит вне этой компоненты
+    //а тут просто передаем дату и отдельно файлы, там они уже соединятся
+    //и отправятся на север
+    //для добавления и обновления карточки ест разные сабмиты.
+    //При редактирвоании просто добавим вне объекта даты id
+    onSubmit(data, questionFile, answerFile)
     reset()
+    setQuestionFile(null)
+    setAnswerFile(null)
     toggleModal(false)
-    //при сабмите фызвать функцию, сбросить значения и закрыться
   }
 
-  const handleFormSubmitted = handleSubmit(onSubmit)
+  const handleFormSubmitted = handleSubmit(onSubmitHandler)
   const onOpenHandler = (isOpen: boolean) => {
     toggleModal(isOpen)
   }
@@ -242,7 +268,9 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
             <Button onClick={onCloseHandler} variant={'secondary'}>
               Cancel
             </Button>
-            <Button type="submit">{buttonText}</Button>
+            <Button type="submit" onClick={handleFormSubmitted}>
+              {buttonText}
+            </Button>
           </div>
         </div>
       </form>
