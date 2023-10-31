@@ -34,15 +34,6 @@ export type CardsResponse = {
   items: Card[]
 }
 
-export type InitialStateType = {
-  currentPage: number
-  itemsPerPage: string
-  tabValue: string
-  cardsCount: {
-    minCardsCount: number
-    maxCardsCount: number
-  }
-}
 export type CreateCardParams = {
   question: string
   answer: string

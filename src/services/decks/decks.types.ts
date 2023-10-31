@@ -43,3 +43,13 @@ export type DecksParams = {
 } | void
 
 export type DeckRequestParams = FormData
+
+export type InitialStateType = {
+  currentPage: number
+  itemsPerPage: string
+  tabValue: string
+  cardsCount: {
+    minCardsCount: number
+    maxCardsCount: number
+  }
+}
