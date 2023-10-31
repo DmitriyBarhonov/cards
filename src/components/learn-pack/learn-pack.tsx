@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import { Button, Card, OptionType, Typography } from '../ui'
 import { ControlledRadioGroup } from '../ui/controlled'
