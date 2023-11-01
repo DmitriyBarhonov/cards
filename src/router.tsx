@@ -57,7 +57,7 @@ const privateRoutes: RouteObject[] = [
     element: <CardsPage />,
   },
   {
-    path: '/personal-info', //todo не забыть повесить логику на id пользователя
+    path: '/personal-info',
     element: <PersonalInfo />,
   },
   {
