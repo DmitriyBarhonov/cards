@@ -13,7 +13,7 @@ type Props = {
   name: string
 }
 export const ProfileEditMode: FC<Props> = ({ onInputBlurHandler, name }) => {
-  const [updateInfo] = useUpdateMeMutation()
+  const [updateMe] = useUpdateMeMutation()
 
   const classNames = {
     input: clsx(s.formInput),
@@ -22,18 +22,18 @@ export const ProfileEditMode: FC<Props> = ({ onInputBlurHandler, name }) => {
 
   const { register, handleSubmit } = useForm<UserDataUpdate>()
 
-  const updateUserDataHandler = (data: UserDataUpdate) => {
-    updateInfo(data)
+  const handleFormSubmitted = handleSubmit(data => {
+    updateMe(data)
     onInputBlurHandler()
-  }
+  })
 
-  //TODO here we probably should use controlled input
   return (
     <>
-      <form onSubmit={handleSubmit(updateUserDataHandler)}>
+      <form onSubmit={handleFormSubmitted}>
         <Input
           {...register('name')}
-          onBlur={onInputBlurHandler}
+          autoFocus
+          // onBlur={onInputBlurHandler} не работает из-за этого кнопка, ищу другой вариант
           className={classNames.input}
           label={'Nickname'}
           defaultValue={name}

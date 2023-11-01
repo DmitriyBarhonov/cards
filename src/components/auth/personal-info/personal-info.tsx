@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { ChangeEvent, FC, useRef, useState } from 'react'
 
 import { clsx } from 'clsx'
 import { useNavigate } from 'react-router-dom'
@@ -10,14 +10,17 @@ import { ProfileDisplayMode } from '@/components/auth/personal-info/display-mode
 import { ProfileEditMode } from '@/components/auth/personal-info/edit-mode'
 import { Avatar, Button, Card, Typography } from '@/components/ui'
 import { useAppDispatch } from '@/hooks/hooks.ts'
-import { useGetMeQuery, useLogOutMutation, util } from '@/services/auth'
+import { useGetMeQuery, useLogOutMutation, useUpdateMeMutation, util } from '@/services/auth'
+import { UserDataUpdate } from '@/services/auth/auth.types.ts'
 
 export type PersonalInfoProps = {}
 
 export const PersonalInfo: FC<PersonalInfoProps> = ({}) => {
+  const inputRef = useRef<HTMLInputElement>(null)
   const [editMode, setEditMode] = useState(false)
   const { data: me } = useGetMeQuery()
   const [logOut] = useLogOutMutation()
+  const [updateMe] = useUpdateMeMutation()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
@@ -35,12 +38,27 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({}) => {
     editButton: clsx(s.editTextButton),
     editIcon: clsx(s.editTextIcon),
     editProfileNameIcon: clsx(s.editProfName),
+    upload: clsx(s.uploadInput),
+  }
+  const selectFileHandler = () => {
+    inputRef && inputRef.current?.click()
+  }
+  const updateAvatar = (data: UserDataUpdate) => {
+    const form = new FormData()
+
+    data.avatar && form.append('avatar', data.avatar)
+
+    updateMe(form)
+  }
+  const uploadImgHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
+
+      updateAvatar({ avatar: file })
+    }
   }
   const onEditTextClickHandler = () => {
     setEditMode(true)
-  }
-  const onEditAvatarClickHandler = () => {
-    //кваква заглушка лягушка о.О
   }
   const onInputBlurHandler = () => {
     setEditMode(false)
@@ -64,16 +82,19 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({}) => {
           </Typography>
           <div className={classNames.avatarWrapper}>
             <Avatar className={classNames.avatar} name={me.name} avatar={imgForPersonalInfo} />
+            <input
+              type="file"
+              onChange={uploadImgHandler}
+              className={classNames.upload}
+              ref={inputRef}
+            />
             <Button
-              onClick={onEditAvatarClickHandler}
+              onClick={selectFileHandler}
               className={classNames.editButton}
               variant={'secondary'}
             >
-              <EdittextIcon className={classNames.editIcon} onClick={onEditTextClickHandler} />
+              <EdittextIcon className={classNames.editIcon} onClick={selectFileHandler} />
             </Button>
-            {/*<button className={classNames.editButton}>*/}
-            {/*  <EdittextIcon className={classNames.editIcon} onClick={onEditTextClickHandler} />*/}
-            {/*</button>*/}
           </div>
 
           {editMode ? (
