@@ -1,14 +1,13 @@
 .container {
-  width: 90%;
+  width: 80%;
   max-width: 1280px;
   height: 100%;
   margin: 33px auto;
 
-  .addDeckBtnWraper {
+  .addDeckBtnWrapper {
     display: flex;
     justify-content: flex-end;
   }
-
 
 }
 
@@ -16,12 +15,16 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  flex-wrap: wrap;
 
   .tabSwitcher {
+    box-sizing: border-box;
+
   }
 
   .search {
-    max-width: 300px;
+    //max-width: 300px;
+    width: 35% !important;
     //margin: inherit;
     //height: inherit;
 

@@ -141,7 +141,7 @@ export const Decks = () => {
       ) : null}
       <div className={s.container}>
         <Typography variant={'h2'}>Packs list</Typography>
-        <div className={s.addDeckBtnWraper}>
+        <div className={s.addDeckBtnWrapper}>
           <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoadingCreateDec}>
             {'Add New Deck'}
           </Button>
@@ -149,6 +149,7 @@ export const Decks = () => {
         <div className={s.menu}>
           <Input
             className={s.search}
+            fullWidth={true}
             variant={'search'}
             value={search}
             onChange={e => setSearch(e.currentTarget.value)}
