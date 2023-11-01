@@ -149,7 +149,6 @@ export const Decks = () => {
         <div className={s.menu}>
           <Input
             className={s.search}
-            fullWidth={true}
             variant={'search'}
             value={search}
             onChange={e => setSearch(e.currentTarget.value)}
@@ -180,7 +179,7 @@ export const Decks = () => {
               variant="secondary"
               disabled={isLoadingCreateDec}
             >
-              <TrashOutline />
+              <TrashOutline className={s.trashIcon} />
               <div> {'Clear filter'}</div>
             </Button>
           </div>
