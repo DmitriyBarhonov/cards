@@ -9,66 +9,61 @@
     justify-content: flex-end;
   }
 
-}
-
-.menu {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin-top: 20px;
-
-
-  .tabSwitcher {
-    box-sizing: border-box;
-
-  }
-
-  .search {
-    width: 36%;
-  }
-
-  .wrapperButton {
+  .menu {
     display: flex;
-    flex-direction: column-reverse;
     align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 20px;
 
-    .clearFilter {
+    .tabSwitcher {
+      box-sizing: border-box;
+    }
+
+    .search {
+      width: 36%;
+    }
+
+    .wrapperButton {
       display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      padding-left: 20px;
+      flex-direction: column-reverse;
+      align-items: flex-end;
 
-      .trashIcon {
-        margin: 0 10px 2px 0 ;
+      .clearFilter {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding-left: 20px;
+        height: 38px;
+        box-sizing: border-box;
 
+        .trashIcon {
+          margin: 0 10px 2px 0;
+        }
       }
     }
   }
 
-}
+  .pagination {
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+  }
 
+  .iconsRow {
+    display: flex;
+    justify-content: flex-end;
+    // Прижимаем текст к правому краю в последнем ряду, так нужно для иконок
+  }
 
-.pagination {
-  margin: 20px auto;
-  display: flex;
-  justify-content: center;
-}
+  .coverContainer {
+    display: flex;
+    align-items: center;
 
-.iconsRow {
-  display: flex;
-  justify-content: flex-end;
-  // Прижимаем текст к правому краю в последнем ряду, так нужно для иконок
-}
-
-
-.coverContainer {
-  display: flex;
-  align-items: center;
-
-  .coverImage {
-    height: 54px;
-    width: auto;
-    margin-right: 10px;
+    .coverImage {
+      height: 54px;
+      width: auto;
+      margin-right: 10px;
+    }
   }
 }

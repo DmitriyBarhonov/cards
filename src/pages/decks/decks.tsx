@@ -140,7 +140,7 @@ export const Decks = () => {
         <LinearProgress color="secondary" />
       ) : null}
       <div className={s.container}>
-        <Typography variant={'h2'}>Packs list</Typography>
+        <Typography variant={'large'}>Decks list</Typography>
         <div className={s.addDeckBtnWrapper}>
           <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoadingCreateDec}>
             {'Add New Deck'}
@@ -155,7 +155,7 @@ export const Decks = () => {
             placeholder="Search by name"
           />
           <div>
-            <Typography variant={'caption'}>Show packs cards</Typography>
+            <Typography variant={'body2'}>Show packs cards</Typography>
             <TabSwitcher
               className={s.tabSwitcher}
               options={tabOptions}
@@ -164,7 +164,7 @@ export const Decks = () => {
             />
           </div>
           <div>
-            <Typography variant={'caption'}>Number of cards</Typography>
+            <Typography variant={'body2'}>Number of cards</Typography>
             <SliderForCards
               value={[cardsCount[0], cardsCount[1]]}
               onChange={setCardsHandler}
