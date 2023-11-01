@@ -112,7 +112,7 @@ export const Decks = () => {
     tabHandler('all')
   }
   const createData = (data: AddUpgradeType, file?: File | null) => {
-    //сервер принимает файл только в формате форм даты, поэтому вноим
+    //сервер принимает файл только в формате форм даты, поэтому вносим
     //в формдата уже все что имеется. Если есть файл и его тоже
     //возвр. формдату для каждой add/edit по необходимости
     const formData = new FormData()
@@ -141,6 +141,11 @@ export const Decks = () => {
       ) : null}
       <div className={s.container}>
         <Typography variant={'h2'}>Packs list</Typography>
+        <div className={s.addDeckBtnWraper}>
+          <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoadingCreateDec}>
+            {'Add New Deck'}
+          </Button>
+        </div>
         <div className={s.menu}>
           <Input
             className={s.search}
@@ -151,7 +156,12 @@ export const Decks = () => {
           />
           <div>
             <Typography variant={'caption'}>Show packs cards</Typography>
-            <TabSwitcher options={tabOptions} value={tabValue} onValueChange={tabHandler} />
+            <TabSwitcher
+              className={s.tabSwitcher}
+              options={tabOptions}
+              value={tabValue}
+              onValueChange={tabHandler}
+            />
           </div>
           <div>
             <Typography variant={'caption'}>Number of cards</Typography>
@@ -171,9 +181,6 @@ export const Decks = () => {
             >
               <TrashOutline />
               <div> {'Clear filter'}</div>
-            </Button>
-            <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoadingCreateDec}>
-              {'Add New Deck'}
             </Button>
           </div>
         </div>

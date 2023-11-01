@@ -3,24 +3,49 @@
   max-width: 1280px;
   height: 100%;
   margin: 33px auto;
+
+  .addDeckBtnWraper {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+
 }
 
 .menu {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+
+  .tabSwitcher {
+  }
+
+  .search {
+    max-width: 300px;
+    //margin: inherit;
+    //height: inherit;
+
+  }
+
+  .clearFilter {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+
+    .clearFilter > div {
+      margin-left: 10px;
+    }
+  }
+
 }
 
-.search {
-  max-width: 300px;
-  margin: inherit;
-  height: inherit;
-}
+
 .pagination {
   margin: 20px auto;
   display: flex;
   justify-content: center;
 }
+
 .iconsRow {
   display: flex;
   justify-content: flex-end;
@@ -32,20 +57,13 @@
   flex-direction: column-reverse;
   align-items: flex-end;
 }
-.clearFilter {
-  display: flex;
-  align-items: center;
-  margin-top: 30px;
-}
-.clearFilter > div{
-  margin-left: 10px;
-}
 
-.coverContainer{
+
+.coverContainer {
   display: flex;
   align-items: center;
 
-  .coverImage{
+  .coverImage {
     height: 54px;
     width: auto;
     margin-right: 10px;
