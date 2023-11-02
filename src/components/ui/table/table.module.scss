@@ -1,3 +1,5 @@
+@use "../../../assets/mixins/mixins" as mixins;
+
 .table {
   cursor: pointer;
   border-collapse: collapse;
@@ -42,10 +44,16 @@
 }
 
 .arrow {
+  @include mixins.defaultHover;
   user-select: none;
   display: flex;
   gap: 4px;
   align-items: center;
+  transition: all 0.3s ease;
+
+  .arrowIcon {
+    @include mixins.defaultHover;
+  }
 }
 
 .row {
@@ -56,10 +64,13 @@
 }
 
 .data {
+  @include mixins.defaultHover;
   padding: 6px 24px;
   font-size: var(--font-size-s);
   line-height: var(--line-height-m);
   cursor: pointer;
+  transition: all 0.3s ease;
+  word-wrap: break-word;
 }
 
 .empty {

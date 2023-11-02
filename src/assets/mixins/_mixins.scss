@@ -8,6 +8,19 @@
   }
 }
 
+@mixin defaultHover {
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: var(--color-accent-100);
+  }
+  &:active {
+    color: var(--color-accent-300);
+  }
+
+}
+
 
 @mixin commonAuthContainer {
   display: flex;

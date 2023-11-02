@@ -80,7 +80,13 @@ export const SortedHeader: FC<
             <div className={s.arrow}>
               {title}
               {sort && sort.key === key && (
-                <span>{sort.direction === 'asc' ? <SortUp /> : <SortDown />}</span>
+                <span>
+                  {sort.direction === 'asc' ? (
+                    <SortUp className={s.arrowIcon} />
+                  ) : (
+                    <SortDown className={s.arrowIcon} />
+                  )}
+                </span>
               )}
             </div>
           </th>
