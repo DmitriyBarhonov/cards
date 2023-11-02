@@ -34,14 +34,14 @@ export type CardsResponse = {
   items: Card[]
 }
 
-export type CreateCardParams = {
-  question: string
-  answer: string
-  questionImg?: string
-  answerImg?: string
-  questionVideo?: string
-  answerVideo?: string
-}
+// export type CreateCardParams = {
+//   question: string
+//   answer: string
+//   questionImg?: string
+//   answerImg?: string
+//   questionVideo?: string
+//   answerVideo?: string
+// }
 
 export type GetRandomCard = {
   id: string

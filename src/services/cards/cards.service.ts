@@ -58,6 +58,5 @@ export const {
   useDeleteCardMutation,
   useGetCardsDeckQuery,
   useUpdateCardMutation,
-  useGetCardByIdQuery,
   useCreateCardMutation,
 } = cardsApi

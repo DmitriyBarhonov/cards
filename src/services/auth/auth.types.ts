@@ -42,7 +42,7 @@ export type UserDataResponse = {
 }
 
 export type UserDataUpdate = {
-  avatar?: File
+  avatar?: string | File
   name?: string
   email?: string
 }
