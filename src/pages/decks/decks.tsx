@@ -112,7 +112,7 @@ export const Decks = () => {
     tabHandler('all')
   }
   const createData = (data: AddUpgradeType, file?: File | null) => {
-    //сервер принимает файл только в формате форм даты, поэтому вноим
+    //сервер принимает файл только в формате форм даты, поэтому вносим
     //в формдата уже все что имеется. Если есть файл и его тоже
     //возвр. формдату для каждой add/edit по необходимости
     const formData = new FormData()
@@ -140,7 +140,12 @@ export const Decks = () => {
         <LinearProgress color="secondary" />
       ) : null}
       <div className={s.container}>
-        <Typography variant={'h2'}>Packs list</Typography>
+        <Typography variant={'large'}>Decks list</Typography>
+        <div className={s.addDeckBtnWrapper}>
+          <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoadingCreateDec}>
+            {'Add New Deck'}
+          </Button>
+        </div>
         <div className={s.menu}>
           <Input
             className={s.search}
@@ -150,11 +155,16 @@ export const Decks = () => {
             placeholder="Search by name"
           />
           <div>
-            <Typography variant={'caption'}>Show packs cards</Typography>
-            <TabSwitcher options={tabOptions} value={tabValue} onValueChange={tabHandler} />
+            <Typography variant={'body2'}>Show packs cards</Typography>
+            <TabSwitcher
+              className={s.tabSwitcher}
+              options={tabOptions}
+              value={tabValue}
+              onValueChange={tabHandler}
+            />
           </div>
           <div>
-            <Typography variant={'caption'}>Number of cards</Typography>
+            <Typography variant={'body2'}>Number of cards</Typography>
             <SliderForCards
               value={[cardsCount[0], cardsCount[1]]}
               onChange={setCardsHandler}
@@ -169,11 +179,8 @@ export const Decks = () => {
               variant="secondary"
               disabled={isLoadingCreateDec}
             >
-              <TrashOutline />
+              <TrashOutline className={s.trashIcon} />
               <div> {'Clear filter'}</div>
-            </Button>
-            <Button onClick={() => setAddNewDeckModal(true)} disabled={isLoadingCreateDec}>
-              {'Add New Deck'}
             </Button>
           </div>
         </div>
@@ -203,7 +210,7 @@ export const Decks = () => {
                     <Table.Data>{new Date(deck.updated).toLocaleDateString('ru-Ru')}</Table.Data>
                     <Table.Data>{deck.author.name}</Table.Data>
                     <Table.Data className={s.iconsRow}>
-                      <PlayCircle size={24} />
+                      <PlayCircle className={s.tableOptionIcon} size={24} />
                       {/*если это моя колода, то покажи все иконки, иначе только learn */}
                       {user.id === deck.author.id ? (
                         <div className={'flex'}>
@@ -214,7 +221,7 @@ export const Decks = () => {
                               setUpdateDeckModal(true) //открываем модалку для редактирования
                             }}
                           >
-                            <EdittextIcon />
+                            <EdittextIcon className={s.tableOptionIcon} />
                           </Button>
                           <Button
                             variant={'icon'}
@@ -223,7 +230,7 @@ export const Decks = () => {
                               setDeleteDeckModal(true) //открываем модалку для удаления
                             }}
                           >
-                            <TrashOutline size={24} />
+                            <TrashOutline className={s.tableOptionIcon} size={24} />
                           </Button>
                         </div>
                       ) : null}

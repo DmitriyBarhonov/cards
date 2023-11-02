@@ -1,3 +1,5 @@
+@use "../../../assets/mixins/mixins" as mixins;
+
 .table {
   cursor: pointer;
   border-collapse: collapse;
@@ -9,32 +11,68 @@
 .head {
   width: 100vh;
   padding: 6px 24px;
-
   font-size: var(--font-size-s);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-m);
   text-align: left;
-
   background-color: var(--color-dark-500);
+
+  &:first-child {
+    max-width: 35%;
+  }
+
+  &:nth-child(2) {
+    width: 25%;
+    max-width: 30%;
+  }
+
+  &:nth-child(3) {
+    width: 17%;
+    max-width: 20%;
+  }
+
+  &:nth-child(4) {
+    width: 13%;
+    max-width: 15%;
+
+  }
+
+  &:nth-child(5) {
+    width: 10%;
+  }
+
 }
+
 .arrow {
+  @include mixins.defaultHover;
   user-select: none;
   display: flex;
   gap: 4px;
   align-items: center;
+  transition: all 0.3s ease;
+
+  .arrowIcon {
+    @include mixins.defaultHover;
+  }
 }
+
 .row {
   padding: 6px 24px;
   font-size: var(--font-size-s);
   line-height: var(--line-height-m);
   border-bottom: 1px solid var(--color-dark-500);
 }
+
 .data {
+  @include mixins.defaultHover;
   padding: 6px 24px;
   font-size: var(--font-size-s);
   line-height: var(--line-height-m);
   cursor: pointer;
+  transition: all 0.3s ease;
+  word-wrap: break-word;
 }
+
 .empty {
   display: flex;
   justify-content: center;

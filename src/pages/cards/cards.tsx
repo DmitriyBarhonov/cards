@@ -80,8 +80,6 @@ export const CardsPage = () => {
     //По итогу мы возвр формдату для add/edit по необходимости (с и без id)
     const formData = new FormData()
 
-    // formData.append('question', data.question)
-    // formData.append('answer', data.answer)
     formData.append('question', cardData.question)
     formData.append('answer', cardData.answer)
 
@@ -120,6 +118,7 @@ export const CardsPage = () => {
       updateCard({ id: selectedCard.id, data })
     }
   }
+
   const redirectToLearn = () => {
     navigate(`/learn/${id}`)
   }

@@ -5,19 +5,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 251px;
+  width: 260px;
   height: 36px;
 
   .rangeDigit {
     @include mixins.defaultBorder;
     display: inline-block;
-    border-radius: 2px;
+    border-radius: 4px;
     text-align: center;
     font-weight: var(--font-weight-regular);
     padding: 6px 8px;
     min-width: 36px;
     width: auto;
-    height: 36px;
+    height: 38px;
     flex-shrink: 0;
   }
 
