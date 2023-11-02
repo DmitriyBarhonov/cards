@@ -1,3 +1,5 @@
+@use "../../assets/mixins/mixins" as mixins;
+
 .container {
   width: 80%;
   max-width: 1280px;
@@ -62,7 +64,15 @@
   .iconsRow {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+
     // Прижимаем текст к правому краю в последнем ряду, так нужно для иконок
+
+
+    .tableOptionIcon{
+      @include mixins.defaultHover;
+      color: var(--color-light-100);
+    }
   }
 
   .coverContainer {

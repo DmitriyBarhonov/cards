@@ -210,7 +210,7 @@ export const Decks = () => {
                     <Table.Data>{new Date(deck.updated).toLocaleDateString('ru-Ru')}</Table.Data>
                     <Table.Data>{deck.author.name}</Table.Data>
                     <Table.Data className={s.iconsRow}>
-                      <PlayCircle size={24} />
+                      <PlayCircle className={s.tableOptionIcon} size={24} />
                       {/*если это моя колода, то покажи все иконки, иначе только learn */}
                       {user.id === deck.author.id ? (
                         <div className={'flex'}>
@@ -221,7 +221,7 @@ export const Decks = () => {
                               setUpdateDeckModal(true) //открываем модалку для редактирования
                             }}
                           >
-                            <EdittextIcon />
+                            <EdittextIcon className={s.tableOptionIcon} />
                           </Button>
                           <Button
                             variant={'icon'}
@@ -230,7 +230,7 @@ export const Decks = () => {
                               setDeleteDeckModal(true) //открываем модалку для удаления
                             }}
                           >
-                            <TrashOutline size={24} />
+                            <TrashOutline className={s.tableOptionIcon} size={24} />
                           </Button>
                         </div>
                       ) : null}
