@@ -24,16 +24,16 @@ const classNames = {
   signUp: clsx(s.signUpLink),
 }
 const schema = z.object({
-  email: z.string().email('Invalid email address').trim().nonempty('Enter email'), //мыло должно быть формата строка, типа почта(а@a@), убрать пробелы, не пустой
+  email: z.string().email('Invalid email address').trim().nonempty('Enter email'),
   password: z
     .string()
     .trim()
     .nonempty('Enter password')
-    .min(4, 'Password must be at least 4 characters'), //как минимум 4 символа
-  rememberMe: z.boolean().optional(), //если не будет optional, то всегда надо нажимать галочку, а это не надо
+    .min(4, 'Password must be at least 4 characters'),
+  rememberMe: z.boolean().optional(),
 })
 
-export type SignInFormType = z.infer<typeof schema> //вытаскивает типизацию для данных формы из схемы выше
+export type SignInFormType = z.infer<typeof schema>
 
 export const SignIn = () => {
   const [login, { error }] = useLoginMutation()
@@ -57,7 +57,7 @@ export const SignIn = () => {
       setError('password', {
         type: 'custom',
         message: error.data.message as string,
-      }) //
+      })
     }
   }
   const handleFormSubmitted = handleSubmit(login)
@@ -85,13 +85,7 @@ export const SignIn = () => {
             control={control}
           />
           <div className={classNames.rememberMe}>
-            <ControlledCheckbox
-              // name передаем такой же как и в типизации
-              name="rememberMe"
-              label={'Remember me'}
-              // Передаем control
-              control={control}
-            />
+            <ControlledCheckbox name="rememberMe" label={'Remember me'} control={control} />
           </div>
 
           <Typography
@@ -100,8 +94,7 @@ export const SignIn = () => {
             className={classNames.forgotPass}
             variant={'link1'}
           >
-            {' '}
-            <Link to="/forgot-password">Forgot Password?</Link>
+            Forgot Password?
           </Typography>
           <Button fullWidth={false} className={classNames.submit} type="submit">
             Sign in
@@ -111,7 +104,6 @@ export const SignIn = () => {
           {`Don't have an account?`}
         </Typography>
         <Typography as={Link} to={'/sign-up'} className={classNames.signUp} variant={'h3'}>
-          {/* передаем как компонент Link из роутер дома и переходим по пути что пишем в to */}
           Sign Up
         </Typography>
       </Card>

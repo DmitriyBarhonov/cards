@@ -10,7 +10,7 @@ import { PersonOutline } from '@/assets/icons/person-outline.tsx'
 import { Button, Dropdown, Typography } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
 import { DropdownItem, DropdownItemUserInfo } from '@/components/ui/dropdown-menu/custom-drop-down'
-import { useAppDispatch } from '@/hooks/hooks.ts'
+import { useAppDispatch } from '@/hooks'
 import { useLogOutMutation, util } from '@/services/auth'
 
 type HeaderProps = {
@@ -20,21 +20,11 @@ type HeaderProps = {
   avatar?: string
   onSignIn: () => void
 }
-export const Header: FC<HeaderProps> = ({
-  isAuth = false,
-  name,
-  email,
-  avatar,
-  onSignIn,
-  // onSignOut,
-  // onProfileClick,
-}) => {
+export const Header: FC<HeaderProps> = ({ isAuth = false, name, email, avatar, onSignIn }) => {
   const [logOut] = useLogOutMutation()
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
-
+  const navigate = useNavigate()
   const handleLogOut = () => {
-    //TODO избавиться от повтора в personal-info
     logOut()
       .unwrap()
       .then(() => {
@@ -49,7 +39,6 @@ export const Header: FC<HeaderProps> = ({
         <Logo className={s.logo} />
       </Button>
       {isAuth ? (
-        //здесь будет открывающий тег дропдауна, тамбудет логика по sign out и onProfileClick
         <div className={s.avatar}>
           <Typography as={Link} to="/personal-info" variant="subtitle1" className={s.name}>
             {name || 'no name'}

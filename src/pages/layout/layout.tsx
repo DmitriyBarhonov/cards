@@ -4,7 +4,6 @@ import { Header } from '@/components/ui'
 import { useGetMeQuery } from '@/services/auth'
 
 export const Layout = () => {
-  //даные о ползователе поулчаем из запроса
   const { data: user } = useGetMeQuery()
 
   return (
@@ -19,4 +18,4 @@ export const Layout = () => {
       <Outlet />
     </div>
   )
-} //все просто, отрисуй всех детей с хэдэром сверху
+}

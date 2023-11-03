@@ -7,10 +7,7 @@ input {
 }
 
 .dialogOverlay {
-  //background-color: var(--color-dark-900);
-  //TODO выбрать мерцание или background
-  //если убрать background пропадает мерцание
-  //при открытии модалки
+  background-color: var(--color-dark-900);
   opacity: 0.9;
   position: fixed;
   inset: 0;
@@ -22,8 +19,9 @@ input {
   @include mixins.defaultBorder;
   background-color: var(--color-dark-700);
   border-radius: 6px;
-  box-shadow: hsl(206 22% 7% / 35%) 0 10px 38px -10px,
-  hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  box-shadow:
+    hsl(206 22% 7% / 35%) 0 10px 38px -10px,
+    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
   position: fixed;
   top: 50%;
   left: 50%;

@@ -17,8 +17,6 @@ const deskApi = baseApi.injectEndpoints({
           method: 'GET',
           params: params ?? {},
         }),
-        //когда выполнится запрос и даные придут
-        //они будут храниться в кэше под тегом Decks
         providesTags: ['Decks'],
       }),
       createDeck: builder.mutation<Deck, DeckRequestParams>({
@@ -46,9 +44,6 @@ const deskApi = baseApi.injectEndpoints({
             alert(error)
           }
         },
-        //когда выполнится запрос и даные придут
-        //сд. прошлые данные с этим тегом невалидными
-        //и так сдулается обновление
         invalidatesTags: ['Decks'],
       }),
       getDeckById: builder.query<Deck, { id: string }>({
@@ -60,11 +55,6 @@ const deskApi = baseApi.injectEndpoints({
           url: `/v1/decks/${updateData.id}`,
           method: 'PATCH',
           body: updateData.data,
-          //  body: {
-          //   cover: updateData.cover,
-          //   name: updateData.name,
-          //   isPrivate: updateData.isPrivate,
-          // },
         }),
         async onQueryStarted({ id }, { dispatch, queryFulfilled, getState }) {
           const state = getState() as RootState
@@ -92,36 +82,23 @@ const deskApi = baseApi.injectEndpoints({
           url: `v1/decks/${data.id}`,
           method: 'DELETE',
         }),
-        //сначала добавляем async onQueryStarted
-        //тут все таки айди нужен
         async onQueryStarted({ id }, { dispatch, queryFulfilled, getState }) {
           const state = getState() as RootState
 
           const patchResult = dispatch(
             deskApi.util.updateQueryData(
-              //тут будем давать адрес 1, 2 аргументы и 3 какое-то действие
               'getDecks',
-              //мы же getDesks будем выполнять, вот и параметры для него тут
               { currentPage: state.decks.currentPage },
 
               draft => {
-                //В предоставленном коде draft представляет собой неизменяемое (immutable)
-                // состояние данных, которое может быть изменено с использованием библиотеки
-                // В данном контексте, draft относится к состоянию кэша данных, которое можно
-                // модифицировать перед обновлением. Это позволяет изменять данные кэша
-                // без прямого мутирования (модификации) исходного состояния.
-                // т.е. здесь драфт это вся фигня =D что есть в кэше д тегом 'Decks'
                 draft.items = draft.items.filter(item => item.id !== id)
               }
             )
           )
 
           try {
-            //итак, на этом моменты попытаемся осуществитьь вышеписанное
             await queryFulfilled
           } catch {
-            //но, на случай если что-то пойдет не по плану
-            //есть undo, которая откатит наши оптимистичные изменения (на жизненные ;D)
             patchResult.undo()
           }
         },
@@ -145,7 +122,6 @@ const deskApi = baseApi.injectEndpoints({
           },
         }),
         invalidatesTags: ['Learn'],
-        //не проверяла работу, надо делать компоненты. При применении не забыть сделать валидацию от 1 до 5
       }),
     }
   },

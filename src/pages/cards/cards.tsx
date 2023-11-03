@@ -112,7 +112,7 @@ export const CardsPage = () => {
     questionImg?: File | null,
     answerImg?: File | null
   ) => {
-    const data = createCardData(cardData, questionImg, answerImg) // Assuming `createCardData` returns the desired `formData`
+    const data = createCardData(cardData, questionImg, answerImg) // Assuming createCardData returns the desired formData
 
     if (deck?.id) {
       updateCard({ id: selectedCard.id, data })
@@ -160,7 +160,7 @@ export const CardsPage = () => {
             Add New Card
           </Button>
         ) : (
-          <Button onClick={redirectToLearn}>Learn this Deck</Button>
+          cards?.items.length !== 0 && <Button onClick={redirectToLearn}>Learn this Deck</Button>
         )}
       </div>
       {/*Есть обложка коллоды? отрисует!*/}

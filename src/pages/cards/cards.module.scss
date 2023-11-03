@@ -67,3 +67,18 @@
   color: var(--color-light-100);
   margin: 0 2px;
 }
+
+.dropdownElement {
+  color: var(--color-light-100);
+  cursor: pointer;
+  transition: all 0.4s ease;
+
+  &:hover {
+    color: var(--color-accent-100);
+  }
+
+  &:active {
+    color: var(--color-accent-300);
+  }
+}
+

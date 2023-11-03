@@ -33,6 +33,7 @@ export const DeleteItem: FC<DeleteItemProps> = ({
     toggleModal(isOpen)
   }
   const onCloseHandler = () => {
+    document.body.classList.remove('pointer-events')
     toggleModal(false)
   }
 

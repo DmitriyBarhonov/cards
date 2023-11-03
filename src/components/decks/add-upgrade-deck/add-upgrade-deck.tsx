@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useRef, useState } from 'react'
+import { ChangeEvent, FC, useRef, useState, DragEvent } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -20,10 +20,7 @@ const schema = z.object({
   isPrivate: z.boolean().optional(), //если не будет optional, то всегда надо нажимать галочку, а это не надо
   cover: z.instanceof(File).optional(),
 })
-//колода будет не пустой строкой от 3 до 30 символов
-//private будет опциональным булевым
 
-//export type AddUpgradeType = z.infer<typeof schema>
 export type AddUpgradeType = {
   name: string
   isPrivate?: boolean | undefined
@@ -31,16 +28,13 @@ export type AddUpgradeType = {
 }
 
 export type AddUpgradeDeckProps = {
-  defaultValues?: AddUpgradeType //используем при вызове для upgrade
-  title: string //заголовок
-  buttonText: string //текст на кнопке
-  isOpen: boolean //открыта или закрыта
-  toggleModal: (isOpen: boolean) => void //переключалка открытия или закрытия
+  defaultValues?: AddUpgradeType
+  title: string
+  buttonText: string
+  isOpen: boolean
+  toggleModal: (isOpen: boolean) => void
 
   onSubmit: (formData: AddUpgradeType, file: File | null) => void
-  //при сабмите отправляем данные типа название колоды и приватная ли
-  //если createDeck, то передаем просто функцию,
-  //если upgrade, то на месте вызова компоненты передаем еще и id колоды
 }
 export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
   defaultValues = { name: '', isPrivate: false, cover: undefined },
@@ -62,13 +56,9 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
   const loadFileText = title === 'Add New Deck' ? 'Chose a image' : 'Pick another file'
 
   const onSubmitHandler = (formData: AddUpgradeType) => {
-    //onSubmit поулчаем из decks. Он принимает форм дату, тоесть
-    //данные из формы data, которые мы записали для спец.формата
-    //эта форм дата отправляется на серв вместе с id
-    //для добавления и обновления коллдоы ест разные сабмиты
     onSubmit(formData, file)
     resetField('name')
-    setFile(null) // Сброс выбранного файла после его добавления в data
+    setFile(null)
     toggleModal(false)
   }
   let handleFormSubmitted = handleSubmit(onSubmitHandler)
@@ -79,17 +69,15 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
     reset()
     toggleModal(false)
   }
-  const dragStartHandler = (e: React.DragEvent<HTMLDivElement>) => {
+  const dragStartHandler = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     setDrag(true)
   }
-  const dragLeaveHandler = (e: React.DragEvent<HTMLDivElement>) => {
+  const dragLeaveHandler = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     setDrag(false)
   }
-  const onDropFileHandler = (e: React.DragEvent<HTMLDivElement>) => {
-    //TODO объеденить / зрефакторить с defaultUploadHandler
-    //код почти одинаковый
+  const onDropFileHandler = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     let selectedFiles = e.dataTransfer.files
 
@@ -110,7 +98,6 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
 
         reader.readAsDataURL(file)
       } else {
-        //для будущего вывода ошибок
         alert('Photo Upload Error')
       }
     }
@@ -130,7 +117,6 @@ export const AddUpgradeDeck: FC<AddUpgradeDeckProps> = ({
         }
         reader.readAsDataURL(selectedFile)
       } else {
-        //для будущего вывода ошибок
         alert('Photo Upload Error')
       }
     }
