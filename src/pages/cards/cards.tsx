@@ -160,7 +160,7 @@ export const CardsPage = () => {
             Add New Card
           </Button>
         ) : (
-          <Button onClick={redirectToLearn}>Learn this Deck</Button>
+          cards?.items.length !== 0 && <Button onClick={redirectToLearn}>Learn this Deck</Button>
         )}
       </div>
       {/*Есть обложка коллоды? отрисует!*/}

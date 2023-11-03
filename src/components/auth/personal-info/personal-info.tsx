@@ -18,6 +18,7 @@ export type PersonalInfoProps = {}
 export const PersonalInfo: FC<PersonalInfoProps> = ({}) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [editMode, setEditMode] = useState(false)
+  const [imgError, setImgError] = useState('')
   const { data: me } = useGetMeQuery()
   const [logOut] = useLogOutMutation()
   const [updateMe] = useUpdateMeMutation()
@@ -51,10 +52,24 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({}) => {
     updateMe(form)
   }
   const uploadImgHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setImgError('')
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0]
 
-      updateAvatar({ avatar: file })
+      const allowedTypes = ['image/jpeg', 'image/png']
+
+      if (!allowedTypes.includes(file.type)) {
+        setImgError('Only JPEG and PNG images are allowed.')
+
+        return
+      }
+      if (file.size + 1024 * 1024) {
+        setImgError('The image size should not exceed 1MB')
+
+        return
+      }
+      updateAvatar?.({ avatar: file })
+      setImgError('')
     }
   }
   const onEditTextClickHandler = () => {
@@ -93,10 +108,14 @@ export const PersonalInfo: FC<PersonalInfoProps> = ({}) => {
               className={classNames.editButton}
               variant={'secondary'}
             >
-              <EdittextIcon className={classNames.editIcon} onClick={selectFileHandler} />
+              <EdittextIcon className={classNames.editIcon} />
             </Button>
           </div>
-
+          {imgError && (
+            <Typography className={'mt-5'} variant={'error'}>
+              {imgError}
+            </Typography>
+          )}
           {editMode ? (
             <ProfileEditMode name={me.name} onInputBlurHandler={onInputBlurHandler} />
           ) : (

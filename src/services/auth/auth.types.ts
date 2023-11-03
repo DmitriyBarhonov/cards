@@ -28,7 +28,7 @@ export type ResendVerificationEmailArgs = {
 }
 export type RecoverPasswordArgs = {
   email: string
-  subject: string
+  subject?: string
 }
 
 export type UserDataResponse = {

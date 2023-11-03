@@ -74,7 +74,7 @@ const authService = baseApi.injectEndpoints({
           body: code,
         }),
       }),
-      resendRerification: builder.mutation<void, ResendVerificationEmailArgs>({
+      resendVerification: builder.mutation<void, ResendVerificationEmailArgs>({
         query: ({ userId, subject }) => ({
           url: `v1/auth/resend-verification-email`,
           method: 'POST',
@@ -97,7 +97,7 @@ const authService = baseApi.injectEndpoints({
           url: `v1/auth/recover-password`,
           method: 'POST',
           body: {
-            html: '<h1>Hi, ##name##</h1><p>Click <a href="##token##">here</a> to recover your password</p>',
+            // html: '<h1>Hi, ##name##</h1><p>Click <a href="##token##">here</a> to recover your password</p>',
             email,
             subject,
           },
@@ -121,5 +121,6 @@ export const {
   useGetMeQuery,
   useSignUpMutation,
   useVerifyEmailMutation,
+  useRecoverPasswordMutation,
   useUpdateMeMutation,
 } = authService
