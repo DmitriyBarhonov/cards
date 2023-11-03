@@ -40,7 +40,7 @@ export const Header: FC<HeaderProps> = ({ isAuth = false, name, email, avatar, o
       </Button>
       {isAuth ? (
         <div className={s.avatar}>
-          <Typography variant="subtitle1" className={s.name}>
+          <Typography as={Link} to="/personal-info" variant="subtitle1" className={s.name}>
             {name || 'no name'}
           </Typography>
           <Dropdown

@@ -1,8 +1,21 @@
+@use "../../assets/mixins/mixins" as mixins;
+
 .container {
   width: 80%;
   max-width: 1280px;
   height: 100%;
   margin: 33px auto;
+
+  .backLinkContainer {
+    @include mixins.defaultHover;
+    display: flex;
+    justify-content: flex-start;
+    cursor: pointer;
+
+    .backIcon {
+      margin-right: 2px;
+    }
+  }
 }
 
 .empty {
@@ -31,7 +44,7 @@
 .deckCoverContainer {
   display: flex;
   align-items: center;
-  margin: 24px;
+  margin-top: 14px;
 
   .deckCoverImage {
     height: 170px;
@@ -39,10 +52,20 @@
     margin-right: 10px;
   }
 }
+.cardsInput{
+  margin: 20px 0;
+}
+
 .pagination {
   margin: 20px auto;
   display: flex;
   justify-content: center;
+}
+
+.tableOptionIcon{
+  @include mixins.defaultHover;
+  color: var(--color-light-100);
+  margin: 0 2px;
 }
 
 .dropdownElement {
@@ -58,3 +81,4 @@
     color: var(--color-accent-300);
   }
 }
+

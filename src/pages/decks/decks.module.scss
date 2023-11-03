@@ -73,6 +73,8 @@
     .tableOptionIcon{
       @include mixins.defaultHover;
       color: var(--color-light-100);
+      margin: 0 2px;
+
     }
   }
 
