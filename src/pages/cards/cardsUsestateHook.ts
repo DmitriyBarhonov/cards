@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Card } from '@/services/decks/decks.types'
+import { Card } from '@/services/cards/cards.types'
 import { Sort } from '@/services/types'
 
 export const useStateCard = () => {
