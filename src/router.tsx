@@ -7,12 +7,7 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
-import { ModalCard } from './pages/modalCard'
-
-import { CheckEmail } from '@/components/auth/check-email'
-import { ForgotPass } from '@/components/auth/forgot-pass'
-import { PersonalInfo } from '@/components/auth/personal-info'
-import { SetNewPass } from '@/components/auth/set-new-pass'
+import { CheckEmail, PersonalInfo, SetNewPass } from '@/components/auth'
 import {
   PageNotFound,
   Layout,
@@ -21,6 +16,7 @@ import {
   SignUpPage,
   SignInPage,
   LearnPackPage,
+  ForgotPasswordPage,
 } from '@/pages'
 import { useGetMeQuery } from '@/services/auth'
 
@@ -35,7 +31,7 @@ const publicRoutes: RouteObject[] = [
   },
   {
     path: '/forgot-password',
-    element: <ForgotPass onSubmit={() => {}} />,
+    element: <ForgotPasswordPage />,
   },
   {
     path: '/check-your-email',
@@ -57,16 +53,12 @@ const privateRoutes: RouteObject[] = [
     element: <Decks />,
   },
   {
-    path: '/cards/:id', //в компонент карточки зайдем только по айди колоды
+    path: '/cards/:id',
     element: <CardsPage />,
   },
   {
     path: '/personal-info',
     element: <PersonalInfo />,
-  },
-  {
-    path: '/card',
-    element: <ModalCard />,
   },
   {
     path: '/learn/:deckId',
