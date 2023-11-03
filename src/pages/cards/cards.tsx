@@ -125,12 +125,8 @@ export const CardsPage = () => {
 
   return (
     <div className={s.container}>
-      <Typography
-        variant="body2"
-        className={'flex justify-start cursor-pointer'}
-        onClick={() => navigate(-1)}
-      >
-        {/* верни на страницу назад */} <ArrowLeft />
+      <Typography variant="h2" className={s.backLinkContainer} onClick={() => navigate(-1)}>
+        {/* верни на страницу назад */} <ArrowLeft className={s.backIcon} />
         Back to Decks List
       </Typography>
       <div className={'mt-6 flex justify-between '}>
@@ -177,6 +173,7 @@ export const CardsPage = () => {
         variant="search"
         fullWidth={true}
         placeholder={'Input search'}
+        className={s.cardsInput}
         value={search}
         onChange={e => setSearch(e.currentTarget.value)}
       />
