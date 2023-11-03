@@ -43,7 +43,7 @@ const authService = baseApi.injectEndpoints({
         },
         providesTags: ['Me'],
       }),
-      updateMe: builder.mutation<UserDataResponse, UserDataUpdate>({
+      updateMe: builder.mutation<UserDataResponse, FormData | UserDataUpdate>({
         query: data => ({
           url: `/v1/auth/me`,
           method: 'PATCH',

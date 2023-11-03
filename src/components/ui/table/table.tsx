@@ -9,7 +9,8 @@ import { SortUp } from '@/assets/icons/up.tsx'
 import { Typography } from '@/components/ui'
 import { Column, Sort } from '@/services/types'
 
-//везде будет одинаковая конструкция ComponentProps<'тег таблицы'>, то есть кастомный компонент будет принимать пропсы такие же, как и тег таблицы
+//везде будет одинаковая конструкция ComponentProps<'тег таблицы'>,
+// то есть кастомный компонент будет принимать пропсы такие же, как и тег таблицы
 //будут представлены все компоненты table, thead, tbody, th, tr, td
 export const Root: FC<ComponentProps<'table'>> = ({ className, ...rest }) => {
   const classNames = {
@@ -79,7 +80,13 @@ export const SortedHeader: FC<
             <div className={s.arrow}>
               {title}
               {sort && sort.key === key && (
-                <span>{sort.direction === 'asc' ? <SortUp /> : <SortDown />}</span>
+                <span>
+                  {sort.direction === 'asc' ? (
+                    <SortUp className={s.arrowIcon} />
+                  ) : (
+                    <SortDown className={s.arrowIcon} />
+                  )}
+                </span>
               )}
             </div>
           </th>

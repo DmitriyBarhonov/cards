@@ -7,11 +7,15 @@ input {
 }
 
 .dialogOverlay {
-  background-color: var(--color-dark-900);
-  opacity: 0.4;
+  //background-color: var(--color-dark-900);
+  //TODO выбрать мерцание или background
+  //если убрать background пропадает мерцание
+  //при открытии модалки
+  opacity: 0.9;
   position: fixed;
   inset: 0;
-  //animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: 0.3s all ease;
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dialogContent {
@@ -25,8 +29,8 @@ input {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 45vw;
-  max-width: 600px;
-  max-height: 85vh;
+  max-width: 550px;
+  max-height: 100vh;
   padding: 24px;
   animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 

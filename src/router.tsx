@@ -7,17 +7,21 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
-import { LearnPackPage } from './pages/learn-pack-page/learn-pack-page'
 import { ModalCard } from './pages/modalCard'
 
 import { CheckEmail } from '@/components/auth/check-email'
 import { ForgotPass } from '@/components/auth/forgot-pass'
 import { PersonalInfo } from '@/components/auth/personal-info'
 import { SetNewPass } from '@/components/auth/set-new-pass'
-import { PageNotFound, Layout, CardsPage } from '@/pages'
-import { Decks } from '@/pages/decks/decks'
-import { SignInPage } from '@/pages/sign-in-page/sign-in-page.tsx'
-import { SignUpPage } from '@/pages/sign-up-page/sign-up-page.tsx'
+import {
+  PageNotFound,
+  Layout,
+  CardsPage,
+  Decks,
+  SignUpPage,
+  SignInPage,
+  LearnPackPage,
+} from '@/pages'
 import { useGetMeQuery } from '@/services/auth'
 
 const publicRoutes: RouteObject[] = [
@@ -57,7 +61,7 @@ const privateRoutes: RouteObject[] = [
     element: <CardsPage />,
   },
   {
-    path: '/personal-info', //todo не забыть повесить логику на id пользователя
+    path: '/personal-info',
     element: <PersonalInfo />,
   },
   {

@@ -1,1 +1,1 @@
-export * from './modalCard.tsx'
+export * from './modalCard'

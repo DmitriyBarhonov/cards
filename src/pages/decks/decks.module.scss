@@ -1,53 +1,89 @@
+@use "../../assets/mixins/mixins" as mixins;
+
 .container {
-  width: 90%;
+  width: 80%;
   max-width: 1280px;
   height: 100%;
   margin: 33px auto;
-}
 
-.menu {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-}
+  .addDeckBtnWrapper {
+    display: flex;
+    justify-content: flex-end;
+  }
 
-.search {
-  max-width: 300px;
-  margin: inherit;
-  height: inherit;
-}
-.pagination {
-  margin: 20px auto;
-  display: flex;
-  justify-content: center;
-}
-.iconsRow {
-  display: flex;
-  justify-content: flex-end;
-  // Прижимаем текст к правому краю в последнем ряду, так нужно для иконок
-}
+  .menu {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 20px;
 
-.wrapperButton {
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: flex-end;
-}
-.clearFilter {
-  display: flex;
-  align-items: center;
-  margin-top: 30px;
-}
-.clearFilter > div{
-  margin-left: 10px;
-}
+    .tabSwitcher {
+      box-sizing: border-box;
+    }
 
-.coverContainer{
-  display: flex;
-  align-items: center;
+    .search {
+      width: 36%;
 
-  .coverImage{
-    height: 54px;
-    width: auto;
-    margin-right: 10px;
+      @media screen and (max-width: 1360px) {
+        width: 32%;
+      }
+
+      @media screen and (max-width: 1200px) {
+        width: 15%;
+      }
+
+    }
+
+    .wrapperButton {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: flex-end;
+
+      .clearFilter {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding-left: 20px;
+        height: 38px;
+        box-sizing: border-box;
+
+        .trashIcon {
+          margin: 0 10px 2px 0;
+        }
+      }
+    }
+  }
+
+  .pagination {
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .iconsRow {
+    margin-top: 10%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    // Прижимаем текст к правому краю в последнем ряду, так нужно для иконок
+
+
+    .tableOptionIcon{
+      @include mixins.defaultHover;
+      color: var(--color-light-100);
+    }
+  }
+
+  .coverContainer {
+    display: flex;
+    align-items: center;
+
+    .coverImage {
+      height: 54px;
+      width: auto;
+      margin-right: 10px;
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FC, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 
@@ -7,7 +7,7 @@ import { ControlledRadioGroup } from '../ui/controlled'
 
 import s from './learn-pack.module.scss'
 
-import { Card as CardType } from '@/services/decks/decks.types'
+import { Card as CardType } from '@/services/cards/cards.types'
 
 type LearnPackProps = {
   dataCard?: CardType
@@ -16,7 +16,7 @@ type LearnPackProps = {
   nameDeck: string
 }
 
-export const LearnPack: React.FC<LearnPackProps> = ({ dataCard, onSubmit, options, nameDeck }) => {
+export const LearnPack: FC<LearnPackProps> = ({ dataCard, onSubmit, options, nameDeck }) => {
   const [showAnswer, setShowAnswer] = useState(false)
   const { handleSubmit, control } = useForm<{ grade: string }>({
     mode: 'onSubmit',
