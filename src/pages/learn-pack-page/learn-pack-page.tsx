@@ -27,6 +27,8 @@ export const LearnPackPage: React.FC = () => {
   const { data: deck } = useGetDeckByIdQuery({ id: deckId })
 
   const onSubmit: SubmitHandler<{ grade: string }> = grade => {
+    console.log(grade)
+
     const gradeCard = +grade
 
     if (deckId && dataCard) {
