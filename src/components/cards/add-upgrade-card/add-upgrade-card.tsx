@@ -220,6 +220,7 @@ export const AddUpgradeCard: FC<AddUpgradeCardProps> = ({
             options={optionsPrimary}
             value={selectValue}
             onChange={onSelectChangeHandler}
+            className={s.select}
           />
           {/*question block*/}
           {selectValue === 'Text + Image' && (

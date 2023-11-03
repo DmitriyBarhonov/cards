@@ -27,6 +27,7 @@
   width: 100%;
   height: auto;
   border: 1px solid var(--color-dark-100);
+  border-radius: 4px;
 
   .inputBtnAndText {
     display: flex;
@@ -63,11 +64,18 @@
 .questionInputWrapper {
   margin: 10px 0;
 }
-
-.answerInput {
-  margin-top: 2px;
-  margin-bottom: 42px;
+.select{
+  margin-bottom: 6px;
+  border-radius: 4px;
 }
+.questionInput {
+  margin: 10px 0;
+}
+.answerInput {
+  margin-top: 10px;
+  margin-bottom: 24px;
+}
+
 
 .inputsAndSelectContainer {
   display: flex;
@@ -80,6 +88,3 @@
   margin-top: 10px;
 }
 
-.questionInput {
-
-}
