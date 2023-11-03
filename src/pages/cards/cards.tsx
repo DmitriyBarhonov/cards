@@ -236,7 +236,7 @@ export const CardsPage = () => {
                             setUpdateCardModal(true) //открываем модалку для удаления
                           }}
                         >
-                          <EdittextIcon />
+                          <EdittextIcon className={s.tableOptionIcon} />
                         </Button>
                         <Button
                           variant={'icon'}
@@ -245,7 +245,7 @@ export const CardsPage = () => {
                             setDeleteCardModal(true) //открываем модалку для удаления
                           }}
                         >
-                          <TrashOutline size={24} />
+                          <TrashOutline className={s.tableOptionIcon} size={24} />
                         </Button>
                       </div>
                     </Table.Data>

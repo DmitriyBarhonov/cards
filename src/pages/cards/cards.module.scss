@@ -1,3 +1,5 @@
+@use "../../assets/mixins/mixins" as mixins;
+
 .container {
   width: 80%;
   max-width: 1280px;
@@ -43,4 +45,10 @@
   margin: 20px auto;
   display: flex;
   justify-content: center;
+}
+
+.tableOptionIcon{
+  @include mixins.defaultHover;
+  color: var(--color-light-100);
+  margin: 0 2px;
 }
