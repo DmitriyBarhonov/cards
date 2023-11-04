@@ -70,11 +70,9 @@
   line-height: var(--line-height-m);
   cursor: pointer;
   transition: all 0.3s ease;
-  //word-wrap: break-word;
-  //overflow: hidden;
-  //text-overflow: ellipsis;
-  //white-space: pre-wrap;
-  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .empty {
