@@ -88,6 +88,10 @@ export const Decks = () => {
 
   // functions
 
+  const redirectToLearn = (id: string) => {
+    navigate(`/learn/${id}`)
+  }
+
   useEffect(() => {
     dispatch(decksSlice.actions.setMaxCardsCount(decks ? decks.maxCardsCount : 50))
   }, [decks])
@@ -210,7 +214,16 @@ export const Decks = () => {
                     <Table.Data>{new Date(deck.updated).toLocaleDateString('ru-Ru')}</Table.Data>
                     <Table.Data>{deck.author.name}</Table.Data>
                     <Table.Data className={s.iconsRow}>
-                      <PlayCircle className={s.tableOptionIcon} size={24} />
+                      <Button
+                        variant={'icon'}
+                        onClick={() => {
+                          setSelectedDeck(deck) //в стейт заносим нужную модалку для удаления
+                          redirectToLearn(deck.id) //открываем модалку для редактирования
+                        }}
+                      >
+                        <PlayCircle className={s.tableOptionIcon} size={24} />
+                      </Button>
+
                       {/*если это моя колода, то покажи все иконки, иначе только learn */}
                       {user.id === deck.author.id ? (
                         <div className={'flex'}>

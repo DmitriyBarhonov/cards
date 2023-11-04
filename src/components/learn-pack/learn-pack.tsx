@@ -1,6 +1,7 @@
 import { FC, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import { Button, Card, OptionType, Typography } from '../ui'
 import { ControlledRadioGroup } from '../ui/controlled'
@@ -18,6 +19,7 @@ type LearnPackProps = {
 
 export const LearnPack: FC<LearnPackProps> = ({ dataCard, onSubmit, options, nameDeck }) => {
   const [showAnswer, setShowAnswer] = useState(false)
+  const navigate = useNavigate()
   const { handleSubmit, control } = useForm<{ grade: string }>({
     mode: 'onSubmit',
     defaultValues: {
@@ -32,7 +34,7 @@ export const LearnPack: FC<LearnPackProps> = ({ dataCard, onSubmit, options, nam
     <Card className={s.cards}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <Typography className={s.learnTitle} variant="h1">{`Learn ${nameDeck}`}</Typography>
+          <Typography className={s.learnTitle} variant="large">{`Learn ${nameDeck}`}</Typography>
           <Typography className={s.questionTitle}>
             <span>Question:</span> {` ${dataCard ? dataCard.question : ''}`}?
           </Typography>
@@ -43,7 +45,9 @@ export const LearnPack: FC<LearnPackProps> = ({ dataCard, onSubmit, options, nam
         </div>
         {!showAnswer || (
           <div className={s.answerList}>
-            <span>Answer:</span>
+            <Typography className={s.questionTitle}>
+              <span>Answer:</span> {` ${dataCard ? dataCard.answer : ''}`}?
+            </Typography>
             {dataCard?.answerImg ? <img src={dataCard?.answerImg} alt={nameDeck} /> : null}
             <div className={s.rate}>
               <span>Rate yourself:</span>
@@ -54,13 +58,20 @@ export const LearnPack: FC<LearnPackProps> = ({ dataCard, onSubmit, options, nam
           </div>
         )}
         {!showAnswer ? (
-          <Button type="submit" onClick={showAnswerHandler}>
-            Show Answer
-          </Button>
+          <div className={s.showAnswContainer}>
+            <Button fullWidthForModal={true} type="submit" onClick={showAnswerHandler}>
+              Show Answer
+            </Button>
+          </div>
         ) : (
-          <Button className={s.nextButton} type="button" onClick={showAnswerHandler}>
-            Next Question
-          </Button>
+          <div className={s.nextAndCloseBtnsContainer}>
+            <Button className={s.quitButton} variant={'tertiary'} onClick={() => navigate(-1)}>
+              Back to Deck
+            </Button>
+            <Button className={s.nextButton} type="button" onClick={showAnswerHandler}>
+              Next Question
+            </Button>
+          </div>
         )}
       </form>
     </Card>
