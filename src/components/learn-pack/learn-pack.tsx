@@ -34,7 +34,7 @@ export const LearnPack: FC<LearnPackProps> = ({ dataCard, onSubmit, options, nam
     <Card className={s.cards}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <Typography className={s.learnTitle} variant="h1">{`Learn ${nameDeck}`}</Typography>
+          <Typography className={s.learnTitle} variant="large">{`Learn ${nameDeck}`}</Typography>
           <Typography className={s.questionTitle}>
             <span>Question:</span> {` ${dataCard ? dataCard.question : ''}`}?
           </Typography>

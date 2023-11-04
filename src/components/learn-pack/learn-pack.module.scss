@@ -1,4 +1,9 @@
+@use "../../assets/mixins/mixins" as mixins;
+
+
 .cards {
+  @include mixins.defaultBorder;
+  border-radius: 4px;
   max-width: 420px;
   margin: 80px auto;
 
@@ -15,8 +20,7 @@
 
 .learnTitle {
   text-align: center;
-  margin-bottom: 45px;
-  font-weight: 700;
+  margin: 25px 0 40px;
 }
 
 .answersCount {
@@ -58,7 +62,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 10px 0;
+  margin: 10px 0 15px;
 
   .quitButton {
     margin-top: 15px;
