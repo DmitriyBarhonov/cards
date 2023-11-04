@@ -57,14 +57,14 @@ export const LearnPack: FC<LearnPackProps> = ({ dataCard, onSubmit, options, nam
         )}
         {!showAnswer ? (
           <div className={s.showAnswContainer}>
-            <Button type="submit" onClick={showAnswerHandler}>
+            <Button fullWidthForModal={true} type="submit" onClick={showAnswerHandler}>
               Show Answer
             </Button>
           </div>
         ) : (
           <div className={s.nextAndCloseBtnsContainer}>
             <Button className={s.quitButton} variant={'tertiary'} onClick={() => navigate(-1)}>
-              End session
+              Back to Deck
             </Button>
             <Button className={s.nextButton} type="button" onClick={showAnswerHandler}>
               Next Question
