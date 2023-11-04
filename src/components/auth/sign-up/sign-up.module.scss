@@ -7,13 +7,14 @@
     @include mixins.cardContainer;
     height: 548px;
 
+    .formTitle {
+      @include mixins.authMainTitle;
+      margin-top: 30px;
+    }
+
     .formBody {
       @include mixins.formContainer;
 
-      .formTitle {
-        @include mixins.authMainTitle;
-        margin: 38px 0 6px;
-      }
 
       .formInput {
         @include mixins.authInput;

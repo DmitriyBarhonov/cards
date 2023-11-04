@@ -16,7 +16,7 @@ export const CheckEmail = () => {
   const classNames = {
     formContainer: clsx(s.formContainer),
     card: clsx(s.card),
-    mainTitle: clsx(s.signInMainTitle),
+    mainTitle: clsx(s.mainTitle),
     icon: clsx(s.mainIcon),
     info: clsx(s.secondaryText),
     button: clsx(s.button),

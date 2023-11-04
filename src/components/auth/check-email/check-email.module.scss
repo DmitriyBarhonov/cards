@@ -9,7 +9,7 @@
 
     .mainTitle {
       @include mixins.authMainTitle;
-      margin: 0 0 6px;
+      margin-top: 30px;
     }
 
     .mainIcon {
@@ -24,7 +24,7 @@
 
     .button {
       @include mixins.authSubmitButton;
-      margin: 22px 0 22px;
+      margin: 22px 0 26px;
 
       //применил здесь доп стили т.к. с модуля самой кнопки
       //hover & active почемуто не срабатыва для type='link'

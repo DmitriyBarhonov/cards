@@ -7,14 +7,14 @@
     @include mixins.cardContainer;
     height: 548px;
 
+    .mainTitle {
+      @include mixins.authMainTitle;
+      margin-top: 30px !important;
+    }
+
     .signInForm {
       @include mixins.formContainer;
 
-      .mainTitle {
-        @include mixins.authMainTitle;
-        margin-top: 6px !important;
-        //margin-bottom: 8px !important;
-      }
 
       .signInInput {
         @include mixins.authInput;
@@ -36,6 +36,7 @@
         &:hover {
           color: var(--color-accent-100);
         }
+
         &:active {
           color: var(--color-accent-300);
         }
