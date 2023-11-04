@@ -45,7 +45,9 @@ export const LearnPack: FC<LearnPackProps> = ({ dataCard, onSubmit, options, nam
         </div>
         {!showAnswer || (
           <div className={s.answerList}>
-            <span>Answer:</span>
+            <Typography className={s.questionTitle}>
+              <span>Answer:</span> {` ${dataCard ? dataCard.answer : ''}`}?
+            </Typography>
             {dataCard?.answerImg ? <img src={dataCard?.answerImg} alt={nameDeck} /> : null}
             <div className={s.rate}>
               <span>Rate yourself:</span>
