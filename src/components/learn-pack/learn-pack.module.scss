@@ -7,10 +7,12 @@
     border-radius: 10px;
     margin-bottom: 20px;
   }
+
   span {
     font-weight: 700;
   }
 }
+
 .learnTitle {
   text-align: center;
   margin-bottom: 45px;
@@ -28,18 +30,40 @@
 .rate {
   margin-top: 20px;
 }
+
 .radioGroup {
   margin-top: 15px;
 }
+
 .questionTitle {
   font-weight: 700;
   margin-bottom: 15px;
 }
+
 .answerList {
   span {
     margin-bottom: 15px;
   }
 }
-.nextButton {
-  margin-top: 15px;
+
+.showAnswContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+
+.nextAndCloseBtnsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .quitButton {
+    margin-top: 15px;
+  }
+
+  .nextButton {
+    margin-top: 15px;
+  }
+}
+

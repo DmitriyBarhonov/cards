@@ -1,6 +1,7 @@
 import { FC, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import { Button, Card, OptionType, Typography } from '../ui'
 import { ControlledRadioGroup } from '../ui/controlled'
@@ -18,6 +19,7 @@ type LearnPackProps = {
 
 export const LearnPack: FC<LearnPackProps> = ({ dataCard, onSubmit, options, nameDeck }) => {
   const [showAnswer, setShowAnswer] = useState(false)
+  const navigate = useNavigate()
   const { handleSubmit, control } = useForm<{ grade: string }>({
     mode: 'onSubmit',
     defaultValues: {
@@ -54,13 +56,20 @@ export const LearnPack: FC<LearnPackProps> = ({ dataCard, onSubmit, options, nam
           </div>
         )}
         {!showAnswer ? (
-          <Button type="submit" onClick={showAnswerHandler}>
-            Show Answer
-          </Button>
+          <div className={s.showAnswContainer}>
+            <Button type="submit" onClick={showAnswerHandler}>
+              Show Answer
+            </Button>
+          </div>
         ) : (
-          <Button className={s.nextButton} type="button" onClick={showAnswerHandler}>
-            Next Question
-          </Button>
+          <div className={s.nextAndCloseBtnsContainer}>
+            <Button className={s.quitButton} variant={'tertiary'} onClick={() => navigate(-1)}>
+              End session
+            </Button>
+            <Button className={s.nextButton} type="button" onClick={showAnswerHandler}>
+              Next Question
+            </Button>
+          </div>
         )}
       </form>
     </Card>
