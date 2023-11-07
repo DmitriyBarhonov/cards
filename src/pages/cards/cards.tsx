@@ -4,11 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import s from './cards.module.scss'
 
-import { ArrowLeft } from '@/assets/icons/arrow-left.tsx'
-import { DotsInCircle } from '@/assets/icons/dots-in-circle.tsx'
-import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
-import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
-import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
+import { ArrowLeft, DotsInCircle, EdittextIcon, PlayCircle, TrashOutline } from '@/assets/icons'
 import { AddUpgradeCard, AddUpgradeCardType } from '@/components/cards/add-upgrade-card'
 import { DeleteItem } from '@/components/decks'
 import { Button, Dropdown, Input, Pagination, Rating, Table, Typography } from '@/components/ui'

@@ -6,17 +6,20 @@ import { useNavigate } from 'react-router-dom'
 import s from './decks.module.scss'
 import { useStateDecks } from './decksUseStateHook'
 
-import { EdittextIcon } from '@/assets/icons/edit-text.tsx'
-import { PlayCircle } from '@/assets/icons/play-circle-outline.tsx'
-import { TrashOutline } from '@/assets/icons/trash-outline.tsx'
+import { EdittextIcon, TrashOutline, PlayCircle } from '@/assets/icons'
 import { AddUpgradeDeck, AddUpgradeType, DeleteItem } from '@/components/decks'
-import { Button, Input, Typography, Table, Pagination, TabSwitcher } from '@/components/ui'
-import { SliderForCards } from '@/components/ui/slider'
-import { useAppDispatch, useAppSelector } from '@/hooks/hooks.ts'
-import { useDebounce } from '@/hooks/useDebounce'
+import {
+  Button,
+  Input,
+  Typography,
+  Table,
+  Pagination,
+  TabSwitcher,
+  SliderForCards,
+} from '@/components/ui'
+import { useAppDispatch, useAppSelector, useDebounce } from '@/hooks'
 import { useGetMeQuery } from '@/services/auth'
 import {
-  // useCreateCardMutation,
   useCreateDeckMutation,
   useDeleteDeckMutation,
   useGetDecksQuery,
@@ -254,7 +257,6 @@ export const Decks = () => {
             </Table.Body>
           </Table.Root>
         )}
-        {/*рефакторинг чтобы не было 0 если таблица пустая*/}
         <Pagination
           className={s.pagination}
           totalCount={decks?.pagination.totalItems ?? 10}
