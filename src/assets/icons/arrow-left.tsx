@@ -3,7 +3,7 @@ type PropsType = {
   size?: number
 } & SVGProps<SVGSVGElement>
 
-export const SvgComponent = ({ size = 16, ...props }: PropsType) => (
+const SvgComponent = ({ size = 16, ...props }: PropsType) => (
   <svg
     width={16}
     height={16}
