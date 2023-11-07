@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 import s from './personal-info.module.scss'
 
-import { EdittextIcon } from '@/assets/icons/edit-text'
+import { EdittextIcon } from '@/assets/icons'
 import { ProfileDisplayMode } from '@/components/auth/personal-info/display-mode'
 import { ProfileEditMode } from '@/components/auth/personal-info/edit-mode'
 import { Avatar, Button, Card, Typography } from '@/components/ui'
