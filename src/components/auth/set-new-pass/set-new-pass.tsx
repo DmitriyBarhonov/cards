@@ -3,10 +3,11 @@ import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { ControlledInput } from '../../ui/controlled/controlled-input'
+
 import s from './set-new-pass.module.scss'
 
 import { Button, Card, Typography } from '@/components/ui'
-import { ControlledInput } from '@/components/ui/controlled-input'
 
 const classNames = {
   formContainer: clsx(s.formContainer),

@@ -1,6 +1,6 @@
 import { useController, UseControllerProps } from 'react-hook-form'
 
-import { Input, InputFieldProps } from '../input'
+import { Input, InputFieldProps } from '../../input'
 
 //import { CardsInput } from '@/components/ui'
 

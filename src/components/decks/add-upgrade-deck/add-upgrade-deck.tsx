@@ -4,11 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { ControlledInput } from '../../ui/controlled/controlled-input'
+
 import s from './add-upgrade-deck.module.scss'
 
 import { Button, Modal, Typography } from '@/components/ui'
 import { ControlledCheckbox } from '@/components/ui/controlled'
-import { ControlledInput } from '@/components/ui/controlled-input'
 
 const schema = z.object({
   name: z
