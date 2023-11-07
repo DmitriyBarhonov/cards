@@ -7,11 +7,6 @@ import { Router } from '@/router.tsx'
 import { store } from '@/services/store.ts'
 
 export function App() {
-  useEffect(() => {
-    // Обновляем заголовок документа
-    document.title = 'Card training'
-  }, [])
-
   return (
     <Provider store={store}>
       <Router />
