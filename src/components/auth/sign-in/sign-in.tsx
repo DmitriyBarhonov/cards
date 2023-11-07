@@ -6,8 +6,7 @@ import { z } from 'zod'
 
 import s from './sign-in.module.scss'
 
-import { Button, Card, Typography } from '@/components/ui'
-import { ControlledCheckbox, ControlledInput } from '@/components/ui/controlled'
+import { Button, Card, ControlledCheckbox, ControlledInput, Typography } from '@/components/ui'
 import { useLoginMutation } from '@/services/auth'
 
 const classNames = {
