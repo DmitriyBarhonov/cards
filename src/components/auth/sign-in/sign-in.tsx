@@ -4,12 +4,10 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { z } from 'zod'
 
-import { ControlledInput } from '../../ui/controlled/controlled-input'
-
 import s from './sign-in.module.scss'
 
 import { Button, Card, Typography } from '@/components/ui'
-import { ControlledCheckbox } from '@/components/ui/controlled'
+import { ControlledCheckbox, ControlledInput } from '@/components/ui/controlled'
 import { useLoginMutation } from '@/services/auth'
 
 const classNames = {

@@ -4,11 +4,10 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { z } from 'zod'
 
-import { ControlledInput } from '../../ui/controlled/controlled-input'
-
 import s from './forgot-pass.module.scss'
 
 import { Button, Card, Typography } from '@/components/ui'
+import { ControlledInput } from '@/components/ui/controlled'
 
 const classNames = {
   formContainer: clsx(s.formContainer),
