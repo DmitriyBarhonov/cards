@@ -4,13 +4,12 @@ import { clsx } from 'clsx'
 
 import s from './table.module.scss'
 
-import { SortDown } from '@/assets/icons/down.tsx'
-import { SortUp } from '@/assets/icons/up.tsx'
+import { SortDown, SortUp } from '@/assets/icons'
 import { Typography } from '@/components/ui'
 import { Column, Sort } from '@/services/types'
 
 //везде будет одинаковая конструкция ComponentProps<'тег таблицы'>,
-// то есть кастомный компонент будет принимать пропсы такие же, как и тег таблицы
+//то есть кастомный компонент будет принимать пропсы такие же, как и тег таблицы
 //будут представлены все компоненты table, thead, tbody, th, tr, td
 export const Root: FC<ComponentProps<'table'>> = ({ className, ...rest }) => {
   const classNames = {
@@ -116,27 +115,3 @@ export const Table = {
   Data,
   Empty,
 }
-// стандартная констурция
-// table, thead, tr, th, tbody, td
-// <table> тег таблицы
-//   <thead> голова таблицы в котором используем tr как описание столбцов
-//   <tr> ниже все описания завернутые в загловки
-//     <th>Name</th> table header - заголовки столбцов
-//     <th>Cards</th>
-//     <th>Last Updated</th>
-//     <th>Created by</th>
-//   </tr>
-//   </thead>
-//   <tbody> тело таблицы
-//   {decks.data?.items?.map((deck: any) => {
-//     return (
-//         <tr key={deck.id}> ряд в таблице, где td это ячейка, кол-во ячеек равно кол-ву столбцов
-//           <td>{deck.name}</td> table data
-//           <td>{deck.cardsCount}</td>
-//           <td>{new Date(deck.updated).toLocaleDateString('ru-Ru')}</td>
-//           <td>{deck.author.name}</td>
-//         </tr>
-//     )
-//   })}
-//   </tbody>
-// </table>

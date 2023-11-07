@@ -24,7 +24,7 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({
   disabled,
   ...restProps
 }) => {
-  // const [value, setValue] = useState(restProps.defaultValue || restProps.value || options[1].value)
+  //const [value, setValue] = useState(restProps.defaultValue || restProps.value || options[1].value)
   //не хардкодим на второй элемент из options, если есть в пропсах value или defaultValue то берем их
   const classNames = {
     toggleGroup: clsx(disabled ? s.toggleDisabled : s.toggleGroup),
@@ -33,9 +33,6 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({
 
   const oValueChangeHandler = (value: string) => {
     if (value) onValueChange(value)
-    //здесь будет отправляться запрос на показ
-    //всех или только моих карточек
-    // restProps.onValueChange && restProps.onValueChange(value)
   }
 
   return (
@@ -49,8 +46,6 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({
       onValueChange={oValueChangeHandler}
       value={restProps.value}
     >
-      {/*сколько options получим в пропсах*/}
-      {/*столько кнопок в переключалке и отрисуется*/}
       {options.map((option: ToggleOptionsType) => {
         return (
           <ToggleGroup.Item

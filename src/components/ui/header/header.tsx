@@ -4,9 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import s from './header.module.scss'
 
-import { LogOut } from '@/assets/icons/log-out.tsx'
-import { Logo } from '@/assets/icons/logo.tsx'
-import { PersonOutline } from '@/assets/icons/person-outline.tsx'
+import { LogOut, Logo, PersonOutline } from '@/assets/icons'
 import { Button, Dropdown, Typography } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
 import { DropdownItem, DropdownItemUserInfo } from '@/components/ui/dropdown-menu/custom-drop-down'
@@ -14,7 +12,7 @@ import { useAppDispatch } from '@/hooks'
 import { useLogOutMutation, util } from '@/services/auth'
 
 type HeaderProps = {
-  isAuth: boolean //если авторизован то будет аватарка, если нет то кнопка sign in
+  isAuth: boolean
   name?: string
   email?: string
   avatar?: string

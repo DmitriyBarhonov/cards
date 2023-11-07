@@ -3,10 +3,11 @@ import { CSSProperties, FC } from 'react'
 import * as SelectRadix from '@radix-ui/react-select'
 import { clsx } from 'clsx'
 
-import { ChevronDown } from '../../../assets/icons/chevron-down.tsx'
 import { Typography } from '../typography'
 
 import s from './select.module.scss'
+
+import { ChevronDown } from '@/assets/icons'
 
 export type Option = { label: string; value: string }
 
