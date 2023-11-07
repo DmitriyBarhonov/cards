@@ -7,8 +7,7 @@ import { z } from 'zod'
 import s from './add-upgrade-deck.module.scss'
 
 import { Button, Modal, Typography } from '@/components/ui'
-import { ControlledCheckbox } from '@/components/ui/controlled'
-import { ControlledInput } from '@/components/ui/controlled-input'
+import { ControlledInput, ControlledCheckbox } from '@/components/ui/controlled'
 
 const schema = z.object({
   name: z

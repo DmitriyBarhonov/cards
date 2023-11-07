@@ -5,8 +5,7 @@ import { z } from 'zod'
 
 import s from './set-new-pass.module.scss'
 
-import { Button, Card, Typography } from '@/components/ui'
-import { ControlledInput } from '@/components/ui/controlled-input'
+import { Button, Card, Typography, ControlledInput } from '@/components/ui'
 
 const classNames = {
   formContainer: clsx(s.formContainer),

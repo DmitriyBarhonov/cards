@@ -2,8 +2,7 @@ import { FC, useMemo } from 'react'
 
 import { clsx } from 'clsx'
 
-import { ChevronLeft } from '@/assets/icons/chevron-left.tsx'
-import { ChevronRight } from '@/assets/icons/chevron-right.tsx'
+import { ChevronLeft, ChevronRight } from '@/assets/icons'
 import { Button, Select, Typography } from '@/components/ui'
 import s from '@/components/ui/pagination/pagination.module.scss'
 //откуда почти все https://www.freecodecamp.org/news/build-a-custom-pagination-component-in-react/

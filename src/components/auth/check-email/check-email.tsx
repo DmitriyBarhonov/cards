@@ -2,7 +2,7 @@ import { clsx } from 'clsx'
 
 import s from './check-email.module.scss'
 
-import { CheckEmailIcon } from '@/assets/icons/check-email-icon'
+import { CheckEmailIcon } from '@/assets/icons'
 import { Button, Card, Typography } from '@/components/ui'
 
 export type CheckEmailProps = {

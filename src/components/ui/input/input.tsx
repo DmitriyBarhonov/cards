@@ -4,9 +4,7 @@ import { clsx } from 'clsx'
 
 import s from './input.module.scss'
 
-// @ts-ignore
-import SearchIcon from '@/assets/icons/search.tsx'
-import { WatchPassIcon } from '@/assets/icons/watch-pass'
+import { SearchIcon, WatchPassIcon } from '@/assets/icons'
 import { CrossedOutWatchPassIcon } from '@/assets/icons/watch-pass-crossed-out'
 
 export type InputFieldProps = {

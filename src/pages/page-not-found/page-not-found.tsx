@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 
 import s from './page-not-found.module.scss'
 
-import { NotFound } from '@/assets/icons/404.tsx'
+import { NotFound } from '@/assets/icons'
 import { Button, Typography } from '@/components/ui'
 
 export const PageNotFound = () => {

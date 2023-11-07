@@ -7,7 +7,7 @@ import { z } from 'zod'
 import s from './add-upgrade-card.module.scss'
 
 import { Button, Modal, Select, Typography } from '@/components/ui'
-import { ControlledInput } from '@/components/ui/controlled-input'
+import { ControlledInput } from '@/components/ui/controlled'
 
 const schema = z.object({
   question: z

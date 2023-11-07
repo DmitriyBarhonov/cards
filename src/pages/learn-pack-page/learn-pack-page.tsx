@@ -1,3 +1,5 @@
+import { FC } from 'react'
+
 import { LinearProgress } from '@mui/material'
 import { SubmitHandler } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
@@ -18,7 +20,7 @@ const options: OptionType[] = [
   { label: 'Knew the answer', value: '5' },
 ]
 
-export const LearnPackPage: React.FC = () => {
+export const LearnPackPage: FC = () => {
   const { deckId } = useParams() as {
     deckId: string
   }
@@ -27,7 +29,7 @@ export const LearnPackPage: React.FC = () => {
   const { data: deck } = useGetDeckByIdQuery({ id: deckId })
 
   const onSubmit: SubmitHandler<{ grade: string }> = ({ grade }) => {
-    console.log(grade)
+    //console.log(grade)
 
     const gradeCard = +grade
 
