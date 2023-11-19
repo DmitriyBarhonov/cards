@@ -27,6 +27,8 @@ button {
 }
 @mixin radio-group-item-after($color-elemet) {
   content: '';
+  left: calc(50% - 5.5px);
+    top: calc(50% - 5.5px);
   display: block;
   width: 11px;
   height: 11px;
